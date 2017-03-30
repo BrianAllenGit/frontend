@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mobile Self-Checkout - Scannly</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <meta name="google-site-verification" content="Ok8lDst021fYgEjigc-z5lCR1rGyDi-e01a7WN9On-k" />
+
+    <!-- General Metadata -->
+    <meta name="keywords" content="point of sale, POS, small business solution">
+    <meta name="description" content="Eliminate standing in lines forever. Check into your favorite retailer through the app, scan the items in your cart using your phone, and check out all in one place.">
+    
+
+    <!-- Facebook Metadata -->
+    <meta property="og:url"                content="http://snapwebdevelopment.com" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="Mobile Self-Checkout - Scannly" />
+    <meta property="og:description"        content="Eliminate standing in lines forever. Check into your favorite retailer through the app, scan the items in your cart using your phone, and check out all in one place." />
+    <meta property="og:image"              content="assets/images/facebook_feature-image.png" />
+    <meta name="application-name"        content="Scannly">
+    <meta property="og:site_name"        content="Scannly">
+    
+    <!-- Twitter Metadata -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@snapwebdev">
+    <meta name="twitter:image" content="assets/images/twitter_feature-image.png">
+    <meta name="twitter:description" content="Eliminate standing in lines forever. Check into your favorite retailer through the app, scan the items in your cart using your phone, and check out all in one place.">
+    <meta name="twitter:title" content="Mobile Self-Checkout - Scannly">
+
+
+    {{content-for "head"}}
+      <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+      <link rel="stylesheet" href="{{rootURL}}assets/frontend.css">
+    {{content-for "head-footer"}}
+
+  </head>
+  <body>
+    {{content-for "body"}}
+      <script src="{{rootURL}}assets/vendor.js"></script>
+      <script src="{{rootURL}}assets/frontend.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbjcOu_3FTIKe1uZheZ52brtsLMo6nJo&libraries=places"></script>
+
+    {{content-for "body-footer"}}
+  </body>
+</html>

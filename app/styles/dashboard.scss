@@ -1,0 +1,376 @@
+html, body {
+	height:100%;
+	width:100%;
+}
+
+#dashboard{
+	width: 100vw;
+	height: 100vh;
+		display: flex;
+	flex-direction: column;
+	background-color: #EEF4F9;
+	box-shadow: 1px 15px 23px 0 rgba(77,112,161,0.52);
+}
+#dashboard-container{
+	height: 100%;
+
+	.sidebar{
+		position: relative;
+	    float: left;
+	    height: 100%;
+		width: 220px;
+		background-color: #FDFEFE;
+		box-shadow: 1px 5px 10px 0 #D9E4EC;
+		#dashboard-account{
+			padding-top:46px;
+			padding-left:43px;
+			font-family: GothamRounded-Book;
+			font-size: 16px;
+			font-weight: 300;
+			line-height: 19px;
+			color: #8CA0B3;
+		}
+		#dashboard-links{
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			#dashboard-dot-image{
+				flex:2;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			#sidebar-links {
+				flex: 3;
+				#links{
+					display: flex;
+					flex-direction: column;
+					a {
+						white-space:nowrap;
+						font-family: GothamRounded-Book;
+						font-size: 14px;
+						letter-spacing: -0.5px;
+						font-weight: 300;
+						line-height: 18px;
+						color: #8CA0B3;
+						text-decoration: none;
+						padding-bottom: 15px;
+					}
+				}
+			}
+		}
+	}
+	.receipt-content{
+		flex:9;
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.receipt-row{
+			width:96%;
+			margin:2%;
+			transition: max-height 1s;
+			background-color: #FFFFFF;
+			box-shadow: -3px 2px 2px 0 rgba(119,151,178,0.16);
+			.receipt-info-container{
+				padding:20px;
+				display: flex;
+				flex-direction: column;
+				.active{
+					max-height:400px !important;
+					opacity:1 !important;
+				}
+				.receipt-details{
+					transition: all 0.3s ease;
+				    -webkit-transition: all 0.3s ease;
+				    -moz-transition: all 0.3s ease;
+				    opacity: 0;
+					max-height:0px;
+/*					.receipt-detail-products{
+						max-height: 0;
+						line-height: 0;
+						color:black;
+
+					}*/
+					.receipt-details-container{
+						display: flex;
+						flex-direction: row;
+						width: 100%;
+						.receipt-detail-items{
+							flex:1;
+							display: flex;
+							flex-direction: column;
+							.item-list{
+								display: flex;
+								flex-direction: row;
+								div p{
+									font-family: GothamRounded-Book;
+									font-size: 13px;
+									font-weight: 300;
+									line-height: 16px;
+									color: #475F75;
+									margin-top:10px;
+									margin-bottom:10px;
+								}
+								.receipt-details-productname{
+									flex:3;
+									color:black;
+
+								}
+								.receipt-details-productquantity{
+									flex: 1;
+									color:black;
+									p{
+										text-align:center;
+									}
+
+
+								}
+								.receipt-details-productprice{
+									flex: 1;
+									color:black;
+																	p{
+										text-align:center;
+									}
+
+								}
+							}
+						}
+						.receipt-detail-subtotal{
+							flex: 1;
+							display: flex;
+							flex-direction: column;
+							text-align:right;
+						}
+
+					}
+				}
+
+
+				.receipt-store-price{
+					display:flex;
+					flex-direction: row;
+					margin-bottom: 20px;
+					.receipt-store{
+						flex: 1;
+						.store-name{
+							font-family: GothamRounded-Book;
+							font-size: 16px;
+							font-weight: 300;
+							line-height: 19px;
+							color: #697B8C;
+							margin:0;
+						}
+						.store-address{
+							font-family: GothamRounded-Book;
+							font-size: 13px;
+							font-weight: 300;
+							line-height: 16px;
+							color: #8CA0B3 !important;
+							padding-top:6px;
+							color:black;
+							margin:0;
+						}
+					}
+					.receipt-price{
+						flex:1;
+						text-align: right;
+
+						.price-total{
+							font-size: 26px;
+							color: #4EBBE3;
+							line-height: 30px;
+							margin:0;
+						}
+					}
+				}
+				.receipt-date-expand{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					.receipt-date{
+						flex: 1;
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						p{
+							padding-left: 5px;
+							font-family: GothamRounded-Book;
+							font-size: 14px;
+							font-weight: 300;
+							line-height: 17px;
+							color: #8CA0B3;
+						}
+					}
+					.active .receipt-expand .image-expand{
+						content:url('/assets/images/receipt-shrink.png');
+					}
+					.receipt-expand{
+						flex: 1;
+						text-align: right;
+						.image-expand{
+							content:url('/assets/images/receipt-expand.png');
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+.price-title{
+	font-family: GothamRounded-Book;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 25px;
+	color: #8CA0B3;
+	margin:0;
+
+}
+	.price-total-small{
+		font-size: 14px;
+		color: #4EBBE3;
+		line-height: 24px;
+		margin:0;
+	}
+
+
+
+#dashboard-top{
+	display: flex;
+	flex-direction: row;
+	min-height: 80px;
+	background-color: #FFFFFF;
+}
+
+
+
+#dashboard-button{
+	flex: 1;
+	min-width: 220px;
+	background-color: #FD7577;
+	display: flex;
+	flex-direction: row;
+	#dashboard-hamburger{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex:1;
+		background-color: #ED5858;
+		background-size: cover;
+	}
+	#dashboard-hamburger-title{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex:2;
+		#hamburger-title{
+			font-family: GothamRounded-Medium;
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 19px;
+			color: #FFFFFF;
+		}
+	}
+
+}
+#dashboard-push{
+	flex: 8;
+}
+
+#dashboard-dots {
+	margin-top: -17px;
+}
+
+#dashboard-user{
+	flex:1;
+	min-width: 220px;
+	display: flex;
+	flex-direction: row;
+	#dashboard-user-info{
+		flex: 3;
+		#dashboard-hello{
+			font-family: "Avenir Next";
+			font-size: 15px;
+			padding-top: 5px;
+			line-height: 12px;
+			color: #8CA0B3;
+			margin-bottom: 5px;
+		}
+		#dashboard-uid{
+			font-family: "Avenir Next";
+			font-size: 18px;
+			line-height: 25px;
+			color: #556677;
+			margin-top: 5px;
+		}
+	}
+	#dashboard-user-picture{
+		flex: 1;
+
+	}
+}
+
+.info-container{
+	width:100%;
+	height:100%;
+	.info-row-container{
+		display: flex;
+		flex-direction: row;
+		padding:100px;
+		.info-row{
+			padding-right:50px;
+			display: flex;
+			flex-direction: column;
+
+			.info-submit{
+				width: 166px;
+				height: 40px;
+				margin-top:20px;
+				margin-left: 10px;
+				background: linear-gradient(135deg, #FD7577 0%, #D53434 100%);
+				box-shadow: 0 7px 10px 0 rgba(51,118,255,0.44);
+
+				border: 1px solid rgba(32,53,128,0.16);
+				border-radius: 3px;
+				font-family: GothamRounded-Book;
+				font-size: 16px;
+				font-weight: 500;
+				line-height: 19px;
+				color: #FFFFFF;
+
+
+			}
+			.statement{
+				width: 330px;
+				font-family: GothamRounded-Book;
+				font-size: 14px;
+				font-weight: 300;
+				line-height: 21px;
+				color: #BDBEBE;
+			}
+			input:not([type=submit]):not([type=file]) {
+/*				opacity: 0.25;
+*/				font-family: GothamRounded-Book;
+				font-size: 14px;
+				font-weight: 300;
+				line-height: 17px;
+				color: #000000;
+				width:330px;
+			}
+			input:disabled{
+				background:rgba(137,138,139,0.26);
+			}
+		}
+	}
+
+}
+.successful-save{
+	color:green;
+	position:fixed;
+	padding-right: 150px;
+	display:none;
+}
+

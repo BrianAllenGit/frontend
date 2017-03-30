@@ -1,0 +1,43 @@
+<section id="dashboard">
+    <div id="dashboard-top">
+        <div id="dashboard-button">
+            <div id="dashboard-hamburger">
+                {{dashboard-toggle}}
+            </div>
+            <div id="dashboard-hamburger-title">
+                <p id="hamburger-title">Dashboard</p>
+            </div>
+        </div>
+        <div id="dashboard-push">
+        </div>
+        <div id="dashboard-user">
+            <div id="dashboard-user-info">
+                <p id="dashboard-hello">Hello</p>
+                <p id="dashboard-uid">{{model.firstname}}!</p>
+            </div>
+            <div id="dashboard-user-picture">
+                <img src={{model.profileimage}} height="80px" width="80px"/>
+            </div>
+        </div>
+    </div>
+    <div id="dashboard-container">
+        <div class="sidebar">
+            <p id="dashboard-account">Account</p>
+            <div id="dashboard-links">
+                <div id="dashboard-dot-image">
+                    <img id="dashboard-dots" src="/assets/images/dashboard-line.png" width="1px" height="76px"/>
+                </div>
+                <div id="sidebar-links">
+                    <div id="links">
+                        {{#link-to "portal.pastorders"}}Past Orders{{/link-to}}
+                        {{#link-to "portal.about"}}Settings{{/link-to}}
+                        <a href="" {{action 'signOut'}}>Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="receipt-content">
+            {{outlet}}
+        </div>
+    </div>
+</section>

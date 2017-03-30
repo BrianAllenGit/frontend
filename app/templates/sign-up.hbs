@@ -1,0 +1,120 @@
+{{navigation-bar session=session}}
+<section id="signup" class="slanted-background">
+    <div class="signup-form">
+      <h1>Sign up</h1>
+      <form {{  action 'signUp' on='submit'}}>
+          <div class="signup-form-fields">
+                <div>
+                    <!-- Email -->
+                    {{input type='email'
+                        id='email'
+                        class='input-box' 
+                        value=email 
+                        placeholder='Email' 
+                        required="required"}}<br />
+                    <!-- First name -->
+                    {{input type='text' 
+                        id='firstName'
+                        class='input-box' 
+                        pattern="[a-zA-z]+" 
+                        value=firstName placeholder='First Name' 
+                        required="required" 
+                        title="Please only use alphabetic characters"}}<br />
+                    <!-- Last Name -->
+                    {{input type='text' 
+                        id='lastName'
+                        class='input-box' 
+                        pattern="[a-zA-z]+" 
+                        value=lastName 
+                        placeholder='Last Name' 
+                        required="required" 
+                        title="Please only use alphabetic characters"}}<br />
+                    <!-- Phone -->
+                    {{input-mask type='tel' 
+                        id='phone'
+                        class='input-box' 
+                        mask="(999) 999-9999" 
+                        type="tel" 
+                        pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" 
+                        value=phone 
+                        placeholder='Phone' }}
+                </div>
+                <div>
+                    <!-- Address -->
+                    {{place-autocomplete-field
+                        value= address
+                        placeholder="Address"
+                        reqjkred="required"
+                        disable=false
+                        handlerController= this
+                        inputClass= 'input-box address-box'
+                        focusOutCallback='done' 
+                        placeChangedCallback='placeChanged' 
+                        restrictions=restrictions
+                    }}
+                    {{!-- 
+                    {{input type='text' 
+                        id='address'
+                        class='input-box' 
+                        value=address 
+                        placeholder='Address' 
+                        required="required"}} --}}
+                    <!-- Password -->
+                    {{input type='password' 
+                        id="password"
+                        class='input-box'
+                        pattern=".{6,}"   
+                        value=password 
+                        placeholder='Password' 
+                        required="required" 
+                        title="Please enter a password that's at least 6 characters long"}}<br />
+                    <!-- Password Confirm -->
+                    {{input type='password' 
+                        id="passwordConfirm" 
+                        class='input-box' 
+                        pattern=".{6,}" 
+                        value=passwordConfirm 
+                        placeholder='Password Confirm' 
+                        required="required" 
+                        title="Please enter a password that's at least 6 characters long"}}<br />
+                    <p>
+                        We take your privacy very seriously and 
+                        will never share you personal information ever. 
+                    </p>
+                </div>
+                
+          </div>
+          {{input type='submit' class='button-gradient-square' value="Sign up" placeholder='Signup'}}
+      </form>
+
+
+      <div class="signup-form-terms">
+        Terms & Conditions
+      </div>
+    </div>
+</section>
+{{main-footer}}
+
+
+{{!-- <section class="cover fullscreen image-bg overlay">
+    <div class="container v-align-transform">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="feature bordered text-center">
+                    <h4 class="uppercase">Register Here</h4>
+                    <form class="text-left">
+                        {{input type='text' class='form-control' value=email placeholder='Email Address' }}
+                        {{input type='password' class='form-control' value=password placeholder='Password' }}
+                        <input type="password" placeholder="Confirm Password" />
+                        <input type="submit" {{action 'signUp'}} value="Register" />
+                    </form>
+                    <p class="mb0">By signing up, you agree to our
+                        <a href="#">Terms Of Use</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section> --}}

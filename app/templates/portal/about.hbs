@@ -1,0 +1,32 @@
+<div class="successful-save">Save Successful!</div>
+
+<div class="info-container">
+	<form {{action "saveInfo" on="submit"}}>
+		<div class="info-row-container">
+			<div class="info-row">
+				{{input type='email' class='input-box' id="email" value=email placeholder=model.email disabled=isGoogleLogin}}
+				{{input type='text' maxlength="16" pattern="[A-Za-z]{1,16}" title="Alphabet characters only" class='input-box' id="firstname" value=firstname placeholder=model.firstname }}
+				{{input type='text' maxlength="16" pattern="[A-Za-z]{1,16}" title="Alphabet characters only" class='input-box' id="lastname" value=lastname placeholder=model.lastname }}
+				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder=model.phone }}
+				{{input type='submit' class="info-submit" value="Save Info"}}				
+			</div>
+
+			<div class="info-row">
+				{{!-- {{input type='text' class='input-box' id="address" value=address placeholder=model.address }} --}}
+				{{place-autocomplete-field
+				value= address
+				placeholder=model.address
+				disable=false
+				handlerController= this
+				inputClass= 'input-box address-box'
+				focusOutCallback='done' 
+				placeChangedCallback='placeChanged' 
+				restrictions=restrictions
+				}}
+				{{input type='password' class='input-box' pattern=".{6,}" title="Six or more characters" id="password" value=password placeholder="Password" disabled=isGoogleLogin}}
+				{{input type='password' class='input-box' pattern=".{6,}" title="Six or more characters" id="confirmpassword" value=password placeholder="Confirm Password" disabled=isGoogleLogin}}
+				<span class="statement">We take your privacy very seriously and<br>will never share your information ever</span>
+			</div>
+		</div>
+	</form>
+</div>

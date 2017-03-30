@@ -1,0 +1,61 @@
+$small-laptop-screen: 1024px
+$tablet: 870px
+$mobile: 425px
+
+#hero
+  height: 600px
+  display: flex
+  padding-top: 50px
+  flex-direction: row
+  @media screen and (max-width: $small-laptop-screen)
+    height: 450px
+  @media screen and (max-width: $tablet)
+    flex-direction: column
+    height: 600px
+    padding-top: 0px
+  @media screen and (max-width: $mobile)
+    height: 650px
+
+  .hero-product-image
+    background-image: url(images/phonewave-section-1.png)
+    background-repeat: no-repeat
+    background-position: bottom
+    background-size: contain
+    display: unset
+    flex: 1
+    @media screen and (max-width: $tablet)
+      display: none
+       //order: 1
+       //flex: 2.5
+       //background-size: cover
+    //@media screen and (max-width: $mobile)
+    //  background-position: bottom
+    //  background-size: cover
+    //  flex: 2
+
+  .hero-product-descr
+    background-image: url(images/phonewave-section-2.png)
+    background-repeat: no-repeat
+    background-position: bottom
+    background-size: contain
+    padding-top: 50px
+    flex: 1
+    @media screen and (max-width: $tablet)
+       order: 0
+       background-size: cover
+       padding-top: 10px
+    @media screen and (max-width: #mobile)
+       background-size: contain
+       padding-top: 20px
+
+    .hero-product-descr-text
+      width: 60%
+      @media screen and (max-width: $small-laptop-screen)
+        width: 80%
+      @media screen and (max-width: $tablet)
+        margin: auto
+        padding-top: 40px
+      @media screen and (max-width: $mobile)
+        padding-top: 5px
+        width: 85%
+        

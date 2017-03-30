@@ -1,0 +1,176 @@
+@font-face
+  font-family: "GothamRounded-Light"
+  src: url('fonts/GothamRounded-Light.eot')
+  src: local('GothamRounded-Light')
+  src: url('fonts/GothamRounded-Light.otf') format('opentype')
+
+@font-face
+  font-family: "GothamRounded-Book"
+  src: url('fonts/GothamRoundedBook_21018.eot')
+  src: local('GothamRounded-Book')
+  src: url('fonts/GothamRoundedBook_21018.otf') format('opentype')
+
+@font-face
+  font-family: "GothamRounded-Medium"
+  src: url('fonts/GothamRoundedMedium_21022.eot')
+  src: local('GothamRounded-Medium')
+  src: url('fonts/GothamRoundedMedium_21022.otf') format('opentype')
+
+@font-face
+  font-family: "GothamRounded-Bold"
+  src: url('fonts/GothamRoundedBold_21016.eot')
+  src: local('GothamRounded-Bold')
+  src: url('fonts/GothamRoundedBold_21016.otf') format('opentype')
+
+
+
+@import navbar
+@import footer
+@import hero
+@import subscribe
+@import coming-soon
+@import login
+@import signup
+@import dashboard
+@import resetpassword
+
+$gotham-book: GothamRounded-Book
+$white: #FFFFFF
+$font-size-default: 14px
+
+//Screen sizes
+$large-laptop-screen: 1440px
+$small-laptop-screen: 1024px
+$tablet: 870px
+$mobile: 425px
+
+body, html
+  width: 100%
+  height: 100%
+  margin: 0
+  font-family: $gotham-book
+  -webkit-font-smoothing: antialiased
+  line-height: 23px
+  color: $white
+  font-size: $font-size-default
+  letter-spacing: .26px
+  background-image: url(images/gradient-rainbow-background.png)
+  background-size: cover
+  background-color: #5293CC
+  background-repeat: no-repeat
+  @media screen and (max-width: $tablet)
+    background-image: url(images/gradient-rainbow-background-mobile.png)
+    background-size: cover
+    line-height: 28px !important
+    font-size: 17px
+  
+.rainbow-background
+  background-image: url(images/gradient-rainbow-background.png)
+  background-size: 100%
+
+.slanted-background
+  background-image: url(images/background-slope.svg)
+  background-repeat: no-repeat
+  background-size: cover
+  background-position: bottom
+
+h3
+  line-height: 40px
+  font-family: GothamRounded-Medium
+  font-size: 30px
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus 
+  outline: none
+
+a
+  text-decoration: none
+  font-family: GothamRounded-Medium
+
+.button-mobile-download
+  width: 200px
+  margin: 15px 0px 0px 0px
+
+.logo-small
+  width: 200px
+
+.input-gradient-round
+  border: 1px solid #FD7577
+  border-radius: 38px
+  height: 40px
+  width: 120px
+  padding: 0px 20px 0px 20px
+  margin-right: 10px
+  font-family: GothamRounded-Book
+  color: #606060
+  letter-spacing: 0.24px
+
+.button-gradient-round
+  background-image: linear-gradient(-135deg, #FD7577 0%, #D53333 100%)
+  box-shadow: 0 8px 11px 0 rgba(248,108,110,0.36)
+  border-radius: 38px
+  border: none
+  padding: 12px 20px 12px 20px
+  font-family: GothamRounded-Bold
+  font-size: 15px
+  text-transform: uppercase
+  color: #FFFFFF
+  letter-spacing: 0.3px
+
+.button-gradient-square
+  background-image: linear-gradient(-135deg, #FD7577 0%, #D53333 100%)
+  border: none
+  box-shadow: 0 5px 11px 0 rgba(51,118,255,0.44)
+  border-radius: 3px
+  font-family: GothamRounded-Book
+  font-size: 16px
+  color: #FFFFFF
+  letter-spacing: 0.3px
+  padding: 10px 10px 10px 10px
+
+.alert
+  display: flex
+  border-radius: 100px
+  background: #d3d3d3
+  padding: 5px 5px 5px 5px
+
+.alert-label
+  text-transform: uppercase
+  font-family: GothamRounded-Bold
+  margin-right: 10px
+  background: #d3d3d3
+  border-radius: 100px
+  padding: 0px 10px 0px 10px
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+
+.alert-blue
+  background: rgba(63,79,246,0.36)
+
+  .alert-label
+    background: #007EE5
+
+
+.mobile-hide
+  @media screen and (max-width: $tablet)
+    display: none
+
+.mobile-unhide
+  display: none
+  @media screen and (max-width: $tablet)
+    display: unset
+
+.input-box
+  padding: 15px
+  margin-bottom: 20px
+  background-color: #f8fafc
+  border: 1.5px solid #d8dde8
+  border-radius: 3px
+  font-family: GothamRounded-Light
+  font-size: 14px
+  letter-spacing: 0.26px
+

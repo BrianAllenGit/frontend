@@ -1,0 +1,32 @@
+//Screen sizes
+$large-laptop-screen: 1440px
+$small-laptop-screen: 1024px
+$tablet: 870px
+$mobile: 425px
+
+#coming-soon
+  background-image: url(images/phonewave-full.png)
+  background-size: contain
+  background-repeat: no-repeat
+  background-position: bottom
+  text-align: center
+  height: 500px
+  @media screen and (max-width: $tablet)
+  	height: 600px
+  @media screen and (max-width: $mobile)
+  	height: 400px
+  
+  h1
+  	line-height: 40px
+  	font-family: GothamRounded-Medium
+  	font-size: 30px
+
+#coming-soon-container
+  width: 40%
+  margin: auto
+  @media screen and (max-width: $mobile)
+  	width: 80%
+  	margin-top: 50px
+  @media screen and (max-width: $tablet)
+  	width: 80%
+  	margin-top: 50px
