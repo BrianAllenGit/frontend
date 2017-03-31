@@ -15,3 +15,7 @@
 /libpeerconnection.log
 npm-debug.log*
 testem.log
+certbot.log
+server.csr
+server.key
+server.pass.key
