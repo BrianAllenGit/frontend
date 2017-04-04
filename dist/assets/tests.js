@@ -763,6 +763,28 @@ define('frontend/tests/unit/helpers/check-receiptid-test.jshint.lint-test', ['ex
     assert.ok(true, 'unit/helpers/check-receiptid-test.js should pass jshint.');
   });
 });
+define('frontend/tests/unit/models/ssl-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForModel)('ssl', 'Unit | Model | ssl', {
+    // Specify the other units that are required for this test.
+    needs: []
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var model = this.subject();
+    // let store = this.store();
+    assert.ok(!!model);
+  });
+});
+define('frontend/tests/unit/models/ssl-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/models/ssl-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/ssl-test.js should pass jshint.');
+  });
+});
 define('frontend/tests/unit/routes/coming-soon-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('route:coming-soon', 'Unit | Route | coming soon', {
