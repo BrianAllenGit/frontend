@@ -94,7 +94,8 @@ nav.nav-mobile {
 .mobile-nav-links {
   list-style: none;
   color: #fff;
-  padding-left: 0px; }
+  padding-left: 0px;
+  margin: 0px; }
   .mobile-nav-links li {
     border-bottom: solid 1px #fff;
     padding-left: 40px;
