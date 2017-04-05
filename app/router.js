@@ -19,7 +19,13 @@ Router.map(function() {
     });
   });
   this.route('coming-soon');
-  this.route('businessLogin');
+  this.route('business', function() {
+    this.route('login');
+    this.route('sign-up');
+    this.authenticatedRoute('portal', function() {
+      this.authenticatedRoute('pastorders');
+    });
+  });
 });
 
 export default Router;

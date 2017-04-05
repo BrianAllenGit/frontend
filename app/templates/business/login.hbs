@@ -1,0 +1,52 @@
+{{navigation-bar session=session}}
+<section id="login" class="slated-background">
+    <div class="login-descr">
+        <div class="alert alert-blue">
+            <div class="alert-label">
+                Business
+            </div>
+            <div class="alert-message">
+                Scannly is free for business owners. Give your customers the best experience
+            </div>
+        </div>
+
+        <h3 id="tagline">No more lines, forever.</h3>
+        Never wait in another line. Scan the items in your cart<br />
+        and check out with your phone
+    </div>
+
+    {{business-login session=session}}
+
+</section>
+{{main-footer}}
+
+
+{{!-- <section class="cover fullscreen image-bg overlay">
+    <div class="container v-align-transform">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
+                <div class="feature bordered text-center">
+                    <h4 class="uppercase">Login Here</h4>
+                    <form class="text-left">
+                        {{input type='text' class='form-control mb0' value=email placeholder='Email Address' }}
+                        {{input type='password' class='form-control mb0' value=password placeholder='Password' }}
+                        {{#if session.isWorking}}
+                            <input type="submit" {{action 'signIn' 'password'}} value="Login" disabled='disabled' />
+                        {{else}}
+                            <input type="submit" {{action 'signIn' 'password'}} value="Login" />
+                        {{/if}}
+                    </form>
+
+                    <button class="loginBtn loginBtn--google" {{action "googleSignIn"}}>
+                      Login with Google
+                    </button>  
+                                        <p class="mb0">Forgot your password?
+                        <a href="#">Click Here To Reset</a>
+                    </p>       
+                    </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section> --}}
