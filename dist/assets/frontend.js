@@ -973,6 +973,7 @@ define('frontend/router', ['exports', 'ember', 'frontend/config/environment'], f
       });
     });
     this.route('coming-soon');
+    this.route('businessLogin');
   });
 
   exports['default'] = Router;
@@ -988,6 +989,9 @@ define('frontend/routes/application', ['exports', 'ember'], function (exports, _
       }
     }
   });
+});
+define('frontend/routes/business-login', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('frontend/routes/coming-soon', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({});
@@ -1162,6 +1166,9 @@ define('frontend/services/torii', ['exports', 'torii/services/torii'], function 
 define("frontend/templates/application", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "23S6IOv4", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/application.hbs" } });
 });
+define("frontend/templates/business-login", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template({ "id": "vlWUhMBB", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business-login.hbs" } });
+});
 define("frontend/templates/coming-soon", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "4rv3QF1m", "block": "{\"statements\":[[\"append\",[\"helper\",[\"navigation-bar\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\\n\"],[\"open-element\",\"section\",[]],[\"static-attr\",\"id\",\"coming-soon\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"coming-soon-container\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Coming Soon\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\tWe're still working on getting all of our web pages up and running, and you should see something here soon. \\n\\t\\tIn the meantime, feel free to sign up or sign in through the \"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"https://goo.gl/forms/N3aCtcfnSDwLJ5AM2\"],[\"static-attr\",\"class\",\"mobile-unhide\"],[\"static-attr\",\"target\",\"_blank\"],[\"flush-element\"],[\"text\",\"app\"],[\"close-element\"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"/login\"],[\"static-attr\",\"class\",\"mobile-hide\"],[\"flush-element\"],[\"text\",\"web portal\"],[\"close-element\"],[\"text\",\". \\n\\t\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\\n\"],[\"append\",[\"unknown\",[\"main-footer\"]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/coming-soon.hbs" } });
 });
@@ -1242,7 +1249,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+676297a9"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+88ac7096"});
 }
 
 /* jshint ignore:end */

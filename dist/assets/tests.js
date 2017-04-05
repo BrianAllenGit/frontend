@@ -544,6 +544,15 @@ define('frontend/tests/routes/application.jshint.lint-test', ['exports'], functi
     assert.ok(true, 'routes/application.js should pass jshint.');
   });
 });
+define('frontend/tests/routes/business-login.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/business-login.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/business-login.js should pass jshint.');
+  });
+});
 define('frontend/tests/routes/coming-soon.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -783,6 +792,27 @@ define('frontend/tests/unit/models/ssl-test.jshint.lint-test', ['exports'], func
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/models/ssl-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business-login-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:business-login', 'Unit | Route | business login', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business-login-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business-login-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business-login-test.js should pass jshint.');
   });
 });
 define('frontend/tests/unit/routes/coming-soon-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
