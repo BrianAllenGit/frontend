@@ -4,6 +4,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({  
   firebaseApp: Ember.inject.service(),
+  router: Ember.inject.service('-routing'),
   restrictions : { country: "US" }, 
 
   actions: {
@@ -56,7 +57,7 @@ export default Ember.Controller.extend({
             this.get('email'), 
             this.get('password')).then((userResponse) => {
 
-              var new_user = this.store.createRecord('user', {
+              var new_user = this.get('store').createRecord('user', {
                   id: userResponse.uid,
                   address: this.get('address'),
                   email: this.get('email'),
