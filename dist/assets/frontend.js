@@ -58,6 +58,116 @@ define('frontend/components/business-login', ['exports', 'ember'], function (exp
     }
   });
 });
+define('frontend/components/business-signup', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Component.extend({
+    firebaseApp: _ember['default'].inject.service(),
+    restrictions: { country: "US" },
+    store: _ember['default'].inject.service(),
+
+    actions: {
+      signUp: function signUp() {
+        var _this = this;
+
+        var controller = this;
+        var auth = this.get('firebaseApp').auth();
+        var store = this.get('store');
+        var email = _ember['default'].$('#email');
+        var firstName = _ember['default'].$('#firstName');
+        var lastName = _ember['default'].$('#lastName');
+        var phone = _ember['default'].$('#phone');
+        //var address =  Ember.$('.address-box');
+        var password = _ember['default'].$('#password');
+        var confirm_password = _ember['default'].$('#passwordConfirm');
+        var nameRegex = /[A-Za-z]+$/i;
+        var phoneRegex = /\([2-9][0-9]{2}\) [0-9]{3}-[0-9]{4}/i;
+        var emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+        //Ensure password and passwordConfirm the same value
+        if (password.val() !== confirm_password.val()) {
+          document.getElementById('passwordConfirm').setCustomValidity("Passwords Don't Match");
+          return;
+        }
+
+        //Ensure email address is formatted properly
+        if (!emailRegex.test(email.val())) {
+          document.getElementById('email').setCustomValidity("Please format email properly");
+          return;
+        }
+
+        //Ensure firstName address is formatted properly
+        if (!nameRegex.test(firstName.val())) {
+          document.getElementById('firstName').setCustomValidity("Please only user alphabetic characters");
+          return;
+        }
+
+        //Ensure lastName address is formatted properly
+        if (!nameRegex.test(lastName.val())) {
+          document.getElementById('lastName').setCustomValidity("Please only user alphabetic characters");
+          return;
+        }
+
+        //Ensure phone is formatted properly
+        if (!phoneRegex.test(phone.val())) {
+          document.getElementById('phone').setCustomValidity("Please format phone number like so (###) ###-####");
+          return;
+        }
+
+        auth.createUserWithEmailAndPassword(this.get('email'), this.get('password')).then(function (userResponse) {
+
+          var new_business_user = store.createRecord('businessuser', {
+            id: userResponse.uid,
+            email: _this.get('email'),
+            firstname: _this.get('firstName'),
+            lastname: _this.get('lastName'),
+            timestamp: new Date().getTime()
+          });
+
+          new_business_user.save().then(
+          //On Success
+          function () {
+            controller.get('session').open('firebase', {
+              provider: 'password',
+              email: controller.get('email') || '',
+              password: controller.get('password') || ''
+            }).then(function () {
+              var businessStore = controller.store.createRecord('store', {
+                name: controller.get('storename'),
+                address: controller.get('address'),
+                owner: userResponse.uid,
+                logo: "https://firebasestorage.googleapis.com/v0/b/Scannly-3e9e2.appspot.com/o/default%2Fdefault.jpg?alt=media&token=cd9ce031-e068-4eca-a2be-7eb0c9aba2ce",
+                phone: controller.get('phone'),
+                timestamp: new Date().getTime()
+              });
+              businessStore.save().then(function () {
+                controller.get('router').transitionTo('business.portal');
+              }, function (error) {
+                alert(error);
+              });
+            }, function (error) {
+              alert(error);
+            });
+          },
+          //On Failure
+          function (response) {
+            console.log(response);
+          });
+        });
+      },
+      placeChanged: function placeChanged(place) {
+        this.set('placeJSON', JSON.stringify(place, undefined, 2));
+        if (place.adr_address) {
+          var regexp = /(<span(?: \w+="[^"]+")*(?: \w+="[^"]+")*>([^<]*)<\/span>)/g,
+              fullAddress = place.adr_address.replace(regexp, "$2");
+          this.set('cleanFullAddress', fullAddress);
+        }
+        this.set('fullAddress', place.adr_address);
+      },
+      done: function done() {
+        console.log("done");
+      }
+    }
+  });
+});
 define('frontend/components/dashboard-toggle', ['exports', 'ember'], function (exports, _ember) {
 	exports['default'] = _ember['default'].Component.extend({
 		didInsertElement: function didInsertElement() {
@@ -342,6 +452,7 @@ define('frontend/controllers/portal/receipts', ['exports', 'ember'], function (e
 define('frontend/controllers/sign-up', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Controller.extend({
     firebaseApp: _ember['default'].inject.service(),
+    router: _ember['default'].inject.service('-routing'),
     restrictions: { country: "US" },
 
     actions: {
@@ -394,7 +505,7 @@ define('frontend/controllers/sign-up', ['exports', 'ember'], function (exports, 
 
         auth.createUserWithEmailAndPassword(this.get('email'), this.get('password')).then(function (userResponse) {
 
-          var new_user = _this.store.createRecord('user', {
+          var new_user = _this.get('store').createRecord('user', {
             id: userResponse.uid,
             address: _this.get('address'),
             email: _this.get('email'),
@@ -1035,11 +1146,7 @@ define('frontend/routes/business', ['exports', 'ember'], function (exports, _emb
   exports['default'] = _ember['default'].Route.extend({});
 });
 define('frontend/routes/business/index', ['exports', 'ember'], function (exports, _ember) {
-	exports['default'] = _ember['default'].Route.extend({
-		beforeModel: function beforeModel() {
-			this.transitionTo('business.portal.pastorders');
-		}
-	});
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('frontend/routes/business/login', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({});
@@ -1048,7 +1155,11 @@ define('frontend/routes/business/portal', ['exports', 'ember'], function (export
   exports['default'] = _ember['default'].Route.extend({});
 });
 define('frontend/routes/business/portal/index', ['exports', 'ember'], function (exports, _ember) {
-  exports['default'] = _ember['default'].Route.extend({});
+	exports['default'] = _ember['default'].Route.extend({
+		beforeModel: function beforeModel() {
+			this.transitionTo('business.portal.pastorders');
+		}
+	});
 });
 define('frontend/routes/business/portal/pastorders', ['exports', 'ember'], function (exports, _ember) {
 		exports['default'] = _ember['default'].Route.extend({
@@ -1266,13 +1377,16 @@ define("frontend/templates/business/portal/pastorders", ["exports"], function (e
   exports["default"] = Ember.HTMLBars.template({ "id": "rEKtLMlF", "block": "{\"statements\":[[\"append\",[\"helper\",[\"log\"],[[\"get\",[\"model\"]]],null],false],[\"text\",\"\\n\\n\"],[\"block\",[\"each\"],[[\"get\",[\"model\"]]],null,6]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-expand\"],[\"flush-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"class\",\"image-expand\"],[\"static-attr\",\"width\",\"10.5px\"],[\"static-attr\",\"height\",\"6px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"block\",[\"link-to\"],[\"portal.pastorders.show\",[\"get\",[\"receipt\",\"receiptid\"]]],null,0]],\"locals\":[]},{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-expand\"],[\"flush-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"class\",\"image-expand\"],[\"static-attr\",\"width\",\"10.5px\"],[\"static-attr\",\"height\",\"6px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"block\",[\"link-to\"],[\"portal.pastorders\"],null,2]],\"locals\":[]},{\"statements\":[[\"text\",\"                                    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"item-list\"],[\"flush-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productname\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productname\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productquantity\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productquantity\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productprice\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"$\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productprice\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"receiptdetails\"]},{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-container\"],[\"flush-element\"],[\"text\",\" \\n                            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-detail-items\"],[\"flush-element\"],[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"activeModel\",\"receiptdetails\"]]],null,4],[\"text\",\"                            \"],[\"close-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-detail-subtotal\"],[\"flush-element\"],[\"text\",\"\\n                                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-subtotal\"],[\"flush-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Subtotal\"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total-small\"],[\"flush-element\"],[\"text\",\"$1.50\"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-tax\"],[\"flush-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total-small\"],[\"flush-element\"],[\"text\",\"$.49\"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"close-element\"],[\"text\",\"\\n                            \"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-row\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-info-container\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-store-price\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-store\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"store-name\"],[\"flush-element\"],[\"append\",[\"unknown\",[\"receipt\",\"storename\"]],false],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"store-address\"],[\"flush-element\"],[\"append\",[\"unknown\",[\"receipt\",\"storeaddress\"]],false],[\"text\",\"helo\"],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-price\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Order total\"],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total\"],[\"flush-element\"],[\"text\",\"$ \"],[\"append\",[\"unknown\",[\"receipt\",\"total\"]],false],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"dynamic-attr\",\"class\",[\"concat\",[\"receipt-details \",[\"helper\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null],\"active\",\"\"],null],\" \"]]],[\"flush-element\"],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null]],null,5],[\"text\",\"            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/receipt-line.png\"],[\"static-attr\",\"width\",\"100%\"],[\"static-attr\",\"height\",\"1px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-date-expand\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-date\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/dashboard-calendar.png\"],[\"static-attr\",\"width\",\"18px\"],[\"static-attr\",\"height\",\"18px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"format-epoch\"],[[\"get\",[\"receipt\",\"timestamp\"]]],null],false],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null]],null,3,1],[\"text\",\"            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"receipt\"]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/pastorders.hbs" } });
 });
 define("frontend/templates/business/sign-up", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "miCVAmf/", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/sign-up.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "qgv49xMz", "block": "{\"statements\":[[\"append\",[\"helper\",[\"navigation-bar\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\"],[\"open-element\",\"section\",[]],[\"static-attr\",\"id\",\"signup\"],[\"static-attr\",\"class\",\"slanted-background\"],[\"flush-element\"],[\"text\",\"\\n    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form\"],[\"flush-element\"],[\"text\",\"\\n      \"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Sign up\"],[\"close-element\"],[\"text\",\"\\n \\t\\t\"],[\"append\",[\"helper\",[\"business-signup\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\\n\\n      \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form-terms\"],[\"flush-element\"],[\"text\",\"\\n        Terms & Conditions\\n      \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\"],[\"append\",[\"unknown\",[\"main-footer\"]],false],[\"text\",\"\\n\\n\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/sign-up.hbs" } });
 });
 define("frontend/templates/coming-soon", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "4rv3QF1m", "block": "{\"statements\":[[\"append\",[\"helper\",[\"navigation-bar\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\\n\"],[\"open-element\",\"section\",[]],[\"static-attr\",\"id\",\"coming-soon\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"coming-soon-container\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Coming Soon\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\tWe're still working on getting all of our web pages up and running, and you should see something here soon. \\n\\t\\tIn the meantime, feel free to sign up or sign in through the \"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"https://goo.gl/forms/N3aCtcfnSDwLJ5AM2\"],[\"static-attr\",\"class\",\"mobile-unhide\"],[\"static-attr\",\"target\",\"_blank\"],[\"flush-element\"],[\"text\",\"app\"],[\"close-element\"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"/login\"],[\"static-attr\",\"class\",\"mobile-hide\"],[\"flush-element\"],[\"text\",\"web portal\"],[\"close-element\"],[\"text\",\". \\n\\t\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\\n\"],[\"append\",[\"unknown\",[\"main-footer\"]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/coming-soon.hbs" } });
 });
 define("frontend/templates/components/business-login", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "ElSuGtfu", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-form\"],[\"flush-element\"],[\"text\",\"\\n    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box\"],[\"flush-element\"],[\"text\",\"\\n\\n        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-label\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Sign In\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n                \"],[\"block\",[\"link-to\"],[\"sign-up\"],null,1],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n\\n        \"],[\"open-element\",\"button\",[]],[\"static-attr\",\"class\",\"button-gradient-square\"],[\"modifier\",[\"action\"],[[\"get\",[null]],\"googleSignIn\"]],[\"flush-element\"],[\"text\",\" \\n            Sign in with \"],[\"open-element\",\"b\",[]],[\"flush-element\"],[\"text\",\"Google\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n        \"],[\"open-element\",\"form\",[]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"input-box\",[\"get\",[\"email\"]],\"Email\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"password\",\"input-box\",[\"get\",[\"password\"]],\"Password\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n        \\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-form-submit\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"remember-me\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"checkbox\"],[\"static-attr\",\"name\",\"remember-me\"],[\"static-attr\",\"class\",\"checkbox\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"label\",[]],[\"static-attr\",\"for\",\"remember-me\"],[\"flush-element\"],[\"text\",\"\\n                        Remember Me\\n                    \"],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"submit\"],[\"static-attr\",\"class\",\"button-gradient-square\"],[\"static-attr\",\"value\",\"Sign In →\"],[\"modifier\",[\"action\"],[[\"get\",[null]],\"signIn\",\"password\"]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n\\n        \"],[\"block\",[\"link-to\"],[\"passwordreset\"],null,0],[\"text\",\" \\n        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-terms\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"#\"],[\"flush-element\"],[\"text\",\"Terms & Conditions\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\\n\"],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"Forgot your password?\"]],\"locals\":[]},{\"statements\":[[\"text\",\"Sign Up\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/business-login.hbs" } });
+});
+define("frontend/templates/components/business-signup", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template({ "id": "JRqV5PhC", "block": "{\"statements\":[[\"open-element\",\"form\",[]],[\"modifier\",[\"action\"],[[\"get\",[null]],\"signUp\"],[[\"on\"],[\"submit\"]]],[\"flush-element\"],[\"text\",\"\\n  \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form-fields\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"comment\",\" Email \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"value\",\"placeholder\",\"required\"],[\"email\",\"email\",\"input-box\",[\"get\",[\"email\"]],\"Email\",\"required\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"comment\",\" First name \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"pattern\",\"value\",\"placeholder\",\"required\",\"title\"],[\"text\",\"firstName\",\"input-box\",\"[a-zA-z]+\",[\"get\",[\"firstName\"]],\"First Name\",\"required\",\"Please only use alphabetic characters\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"comment\",\" Last Name \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"pattern\",\"value\",\"placeholder\",\"required\",\"title\"],[\"text\",\"lastName\",\"input-box\",\"[a-zA-z]+\",[\"get\",[\"lastName\"]],\"Last Name\",\"required\",\"Please only use alphabetic characters\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n            \"],[\"comment\",\" Business Name \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"pattern\",\"value\",\"placeholder\",\"required\",\"title\"],[\"text\",\"storename\",\"input-box\",\"[a-zA-z0-9 -'!]+\",[\"get\",[\"storename\"]],\"Business Name\",\"required\",\"Please only use alphabetic characters\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \\n        \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n        \\t\"],[\"comment\",\" Business Phone \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input-mask\"],null,[[\"type\",\"id\",\"class\",\"mask\",\"type\",\"pattern\",\"value\",\"placeholder\"],[\"tel\",\"phone\",\"input-box\",\"(999) 999-9999\",\"tel\",\"[\\\\(]\\\\d{3}[\\\\)][\\\\s]\\\\d{3}[\\\\-]\\\\d{4}\",[\"get\",[\"phone\"]],\"Business Phone\"]]],false],[\"text\",\"\\n\\n            \"],[\"comment\",\" Business Address \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"place-autocomplete-field\"],null,[[\"value\",\"placeholder\",\"required\",\"disable\",\"handlerController\",\"inputClass\",\"focusOutCallback\",\"placeChangedCallback\",\"restrictions\"],[[\"get\",[\"address\"]],\"Business Address\",\"required\",false,[\"get\",[null]],\"input-box address-box\",\"done\",\"placeChanged\",[\"get\",[\"restrictions\"]]]]],false],[\"text\",\"\\n            \\n\"],[\"text\",\"            \"],[\"comment\",\" Password \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"pattern\",\"value\",\"placeholder\",\"required\",\"title\"],[\"password\",\"password\",\"input-box\",\".{6,}\",[\"get\",[\"password\"]],\"Password\",\"required\",\"Please enter a password that's at least 6 characters long\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"comment\",\" Password Confirm \"],[\"text\",\"\\n            \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"id\",\"class\",\"pattern\",\"value\",\"placeholder\",\"required\",\"title\"],[\"password\",\"passwordConfirm\",\"input-box\",\".{6,}\",[\"get\",[\"passwordConfirm\"]],\"Password Confirm\",\"required\",\"Please enter a password that's at least 6 characters long\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"\\n                We take your privacy very seriously and \\n                will never share you personal information ever. \\n            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n        \\n  \"],[\"close-element\"],[\"text\",\"\\n  \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"submit\",\"button-gradient-square\",\"Sign up\",\"Signup\"]]],false],[\"text\",\"\\n\"],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/business-signup.hbs" } });
 });
 define("frontend/templates/components/dashboard-toggle", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "/RVAYXfl", "block": "{\"statements\":[[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/dashboard-hamburger.png\"],[\"static-attr\",\"id\",\"dashboard-toggle\"],[\"static-attr\",\"height\",\"16px\"],[\"static-attr\",\"width\",\"16px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/dashboard-toggle.hbs" } });
@@ -1351,7 +1465,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+63d1d439"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+6ddbe545"});
 }
 
 /* jshint ignore:end */

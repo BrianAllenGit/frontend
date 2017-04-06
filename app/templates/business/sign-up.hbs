@@ -1,1 +1,37 @@
-{{outlet}}
+{{navigation-bar session=session}}
+<section id="signup" class="slanted-background">
+    <div class="signup-form">
+      <h1>Sign up</h1>
+ 		{{business-signup session=session}}
+
+
+      <div class="signup-form-terms">
+        Terms & Conditions
+      </div>
+    </div>
+</section>
+{{main-footer}}
+
+
+{{!-- <section class="cover fullscreen image-bg overlay">
+    <div class="container v-align-transform">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="feature bordered text-center">
+                    <h4 class="uppercase">Register Here</h4>
+                    <form class="text-left">
+                        {{input type='text' class='form-control' value=email placeholder='Email Address' }}
+                        {{input type='password' class='form-control' value=password placeholder='Password' }}
+                        <input type="password" placeholder="Confirm Password" />
+                        <input type="submit" {{action 'signUp'}} value="Register" />
+                    </form>
+                    <p class="mb0">By signing up, you agree to our
+                        <a href="#">Terms Of Use</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section> --}}

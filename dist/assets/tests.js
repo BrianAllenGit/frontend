@@ -27,6 +27,15 @@ define('frontend/tests/components/business-login.jshint.lint-test', ['exports'],
     assert.ok(true, 'components/business-login.js should pass jshint.');
   });
 });
+define('frontend/tests/components/business-signup.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/business-signup.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/business-signup.js should pass jshint.');
+  });
+});
 define('frontend/tests/components/dashboard-toggle.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -459,6 +468,44 @@ define('frontend/tests/integration/components/business-login-test.jshint.lint-te
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/business-login-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/integration/components/business-signup-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('business-signup', 'Integration | Component | business signup', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': '207w7gmP',
+      'block': '{"statements":[["append",["unknown",["business-signup"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'N5+k8wPd',
+      'block': '{"statements":[["text","\\n"],["block",["business-signup"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/business-signup-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/business-signup-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/business-signup-test.js should pass jshint.');
   });
 });
 define('frontend/tests/integration/components/dashboard-toggle-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
