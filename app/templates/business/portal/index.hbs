@@ -1,1 +1,3 @@
-{{outlet}}
+{{#each model as |store|}}
+	{{#link-to "business.portal.store" store.uid }}{{store.name}}{{/link-to}}
+{{/each}}

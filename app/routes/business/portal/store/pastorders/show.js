@@ -13,6 +13,6 @@ export default Ember.Route.extend({
 	    this._super(...arguments);
 	    Ember.set(controller, 'receipt', model.receipt);
 	    Ember.set(controller, 'receiptdetails', model.receiptdetails);
-	    this.controllerFor('portal.pastorders').set('activeModel', model);
+	    this.controllerFor('business.portal.store.pastorders').set('activeModel', model);
 	  }
 });

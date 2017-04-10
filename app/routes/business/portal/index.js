@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	// beforeModel() {
-	//   	this.transitionTo('business.portal.pastorders');
-	//   }
+	model(){    
+		return this.store.query('store', {orderBy: 'owner', equalTo: this.get('session.currentUser.uid')} )
+	}
 });

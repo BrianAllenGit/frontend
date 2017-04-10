@@ -698,7 +698,7 @@ define('frontend/tests/routes/business/portal/index.jshint.lint-test', ['exports
   QUnit.module('JSHint | routes/business/portal/index.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/business/portal/index.js should pass jshint.');
+    assert.ok(false, 'routes/business/portal/index.js should pass jshint.\nroutes/business/portal/index.js: line 5, col 108, Missing semicolon.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/pastorders.jshint.lint-test', ['exports'], function (exports) {
@@ -725,7 +725,7 @@ define('frontend/tests/routes/business/portal/store/pastorders.jshint.lint-test'
   QUnit.module('JSHint | routes/business/portal/store/pastorders.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal/store/pastorders.js should pass jshint.\nroutes/business/portal/store/pastorders.js: line 24, col 31, \'error\' is defined but never used.\n\n1 error');
+    assert.ok(false, 'routes/business/portal/store/pastorders.js should pass jshint.\nroutes/business/portal/store/pastorders.js: line 22, col 31, \'error\' is defined but never used.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/store/pastorders/show.jshint.lint-test', ['exports'], function (exports) {
