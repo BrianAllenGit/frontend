@@ -390,8 +390,8 @@ footer {
   margin-top: 50px;
   color: #585858; }
   #signup .signup-form {
-    width: 60%;
-    height: 500px;
+    width: 35%;
+    height: 570px;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     position: relative; }
@@ -422,10 +422,11 @@ footer {
         flex: 1; }
       #signup .signup-form .signup-form-fields p {
         margin: 0px 0px 0px 0px;
-        color: #BDBEBE;
+        color: #717171;
         font-size: 11px;
         line-height: 20px;
-        width: 100; }
+        width: 100;
+        margin-bottom: 20px; }
 
 html, body {
   height: 100%;
