@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['login-form'],
 	router: Ember.inject.service('-routing'), 
     actions: {
     signIn(provider) {

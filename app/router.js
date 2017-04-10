@@ -12,7 +12,7 @@ Router.map(function() {
   this.route('passwordreset');
   this.authenticatedRoute('portal', function() {
     this.authenticatedRoute('pastorders', function() {
-      this.route('show', {path : '/:receipt_id'});
+      this.authenticatedRoute('show', {path : '/:receipt_id'});
     });
   	this.authenticatedRoute('about', function (){
       this.authenticatedRoute('edit');
@@ -23,7 +23,11 @@ Router.map(function() {
     this.route('login');
     this.route('sign-up');
     this.authenticatedRoute('portal', function() {
-      this.authenticatedRoute('pastorders');
+      this.authenticatedRoute('store', { path : '/:store_id' }, function (){
+        this.authenticatedRoute('pastorders', function() {
+            this.route('show', {path : '/:receipt_id'});
+          });
+      });
     });
   });
 });

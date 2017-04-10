@@ -611,6 +611,15 @@ define('frontend/tests/models/receiptdetails.jshint.lint-test', ['exports'], fun
     assert.ok(true, 'models/receiptdetails.js should pass jshint.');
   });
 });
+define('frontend/tests/models/store.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | models/store.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/store.js should pass jshint.');
+  });
+});
 define('frontend/tests/models/user.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -689,7 +698,7 @@ define('frontend/tests/routes/business/portal/index.jshint.lint-test', ['exports
   QUnit.module('JSHint | routes/business/portal/index.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/business/portal/index.js should pass jshint.');
+    assert.ok(false, 'routes/business/portal/index.js should pass jshint.\nroutes/business/portal/index.js: line 5, col 108, Missing semicolon.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/pastorders.jshint.lint-test', ['exports'], function (exports) {
@@ -699,6 +708,33 @@ define('frontend/tests/routes/business/portal/pastorders.jshint.lint-test', ['ex
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(false, 'routes/business/portal/pastorders.js should pass jshint.\nroutes/business/portal/pastorders.js: line 20, col 23, \'error\' is defined but never used.\n\n1 error');
+  });
+});
+define('frontend/tests/routes/business/portal/store.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/business/portal/store.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/business/portal/store.js should pass jshint.');
+  });
+});
+define('frontend/tests/routes/business/portal/store/pastorders.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/business/portal/store/pastorders.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'routes/business/portal/store/pastorders.js should pass jshint.\nroutes/business/portal/store/pastorders.js: line 22, col 31, \'error\' is defined but never used.\n\n1 error');
+  });
+});
+define('frontend/tests/routes/business/portal/store/pastorders/show.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/business/portal/store/pastorders/show.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/business/portal/store/pastorders/show.js should pass jshint.');
   });
 });
 define('frontend/tests/routes/business/sign-up.jshint.lint-test', ['exports'], function (exports) {
@@ -1097,6 +1133,90 @@ define('frontend/tests/unit/routes/business/portal/pastorders-test.jshint.lint-t
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/business/portal/pastorders-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:/business/portal/store', 'Unit | Route | /business/portal/store', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business/portal/store-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business/portal/store-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/index-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:/business/portal/store/index', 'Unit | Route | /business/portal/store/index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/index-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business/portal/store/index-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business/portal/store/index-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/pastorders-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:/business/portal/store/pastorders', 'Unit | Route | /business/portal/store/pastorders', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/pastorders-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business/portal/store/pastorders-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business/portal/store/pastorders-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/pastorders/show-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:/business/portal/store/pastorders/show', 'Unit | Route | /business/portal/store/pastorders/show', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/pastorders/show-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business/portal/store/pastorders/show-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business/portal/store/pastorders/show-test.js should pass jshint.');
   });
 });
 define('frontend/tests/unit/routes/business/sign-up-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {

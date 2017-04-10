@@ -1,38 +1,35 @@
-<div class="login-form">
-    <div class="login-box">
+<div class="login-box">
 
-        <div class="login-box-label">
-            <div>
-                <h1>Sign In</h1>
-            </div>
-            <div>
-                {{#link-to 'sign-up'}}Sign Up{{/link-to}}
-            </div>
+    <div class="login-box-label">
+        <div>
+            <h1>Sign In</h1>
         </div>
-
-        <button class="button-gradient-square" {{action "googleSignIn"}}> 
-            Sign in with <b>Google</b>
-        </button><br />
-
-        <form>
-            {{input type='text' class='input-box' value=email placeholder='Email' }}<br />
-            {{input type='password' class='input-box' value=password placeholder='Password' }}<br />
-        
-            <div class="login-box-form-submit">
-                <div class="remember-me">
-                    <input type="checkbox" name="remember-me" class="checkbox"/>
-                    <label for="remember-me">
-                        Remember Me
-                    </label>
-                </div>
-                <input type="submit" class="button-gradient-square" value="Sign In &rarr;" {{action 'signIn' 'password'}}>
-            </div>
-        </form>
-
-        {{#link-to "passwordreset"}}Forgot your password?{{/link-to}} 
-        <div class="login-box-terms">
-            <a href="#">Terms & Conditions</a>
+        <div>
+            {{#link-to 'sign-up'}}Sign Up{{/link-to}}
         </div>
     </div>
 
+    <button class="button-gradient-square" {{action "googleSignIn"}}> 
+        Sign in with <b>Google</b>
+    </button><br />
+
+    <form>
+        {{input type='text' class='input-box' value=email placeholder='Email' }}<br />
+        {{input type='password' class='input-box' value=password placeholder='Password' }}<br />
+    
+        <div class="login-box-form-submit">
+            <div class="remember-me">
+                <input type="checkbox" name="remember-me" class="checkbox"/>
+                <label for="remember-me">
+                    Remember Me
+                </label>
+            </div>
+            <input type="submit" class="button-gradient-square" value="Sign In &rarr;" {{action 'signIn' 'password'}}>
+        </div>
+    </form>
+
+    {{#link-to "passwordreset"}}Forgot your password?{{/link-to}} 
+    <div class="login-box-terms">
+        <a href="#">Terms & Conditions</a>
+    </div>
 </div>
