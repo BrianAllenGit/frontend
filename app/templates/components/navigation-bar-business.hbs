@@ -1,0 +1,87 @@
+<nav class="nav-desktop">
+    {{#link-to 'index'}}<img class="nav-logo" src="/assets/images/scannly-logo-business-white.png"/>{{/link-to}}
+    <ul>
+        <li>
+            <a href="https://goo.gl/forms/N3aCtcfnSDwLJ5AM2" target="_blank">
+                Download the Business App
+            </a>
+        </li>
+        {{#if session.isAuthenticated}}
+            <li>
+                {{#link-to 'business.portal'}}Go To Account{{/link-to}}           
+            </li>
+            <li>
+                <a href="" {{action 'signOut'}}>Sign Out</a>            
+            </li>
+        {{else}}
+            <li>        
+                {{#link-to 'business.login'}}Sign In{{/link-to}}
+            </li>
+        {{/if}}
+        <li>
+            <a href="/coming-soon" class="nav-link-highlighted">
+                Sign up for free
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+<div id="nav-mobile-links" class="nav-links">
+    <ul class="mobile-nav-links">
+        <li> 
+            <a href="https://goo.gl/forms/N3aCtcfnSDwLJ5AM2" target="_blank">
+                Download the App
+            </a>
+        </li>
+        <li>
+            <a href="/coming-soon" class="nav-link-highlighted">
+                Try Scannly Business
+            </a>
+        </li>
+    </ul>
+</div>
+<nav class="nav-mobile">
+    <img class="nav-logo" src="/assets/images/scannly-logo-white.png" onclick="location.href='/';"/>
+    <img id="hamburger" class="hamburger-icon" src="/assets/images/hamburger.svg"/>
+</nav>
+
+
+
+
+{{!-- <div class="nav-container">
+    <nav class="absolute transparent">
+        <div class="nav-bar">
+            <div class="module left">
+                <a href="/">
+                    <img src="/assets/images/logo_copy_light.png" alt="Scannly" class="logo logo-light"/>
+                    <img src="/assets/images/logo_copy_dark.png" alt="Scannly" class="logo logo-dark"/>
+                </a>
+            </div>
+            <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+                <i class="ti-menu"></i>
+            </div>
+            <div class="module-group right">
+                <div class="module left">
+                    <ul class="menu"> --}}
+                       {{!--  {{#if session.isAuthenticated}}
+                            <li>
+                                {{#link-to "portal.index" class='site-header'}}Go to portal{{/link-to}}
+                            </li>
+                            <li>
+                                <a href="" {{action 'signOut'}}>Sign Out</a>
+                            </li>
+                        {{else}}
+                        <li>
+                            {{#link-to "sign-up"}}Sign Up{{/link-to}}                         
+                        </li>
+                        <li>
+                            {{#link-to "login"}}Login{{/link-to}}
+                        </li>                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div> --}}
+
