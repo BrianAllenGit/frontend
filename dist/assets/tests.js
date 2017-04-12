@@ -63,6 +63,15 @@ define('frontend/tests/components/dashboard-toggle.jshint.lint-test', ['exports'
     assert.ok(true, 'components/dashboard-toggle.js should pass jshint.');
   });
 });
+define('frontend/tests/components/infinite-table.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/infinite-table.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/infinite-table.js should pass jshint.\ncomponents/infinite-table.js: line 10, col 17, \'$\' is not defined.\ncomponents/infinite-table.js: line 10, col 39, \'$\' is not defined.\ncomponents/infinite-table.js: line 10, col 62, \'$\' is not defined.\n\n3 errors');
+  });
+});
 define('frontend/tests/components/loading-animation.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -656,6 +665,44 @@ define('frontend/tests/integration/components/dashboard-toggle-test.jshint.lint-
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/dashboard-toggle-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/integration/components/infinite-table-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('infinite-table', 'Integration | Component | infinite table', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': '89Z0VDnN',
+      'block': '{"statements":[["append",["unknown",["infinite-table"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'MdYPRC21',
+      'block': '{"statements":[["text","\\n"],["block",["infinite-table"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/infinite-table-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/infinite-table-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/infinite-table-test.js should pass jshint.');
   });
 });
 define('frontend/tests/integration/components/loading-animation-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {

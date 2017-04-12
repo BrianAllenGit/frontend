@@ -46,7 +46,7 @@ export default Ember.Route.extend({
     	this.activeModel = this.controller.get('activeModel');
       return true; // Bubble the didTransition event
     },
-    loadmore(){
+    loadMore(){
     	this.get('firebaseUtil').next(this.get('referenceId'), 25);
 
     	// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { 
