@@ -1,14 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-		activeModel: "",
+	activeModel: "",
+	loaded: "0",
+	productList: "",
+	storeId: "",
+	referenceId: 10,
 	model(params, transition){    
 		 
 			 var store_id = transition.params["business.portal.store"].store_id;
+			 return this.get('firebaseUtil').query('product', this.get('referenceId'), "products/", {orderBy: 'storeid', equalTo: store_id, limitToFirst: 25 });
 
-			 this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { this.controller.set('product', product); });
+			 // this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { 
+			 // 	this.controller.set('product', product); 
+			 // });
 
-			 return this.store.findRecord('store', store_id);//.then((store) => { this.controller.set('store', store); });
+			 //return this.store.findRecord('store', store_id);//.then((store) => { this.controller.set('store', store); });
 			// return Ember.RSVP.hash({
 			// 	receipt: this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 50 }),
 
@@ -31,12 +38,6 @@ export default Ember.Route.extend({
 			// });
 
 	},
-	setupController(controller, model) {
-	    this._super(...arguments);
-	    //Ember.set(controller, 'receipt', model.receipt);
-	   	//Ember.set(controller, 'store', model.store);
-
-	  },
 	  actions: {
     didTransition() {
     	if (this.controller.get('activeModel') === this.activeModel){
@@ -46,7 +47,13 @@ export default Ember.Route.extend({
       return true; // Bubble the didTransition event
     },
     loadmore(){
-    	alert('hi');
+    	this.get('firebaseUtil').next(this.get('referenceId'), 25);
+
+    	// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { 
+    	// 	this.get('productList').pushObjects(product);
+    	// 	this.controller.set('product', productList); 
+    	// });
+
     }
   }
 });

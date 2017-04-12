@@ -13,9 +13,10 @@
 	  	<td>{{#link-to 'business.portal.store.products.add' model.id}}+{{/link-to}} Add product</td>
 	  </tr>
 	  {{outlet}}
-	{{#if product}}
+	  {{log productList}}
+	{{#if model}}
 
-		{{#each product as |product|}}
+		{{#each model as |product|}}
 		<tr>
 		    <td>{{input type='text' class='' value=name placeholder=product.name }}</td>
 		    <td>{{input type='text' class='' value=sku placeholder=product.sku }}</td>
@@ -27,7 +28,7 @@
 		{{/each}}
 	{{/if}}
 	</table>
-	{{#unless product}}
+	{{#unless model}}
 				{{loading-animation}}
 	{{/unless}}
 	<h1 style="color:black"> More? </h1>

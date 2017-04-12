@@ -267,6 +267,14 @@ define('frontend/components/dashboard-toggle', ['exports', 'ember'], function (e
 		}
 	});
 });
+define('frontend/components/firebase-ui-auth', ['exports', 'emberfire-utils/components/firebase-ui-auth'], function (exports, _emberfireUtilsComponentsFirebaseUiAuth) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsComponentsFirebaseUiAuth['default'];
+    }
+  });
+});
 define('frontend/components/input-mask', ['exports', 'ember-cli-mask/components/input-mask'], function (exports, _emberCliMaskComponentsInputMask) {
   exports['default'] = _emberCliMaskComponentsInputMask['default'];
 });
@@ -960,6 +968,20 @@ define('frontend/initializers/export-application-global', ['exports', 'ember', '
     initialize: initialize
   };
 });
+define('frontend/initializers/firebase-util', ['exports', 'emberfire-utils/initializers/firebase-util'], function (exports, _emberfireUtilsInitializersFirebaseUtil) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsInitializersFirebaseUtil['default'];
+    }
+  });
+  Object.defineProperty(exports, 'initialize', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsInitializersFirebaseUtil.initialize;
+    }
+  });
+});
 define('frontend/initializers/initialize-torii-callback', ['exports', 'torii/redirect-handler'], function (exports, _toriiRedirectHandler) {
   exports['default'] = {
     name: 'torii-callback',
@@ -1360,16 +1382,20 @@ define('frontend/routes/business/portal/store/pastorders/show', ['exports', 'emb
 define("frontend/routes/business/portal/store/products", ["exports", "ember"], function (exports, _ember) {
 		exports["default"] = _ember["default"].Route.extend({
 				activeModel: "",
+				loaded: "0",
+				productList: "",
+				storeId: "",
+				referenceId: 10,
 				model: function model(params, transition) {
-						var _this = this;
 
 						var store_id = transition.params["business.portal.store"].store_id;
+						return this.get('firebaseUtil').query('product', this.get('referenceId'), "products/", { orderBy: 'storeid', equalTo: store_id, limitToFirst: 25 });
 
-						this.store.query('product', { orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then(function (product) {
-								_this.controller.set('product', product);
-						});
+						// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => {
+						// 	this.controller.set('product', product);
+						// });
 
-						return this.store.findRecord('store', store_id); //.then((store) => { this.controller.set('store', store); });
+						//return this.store.findRecord('store', store_id);//.then((store) => { this.controller.set('store', store); });
 						// return Ember.RSVP.hash({
 						// 	receipt: this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 50 }),
 
@@ -1391,11 +1417,6 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 						//     	 store: this.store.findRecord('store', store_id)
 						// });
 				},
-				setupController: function setupController(controller, model) {
-						this._super.apply(this, arguments);
-						//Ember.set(controller, 'receipt', model.receipt);
-						//Ember.set(controller, 'store', model.store);
-				},
 				actions: {
 						didTransition: function didTransition() {
 								if (this.controller.get('activeModel') === this.activeModel) {
@@ -1405,7 +1426,12 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 								return true; // Bubble the didTransition event
 						},
 						loadmore: function loadmore() {
-								alert('hi');
+								this.get('firebaseUtil').next(this.get('referenceId'), 25);
+
+								// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => {
+								// 	this.get('productList').pushObjects(product);
+								// 	this.controller.set('product', productList);
+								// });
 						}
 				}
 		});
@@ -1562,6 +1588,22 @@ define('frontend/services/ajax', ['exports', 'ember-ajax/services/ajax'], functi
 define('frontend/services/firebase-app', ['exports', 'emberfire/services/firebase-app'], function (exports, _emberfireServicesFirebaseApp) {
   exports['default'] = _emberfireServicesFirebaseApp['default'];
 });
+define('frontend/services/firebase-ui', ['exports', 'emberfire-utils/services/firebase-ui'], function (exports, _emberfireUtilsServicesFirebaseUi) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsServicesFirebaseUi['default'];
+    }
+  });
+});
+define('frontend/services/firebase-util', ['exports', 'emberfire-utils/services/firebase-util'], function (exports, _emberfireUtilsServicesFirebaseUtil) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsServicesFirebaseUtil['default'];
+    }
+  });
+});
 define('frontend/services/firebase', ['exports', 'emberfire/services/firebase'], function (exports, _emberfireServicesFirebase) {
   exports['default'] = _emberfireServicesFirebase['default'];
 });
@@ -1623,7 +1665,7 @@ define("frontend/templates/business/portal/store/pastorders/show", ["exports"], 
   exports["default"] = Ember.HTMLBars.template({ "id": "ZS6odUqV", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/pastorders/show.hbs" } });
 });
 define("frontend/templates/business/portal/store/products", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "kh1srwY4", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"dont-flex\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"table\",[]],[\"static-attr\",\"style\",\"width:100%; color:black\"],[\"flush-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"caption\",[]],[\"flush-element\"],[\"text\",\"Your Products\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Name\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"SKU\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Price\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Quantity\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Barcode\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t  \\t\"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"block\",[\"link-to\"],[\"business.portal.store.products.add\",[\"get\",[\"model\",\"id\"]]],null,3],[\"text\",\" Add product\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"get\",[\"product\"]]],null,2],[\"text\",\"\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"unless\"],[[\"get\",[\"product\"]]],null,0],[\"text\",\"\\t\"],[\"open-element\",\"h1\",[]],[\"static-attr\",\"style\",\"color:black\"],[\"flush-element\"],[\"text\",\" More? \"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"button\",[]],[\"modifier\",[\"action\"],[[\"get\",[null]],\"loadmore\"]],[\"flush-element\"],[\"text\",\"click\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"\\t\\t\\t\\t\"],[\"append\",[\"unknown\",[\"loading-animation\"]],false],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"name\"]],[\"get\",[\"product\",\"name\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"sku\"]],[\"get\",[\"product\",\"sku\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"price\"]],[\"get\",[\"product\",\"price\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"quantity\"]],[\"get\",[\"product\",\"quantity\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"tax\"]],[\"get\",[\"product\",\"tax\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"barcode\"]],[\"get\",[\"product\",\"barcode\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t  \\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"product\"]},{\"statements\":[[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"product\"]]],null,1]],\"locals\":[]},{\"statements\":[[\"text\",\"+\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "gPrulCis", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"dont-flex\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"table\",[]],[\"static-attr\",\"style\",\"width:100%; color:black\"],[\"flush-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"caption\",[]],[\"flush-element\"],[\"text\",\"Your Products\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Name\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"SKU\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Price\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Quantity\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Barcode\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t  \\t\"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"block\",[\"link-to\"],[\"business.portal.store.products.add\",[\"get\",[\"model\",\"id\"]]],null,3],[\"text\",\" Add product\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\\t  \"],[\"append\",[\"helper\",[\"log\"],[[\"get\",[\"productList\"]]],null],false],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"get\",[\"model\"]]],null,2],[\"text\",\"\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"unless\"],[[\"get\",[\"model\"]]],null,0],[\"text\",\"\\t\"],[\"open-element\",\"h1\",[]],[\"static-attr\",\"style\",\"color:black\"],[\"flush-element\"],[\"text\",\" More? \"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"open-element\",\"button\",[]],[\"modifier\",[\"action\"],[[\"get\",[null]],\"loadmore\"]],[\"flush-element\"],[\"text\",\"click\"],[\"close-element\"],[\"text\",\"\\n\\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"\\t\\t\\t\\t\"],[\"append\",[\"unknown\",[\"loading-animation\"]],false],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"name\"]],[\"get\",[\"product\",\"name\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"sku\"]],[\"get\",[\"product\",\"sku\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"price\"]],[\"get\",[\"product\",\"price\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"quantity\"]],[\"get\",[\"product\",\"quantity\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"tax\"]],[\"get\",[\"product\",\"tax\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"barcode\"]],[\"get\",[\"product\",\"barcode\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t  \\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"product\"]},{\"statements\":[[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"model\"]]],null,1]],\"locals\":[]},{\"statements\":[[\"text\",\"+\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products.hbs" } });
 });
 define("frontend/templates/business/portal/store/products/add", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "fAKxeBlX", "block": "{\"statements\":[[\"append\",[\"helper\",[\"add-product\"],null,[[\"model\"],[[\"get\",[\"model\"]]]]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products/add.hbs" } });
@@ -1696,6 +1738,14 @@ define('frontend/torii-adapters/application', ['exports', 'ember', 'emberfire/to
 define('frontend/torii-providers/firebase', ['exports', 'emberfire/torii-providers/firebase'], function (exports, _emberfireToriiProvidersFirebase) {
   exports['default'] = _emberfireToriiProvidersFirebase['default'];
 });
+define('frontend/utils/has-limited', ['exports', 'emberfire-utils/utils/has-limited'], function (exports, _emberfireUtilsUtilsHasLimited) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberfireUtilsUtilsHasLimited['default'];
+    }
+  });
+});
 /* jshint ignore:start */
 
 
@@ -1732,7 +1782,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+1cf912b0"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+9ff3c1aa"});
 }
 
 /* jshint ignore:end */
