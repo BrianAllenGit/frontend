@@ -23,6 +23,7 @@ Router.map(function() {
     this.route('login');
     this.route('sign-up');
     this.authenticatedRoute('portal', function() {
+      this.authenticatedRoute('createstore');
       this.authenticatedRoute('store', { path : '/:store_id' }, function (){
         this.authenticatedRoute('pastorders', function() {
             this.route('show', {path : '/:receipt_id'});

@@ -1,0 +1,28 @@
+<div class="successful-save">Save Successful!</div>
+
+<div class="info-container">
+	<form {{action "createStore" on="submit"}}>
+		<div class="info-row-container">
+			<div class="info-row">
+				{{input type='text' class='input-box' id="name" value=name placeholder="Store Name"}}
+				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder="Phone Number" }}
+				{{input type='submit' class="info-submit" value="Create Store"}}				
+			</div>
+
+			<div class="info-row">
+				{{!-- {{input type='text' class='input-box' id="address" value=address placeholder=model.address }} --}}
+				{{place-autocomplete-field
+				value= address
+				placeholder=model.address
+				disable=false
+				handlerController= this
+				inputClass= 'input-box address-box'
+				focusOutCallback='done' 
+				placeChangedCallback='placeChanged' 
+				restrictions=restrictions
+				}}
+				<span class="statement">We take your privacy very seriously and<br>will never share your information ever</span>
+			</div>
+		</div>
+	</form>
+</div>
