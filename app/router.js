@@ -30,6 +30,7 @@ Router.map(function() {
           });
         this.authenticatedRoute('products', function() {
             this.authenticatedRoute('show', {path : '/:product_id'});
+            this.authenticatedRoute('add');
         });
       });
     });

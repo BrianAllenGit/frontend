@@ -18,6 +18,15 @@ define('frontend/tests/app.jshint.lint-test', ['exports'], function (exports) {
     assert.ok(true, 'app.js should pass jshint.');
   });
 });
+define('frontend/tests/components/add-product.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/add-product.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/add-product.js should pass jshint.');
+  });
+});
 define('frontend/tests/components/business-login.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -52,6 +61,15 @@ define('frontend/tests/components/dashboard-toggle.jshint.lint-test', ['exports'
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'components/dashboard-toggle.js should pass jshint.');
+  });
+});
+define('frontend/tests/components/loading-animation.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/loading-animation.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/loading-animation.js should pass jshint.');
   });
 });
 define('frontend/tests/components/navigation-bar-business.jshint.lint-test', ['exports'], function (exports) {
@@ -450,6 +468,44 @@ define('frontend/tests/helpers/unstub-firebase', ['exports', 'firebase'], functi
     }
   }
 });
+define('frontend/tests/integration/components/add-product-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('add-product', 'Integration | Component | add product', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': 'c4nxWMqv',
+      'block': '{"statements":[["append",["unknown",["add-product"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'UPm+TKzG',
+      'block': '{"statements":[["text","\\n"],["block",["add-product"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/add-product-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/add-product-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/add-product-test.js should pass jshint.');
+  });
+});
 define('frontend/tests/integration/components/business-login-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('business-login', 'Integration | Component | business login', {
@@ -600,6 +656,44 @@ define('frontend/tests/integration/components/dashboard-toggle-test.jshint.lint-
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/dashboard-toggle-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/integration/components/loading-animation-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('loading-animation', 'Integration | Component | loading animation', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': 'MpNOzHBa',
+      'block': '{"statements":[["append",["unknown",["loading-animation"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'WTgZJGCX',
+      'block': '{"statements":[["text","\\n"],["block",["loading-animation"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/loading-animation-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/loading-animation-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/loading-animation-test.js should pass jshint.');
   });
 });
 define('frontend/tests/integration/components/navigation-bar-business-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
@@ -846,7 +940,16 @@ define('frontend/tests/routes/business/portal/store/products.jshint.lint-test', 
   QUnit.module('JSHint | routes/business/portal/store/products.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/business/portal/store/products.js should pass jshint.');
+    assert.ok(false, 'routes/business/portal/store/products.js should pass jshint.\nroutes/business/portal/store/products.js: line 34, col 33, \'model\' is defined but never used.\nroutes/business/portal/store/products.js: line 34, col 21, \'controller\' is defined but never used.\n\n2 errors');
+  });
+});
+define('frontend/tests/routes/business/portal/store/products/add.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/business/portal/store/products/add.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/business/portal/store/products/add.js should pass jshint.');
   });
 });
 define('frontend/tests/routes/business/portal/store/products/show.jshint.lint-test', ['exports'], function (exports) {
@@ -1380,6 +1483,27 @@ define('frontend/tests/unit/routes/business/portal/store/products-test.jshint.li
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/business/portal/store/products-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/products/add-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:business/portal/store/products/add', 'Unit | Route | business/portal/store/products/add', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('frontend/tests/unit/routes/business/portal/store/products/add-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/business/portal/store/products/add-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/business/portal/store/products/add-test.js should pass jshint.');
   });
 });
 define('frontend/tests/unit/routes/business/portal/store/products/show-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {

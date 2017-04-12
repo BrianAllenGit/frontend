@@ -1,1 +1,35 @@
-{{outlet}}
+<div id="dont-flex">
+	<table style="width:100%; color:black">
+	  <caption>Your Products</caption>
+	  <tr>
+	    <th>Name</th>
+	    <th>SKU</th>
+	    <th>Price</th>
+	    <th>Quantity</th>
+	    <th>Tax</th>
+	    <th>Barcode</th>
+	  </tr>
+		<tr>
+	  	<td>{{#link-to 'business.portal.store.products.add' model.id}}+{{/link-to}} Add product</td>
+	  </tr>
+	  {{outlet}}
+	{{#if product}}
+
+		{{#each product as |product|}}
+		<tr>
+		    <td>{{input type='text' class='' value=name placeholder=product.name }}</td>
+		    <td>{{input type='text' class='' value=sku placeholder=product.sku }}</td>
+		    <td>{{input type='text' class='' value=price placeholder=product.price }}</td>
+		    <td>{{input type='text' class='' value=quantity placeholder=product.quantity }}</td>
+		    <td>{{input type='text' class='' value=tax placeholder=product.tax }}</td>
+		    <td>{{input type='text' class='' value=barcode placeholder=product.barcode }}</td>
+	  	</tr>
+		{{/each}}
+	{{/if}}
+	</table>
+	{{#unless product}}
+				{{loading-animation}}
+	{{/unless}}
+	<h1 style="color:black"> More? </h1>
+	<button {{action 'loadmore'}}>click</button>
+	</div>
