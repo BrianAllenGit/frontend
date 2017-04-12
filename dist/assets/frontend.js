@@ -1127,6 +1127,18 @@ define('frontend/models/businessuser', ['exports', 'ember-data'], function (expo
     uid: _emberData['default'].attr('string')
   });
 });
+define('frontend/models/product', ['exports', 'ember-data'], function (exports, _emberData) {
+  exports['default'] = _emberData['default'].Model.extend({
+    barcode: _emberData['default'].attr('string'),
+    name: _emberData['default'].attr('string'),
+    price: _emberData['default'].attr(),
+    quantity: _emberData['default'].attr(),
+    sku: _emberData['default'].attr('string'),
+    storeid: _emberData['default'].attr('string'),
+    tax: _emberData['default'].attr()
+
+  });
+});
 define('frontend/models/receipt', ['exports', 'ember-data'], function (exports, _emberData) {
   exports['default'] = _emberData['default'].Model.extend({
     receiptid: _emberData['default'].attr('string'),
@@ -1198,7 +1210,10 @@ define('frontend/router', ['exports', 'ember', 'frontend/config/environment'], f
         this.authenticatedRoute('createstore');
         this.authenticatedRoute('store', { path: '/:store_id' }, function () {
           this.authenticatedRoute('pastorders', function () {
-            this.route('show', { path: '/:receipt_id' });
+            this.authenticatedRoute('show', { path: '/:receipt_id' });
+          });
+          this.authenticatedRoute('products', function () {
+            this.authenticatedRoute('show', { path: '/:product_id' });
           });
         });
       });
@@ -1308,6 +1323,53 @@ define('frontend/routes/business/portal/store/pastorders/show', ['exports', 'emb
 			this.controllerFor('business.portal.store.pastorders').set('activeModel', model);
 		}
 	});
+});
+define("frontend/routes/business/portal/store/products", ["exports", "ember"], function (exports, _ember) {
+		exports["default"] = _ember["default"].Route.extend({
+				activeModel: "",
+				model: function model(params, transition) {
+						console.log(params);
+						var store_id = transition.params["business.portal.store"].store_id;
+						console.log(store_id);
+						return _ember["default"].RSVP.hash({
+								receipt: this.store.query('product', { orderBy: 'storeid', equalTo: store_id, limitToLast: 50 }),
+
+								// this.store.findRecord('businessuser', this.get('session.currentUser.uid')).then(
+								//      	function(snapshot){
+								//      		return currentRoute.store.query('receipt', {orderBy: 'storeid', equalTo: snapshot.get('storeid') });
+								//      		// .then(
+								//      		// 	function(snapshot){
+								//      		// 		return snapshot;
+								//      		// 	},
+								//      		// 	function(error){
+								//      		// 		console.log(error);
+								//      		// 	});
+								//     	},
+								//     	//On error
+								//     	function(error){
+								//     		console.log(error);
+								//    	}),
+								store: this.store.findRecord('store', store_id)
+						});
+				},
+				setupController: function setupController(controller, model) {
+						this._super.apply(this, arguments);
+						_ember["default"].set(controller, 'receipt', model.receipt);
+						_ember["default"].set(controller, 'store', model.store);
+				},
+				actions: {
+						didTransition: function didTransition() {
+								if (this.controller.get('activeModel') === this.activeModel) {
+										this.controller.set('activeModel', "");
+								}
+								this.activeModel = this.controller.get('activeModel');
+								return true; // Bubble the didTransition event
+						}
+				}
+		});
+});
+define('frontend/routes/business/portal/store/products/show', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Route.extend({});
 });
 define('frontend/routes/business/sign-up', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({});
@@ -1507,13 +1569,19 @@ define("frontend/templates/business/portal/store", ["exports"], function (export
   exports["default"] = Ember.HTMLBars.template({ "id": "0Nz8YWig", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store.hbs" } });
 });
 define("frontend/templates/business/portal/store/index", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "mezI5FRz", "block": "{\"statements\":[[\"block\",[\"link-to\"],[\"business.portal.store.pastorders\",[\"get\",[\"model\",\"id\"]]],null,0],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"uid\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"address\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"name\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"owner\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"phone\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"tax\"]],false],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"Past Orders\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/index.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "/sqWHQgN", "block": "{\"statements\":[[\"block\",[\"link-to\"],[\"business.portal.store.pastorders\",[\"get\",[\"model\",\"id\"]]],null,1],[\"text\",\"\\n\"],[\"block\",[\"link-to\"],[\"business.portal.store.products\",[\"get\",[\"model\",\"id\"]]],null,0],[\"text\",\"\\n\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"uid\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"address\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"name\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"owner\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"phone\"]],false],[\"close-element\"],[\"text\",\"\\n\"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"model\",\"tax\"]],false],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"Products\"]],\"locals\":[]},{\"statements\":[[\"text\",\"Past Orders\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/index.hbs" } });
 });
 define("frontend/templates/business/portal/store/pastorders", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "x5vxZgrt", "block": "{\"statements\":[[\"append\",[\"helper\",[\"log\"],[[\"get\",[\"activeModel\"]]],null],false],[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"model\",\"receipt\"]]],null,6]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-expand\"],[\"flush-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"class\",\"image-expand\"],[\"static-attr\",\"width\",\"10.5px\"],[\"static-attr\",\"height\",\"6px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"block\",[\"link-to\"],[\"business.portal.store.pastorders.show\",[\"get\",[\"model\",\"store\",\"uid\"]],[\"get\",[\"receipt\",\"receiptid\"]]],null,0]],\"locals\":[]},{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-expand\"],[\"flush-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"class\",\"image-expand\"],[\"static-attr\",\"width\",\"10.5px\"],[\"static-attr\",\"height\",\"6px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"block\",[\"link-to\"],[\"business.portal.store.pastorders\"],null,2]],\"locals\":[]},{\"statements\":[[\"text\",\"                                    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"item-list\"],[\"flush-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productname\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productname\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productquantity\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productquantity\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-productprice\"],[\"flush-element\"],[\"text\",\"\\n                                            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"$\"],[\"append\",[\"unknown\",[\"receiptdetails\",\"productprice\"]],false],[\"close-element\"],[\"text\",\"\\n                                        \"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"receiptdetails\"]},{\"statements\":[[\"text\",\"                        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-details-container\"],[\"flush-element\"],[\"text\",\" \\n                            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-detail-items\"],[\"flush-element\"],[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"activeModel\",\"receiptdetails\"]]],null,4],[\"text\",\"                            \"],[\"close-element\"],[\"text\",\"\\n                            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-detail-subtotal\"],[\"flush-element\"],[\"text\",\"\\n                                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-subtotal\"],[\"flush-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Subtotal\"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total-small\"],[\"flush-element\"],[\"text\",\"$1.50\"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-tax\"],[\"flush-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n                                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total-small\"],[\"flush-element\"],[\"text\",\"$.49\"],[\"close-element\"],[\"text\",\"\\n                                \"],[\"close-element\"],[\"text\",\"\\n                            \"],[\"close-element\"],[\"text\",\"\\n                        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-row\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-info-container\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-store-price\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-store\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"store-name\"],[\"flush-element\"],[\"append\",[\"unknown\",[\"receipt\",\"storename\"]],false],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"store-address\"],[\"flush-element\"],[\"append\",[\"unknown\",[\"receipt\",\"storeaddress\"]],false],[\"text\",\"helo\"],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-price\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-title\"],[\"flush-element\"],[\"text\",\"Order total\"],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"static-attr\",\"class\",\"price-total\"],[\"flush-element\"],[\"text\",\"$ \"],[\"append\",[\"unknown\",[\"receipt\",\"total\"]],false],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"dynamic-attr\",\"class\",[\"concat\",[\"receipt-details \",[\"helper\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null],\"active\",\"\"],null],\" \"]]],[\"flush-element\"],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null]],null,5],[\"text\",\"            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/receipt-line.png\"],[\"static-attr\",\"width\",\"100%\"],[\"static-attr\",\"height\",\"1px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-date-expand\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"receipt-date\"],[\"flush-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/dashboard-calendar.png\"],[\"static-attr\",\"width\",\"18px\"],[\"static-attr\",\"height\",\"18px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                    \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"format-epoch\"],[[\"get\",[\"receipt\",\"timestamp\"]]],null],false],[\"close-element\"],[\"text\",\"\\n                \"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"helper\",[\"eq\"],[[\"get\",[\"activeModel\",\"receipt\"]],[\"get\",[\"receipt\"]]],null]],null,3,1],[\"text\",\"            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"receipt\"]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/pastorders.hbs" } });
 });
 define("frontend/templates/business/portal/store/pastorders/show", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "ZS6odUqV", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/pastorders/show.hbs" } });
+});
+define("frontend/templates/business/portal/store/products", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template({ "id": "IEZgh359", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products.hbs" } });
+});
+define("frontend/templates/business/portal/store/products/show", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template({ "id": "dbMlAJyy", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products/show.hbs" } });
 });
 define("frontend/templates/business/sign-up", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "yDeTu3vA", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"business-wrapper blue-background\"],[\"flush-element\"],[\"text\",\"\\n\"],[\"append\",[\"helper\",[\"navigation-bar-business\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\"],[\"open-element\",\"section\",[]],[\"static-attr\",\"id\",\"signup\"],[\"static-attr\",\"class\",\"slanted-background\"],[\"flush-element\"],[\"text\",\"\\n    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form mc_embed_signup\"],[\"flush-element\"],[\"text\",\"\\n      \"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Sign up free\"],[\"close-element\"],[\"text\",\"\\n \\t\\t\"],[\"append\",[\"helper\",[\"business-signup\"],null,[[\"session\"],[[\"get\",[\"session\"]]]]],false],[\"text\",\"\\n\\n\\n      \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form-terms\"],[\"flush-element\"],[\"text\",\"\\n        Terms & Conditions\\n      \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\"],[\"append\",[\"unknown\",[\"main-footer\"]],false],[\"text\",\"\\n\\n\\n\"],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/sign-up.hbs" } });
@@ -1610,7 +1678,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+6de53971"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+21414e2f"});
 }
 
 /* jshint ignore:end */
