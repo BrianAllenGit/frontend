@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 		activeModel: "",
 	model(params, transition){    
-			let currentRoute = this;
 			console.log(params);
 			var store_id = transition.params["business.portal.store"].store_id;
 			console.log(store_id);

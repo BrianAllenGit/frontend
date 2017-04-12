@@ -819,7 +819,7 @@ define('frontend/tests/routes/business/portal/store/pastorders.jshint.lint-test'
   QUnit.module('JSHint | routes/business/portal/store/pastorders.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal/store/pastorders.js should pass jshint.\nroutes/business/portal/store/pastorders.js: line 6, col 17, \'currentRoute\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'routes/business/portal/store/pastorders.js should pass jshint.');
   });
 });
 define('frontend/tests/routes/business/portal/store/pastorders/show.jshint.lint-test', ['exports'], function (exports) {

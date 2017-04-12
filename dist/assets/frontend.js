@@ -1251,7 +1251,6 @@ define("frontend/routes/business/portal/store/pastorders", ["exports", "ember"],
 		exports["default"] = _ember["default"].Route.extend({
 				activeModel: "",
 				model: function model(params, transition) {
-						var currentRoute = this;
 						console.log(params);
 						var store_id = transition.params["business.portal.store"].store_id;
 						console.log(store_id);
@@ -1611,7 +1610,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+b00db543"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+6de53971"});
 }
 
 /* jshint ignore:end */
