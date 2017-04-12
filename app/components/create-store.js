@@ -6,8 +6,6 @@ export default Ember.Component.extend({
 
 		actions : {
 		createStore (){
-			let controller = this;
-			var user = controller.get('model');
 			var name = Ember.$('#name');
 			var phone = Ember.$('#phone');
 			var address = Ember.$('.address-box');

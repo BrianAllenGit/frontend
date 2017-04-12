@@ -42,7 +42,7 @@ define('frontend/tests/components/create-store.jshint.lint-test', ['exports'], f
   QUnit.module('JSHint | components/create-store.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/create-store.js should pass jshint.\ncomponents/create-store.js: line 10, col 17, \'user\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'components/create-store.js should pass jshint.');
   });
 });
 define('frontend/tests/components/dashboard-toggle.jshint.lint-test', ['exports'], function (exports) {

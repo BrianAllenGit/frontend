@@ -176,8 +176,6 @@ define('frontend/components/create-store', ['exports', 'ember'], function (expor
 
 		actions: {
 			createStore: function createStore() {
-				var controller = this;
-				var user = controller.get('model');
 				var name = _ember['default'].$('#name');
 				var phone = _ember['default'].$('#phone');
 				var address = _ember['default'].$('.address-box');
@@ -1613,7 +1611,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+239e6ee3"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+b00db543"});
 }
 
 /* jshint ignore:end */
