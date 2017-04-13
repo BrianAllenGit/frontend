@@ -29,10 +29,10 @@
                                 {{/link-to}}
                             </li>
                             <li>
-                                {{#link-to 'business.portal.store.products' store.id}}
-                                    Products
-                                {{/link-to}}
-                            </li>
+{{!--                                 {{#link-to 'business.portal.store.products' store.id}}
+ --}}                                    <a href="/business/portal/{{store.id}}/products">Products</a>
+{{!--                                 {{/link-to}}
+ --}}                            </li>
                             <li>
                                 {{#link-to 'business.portal.store.pastorders' store.id}}
                                     Sales
