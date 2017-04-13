@@ -62,19 +62,24 @@
   width: 80%
   margin: auto
   height: 200px
-
-  div
-    margin: 0
-    padding: 0
+  @media screen and (max-width: $tablet)
+    width: 90%
+    flex-direction: column
+    height: 450px
+  @media screen and (max-width: $mobile)
+    height: 600px
 
 .how-it-works--step
   display: flex
-  width: 33%
-  margin-right: 3% !important
+  width: 100%
+
+  @media screen and (max-width: $tablet)
+    padding-bottom: 50px
+  
 
 .how-it-works--step-number
   font-size: 4em
-  margin-top: 15px !important
+  margin-top: 20px !important
   margin-right: 10px !important
 
 .how-it-works--step-highlight
@@ -85,5 +90,12 @@
   text-align: center
   font-family: GothamRounded-Bold
   font-size: 30px
-  margin-bottom: 100px
-  margin-top: 90px
+  line-height: 45px
+  margin-bottom: 80px !important
+  margin-top: 90px !important
+  width: 80%
+  margin: auto
+  @media screen and (max-width: $tablet)
+    margin-bottom: 20px
+  @media screen and (max-width: $mobile)
+    margin-bottom: 50px
