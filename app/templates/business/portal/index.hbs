@@ -1,4 +1,22 @@
-{{#each model as |store|}}
-	{{#link-to "business.portal.store" store.id }}{{store.name}}{{/link-to}}
-{{/each}}
-{{#link-to "business.portal.createstore"}}Create Store{{/link-to}}
+<div class="business-portal-stores">
+
+	{{#each model as |store|}}
+		<div class="business-portal-stores--store">
+			{{#link-to "business.portal.store" store.id }}
+
+				{{store.name}}<br />
+
+				<span class="business-portal-stores--store-address">
+					{{store.address}}
+				</span>
+			{{/link-to}}
+		</div>
+	{{/each}}
+
+	<div class="business-portal-stores--store add-store">
+		{{#link-to "business.portal.createstore"}}
+			+ Add new store
+		{{/link-to}}
+	</div>
+
+</div>

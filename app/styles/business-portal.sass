@@ -1,13 +1,16 @@
 #business-portal-background
     width: 100vw
     height: 100vh
+    display: flex
 
+/* Navigation bar in business portal */
 .business-portal-nav
 	height: 100vh
 	width: 300px
-
-.business-portal-signout
-	text-align: right
+	min-width: 300px
+	a
+		color: #fff
+		GothamRounded-Book
 
 .business-portal-nav-heading
 	font-family: GothamRounded-Medium
@@ -16,7 +19,7 @@
 	padding-top: 50px
 	padding-left: 20px
 	padding-right: 20px
-	height: 100vh
+	height: 80vh
 
 .business-portal-name
 	font-family: GothamRounded-Bold
@@ -24,8 +27,69 @@
 .business-portal-signout
 	text-decoration: underline
 	color: #D6D3D3
+	a
+		color: #D6D3D3
 
 .business-portal-home
-	margin-top: 80px
+	margin-top: 50px
 	padding-bottom: 5px
 	border-bottom: 1px solid rgba(255,255,255,0.40)
+
+.business-portal-links
+	padding-top: 30px
+
+.business-portal-links-store
+	padding-bottom: 30px
+	list-style-type: none
+
+.store-list-links 
+	padding: 0px
+	ul
+		list-style-type: none
+
+/* Business Portal Contents */
+.business-portal-contents
+	width: 100vw
+	height: 80vh
+	padding: 10vh
+	font-size: 17px
+	line-height: 26px
+	color: #525f7f
+	overflow: auto
+
+
+.business-portal-stores
+	display: flex
+	flex-wrap: wrap
+
+.business-portal-stores--store
+	background-color: #fff
+	width: 400px
+	height: 200px
+	margin: 2.5%
+	background: #fff
+	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07)
+	border-radius: 4px
+	align-items: center
+	justify-content: center
+	display: flex
+
+	a
+		color: #525f7f
+		font-size: 25px
+
+.business-portal-stores--store-address
+	font-size: 12px !important
+
+
+
+
+
+
+
+
+
+
+
+
+

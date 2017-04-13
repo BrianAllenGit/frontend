@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	didInsertElement(){
-		var scrollMe = Ember.$(".receipt-content");
+		var scrollMe = Ember.$(".business-portal-contents");
 		var that = this;
 		var userScrolled = false;
 

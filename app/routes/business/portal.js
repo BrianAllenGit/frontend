@@ -10,5 +10,8 @@ export default Ember.Route.extend({
 	    if(check){
 	    	this.transitionTo('index');
 	    }
-  	}
+  	},
+  	model(){    
+		return this.store.query('store', {orderBy: 'owner', equalTo: this.get('session.currentUser.uid')} );
+	}
 });

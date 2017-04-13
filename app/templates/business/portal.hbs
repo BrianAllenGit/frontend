@@ -7,16 +7,48 @@
             </div>
 
             <div class="business-portal-home">
-                <span class="business-portal-nav-heading">
-                    Home
-                </span>
+                {{#link-to "business.portal" }}
+                    <span class="business-portal-nav-heading">
+                        Home
+                    </span>
+                {{/link-to}}
             </div>
 
-            <div class="business-portal-links">
+            {{ log model }}
 
+            <div class="business-portal-links">
+                <ul class="store-list-links">
+                {{#each model as |store|}}
+                    <li class="business-portal-links-store">
+                        <span class="business-portal-nav-heading">
+                            {{store.name}}
+                        </span><br />
+                        <ul>
+                            <li>{{#link-to 'business.portal.store' store.id}}
+                                    Settings
+                                {{/link-to}}
+                            </li>
+                            <li>
+                                {{#link-to 'business.portal.store.products' store.id}}
+                                    Products
+                                {{/link-to}}
+                            </li>
+                            <li>
+                                {{#link-to 'business.portal.store.pastorders' store.id}}
+                                    Sales
+                                {{/link-to}}
+                            </li>
+                        </ul>
+                    </li>
+                {{/each}}
+                </ul>
             </div>
         </div>
     </nav>
+
+    <article class="business-portal-contents">
+        {{outlet}}
+    </article>
 
 </section>
 
