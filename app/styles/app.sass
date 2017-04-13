@@ -34,6 +34,7 @@
 @import dashboard
 @import resetpassword
 @import business-base
+@import info-section
 
 $gotham-book: GothamRounded-Book
 $white: #FFFFFF
@@ -69,15 +70,41 @@ body, html
   background-image: url(images/gradient-rainbow-background.png)
   background-size: 100%
 
+
+.multiblue-background
+  background-image: url(images/background-plain-blue.svg)
+  background-size: cover
+  background-position: bottom
+
 .blue-background
   background-image: url(images/gradient-blue-background.png)
-  background-size: 100%
+  background-size: cover
+  @media screen and (max-width: $mobile)
+    background-image: url(images/gradient-blue-background-mobile.png)
+    background-size: 100%
 
 .slanted-background
   background-image: url(images/background-slope.svg)
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+
+.full-wave-background
+  background-image: url(images/phonewave-full.png)
+  background-size: 100%
   background-repeat: no-repeat
-  background-size: cover
   background-position: bottom
+  background-size: contain
+  @media screen and (max-width: $mobile)
+    background-image: url(images/phonewave-section-2.png)
+
+.white-background
+  background-color: #fff
+  color: #585858
+
+  a
+   color: #585858 !important
+  
 
 h3
   line-height: 40px
@@ -137,6 +164,10 @@ a
 
 .blue-gradient
   background-image: linear-gradient(54deg, #007EE5 0%, #05B3FF 100%, #5533FF 100%) !important
+  box-shadow: 0 5px 11px 0 rgba(51, 118, 255, 0.44)
+
+.blue-border
+  border-color: #0083e7
 
 .alert
   display: flex

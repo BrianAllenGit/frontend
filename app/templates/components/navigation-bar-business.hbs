@@ -1,5 +1,5 @@
 <nav class="nav-desktop">
-    {{#link-to 'index'}}<img class="nav-logo" src="/assets/images/scannly-logo-business-white.png"/>{{/link-to}}
+    {{#link-to 'business.index'}}<img class="nav-logo" src="/assets/images/scannly-logo-business-white.png"/>{{/link-to}}
     <ul>
         <li>
             <a href="https://goo.gl/forms/N3aCtcfnSDwLJ5AM2" target="_blank">
@@ -19,11 +19,9 @@
             </li>
         {{/if}}
         <li>
-            <a href="/coming-soon" class="nav-link-highlighted">
-                Sign up for free
-            </a>
+            {{#link-to 'business.sign-up' class="nav-link-highlighted" }}Sign up for free{{/link-to}}
         </li>
-    </ul>
+    </ul> 
 </nav>
 
 
@@ -42,7 +40,7 @@
     </ul>
 </div>
 <nav class="nav-mobile">
-    <img class="nav-logo" src="/assets/images/scannly-logo-white.png" onclick="location.href='/';"/>
+    <img class="nav-logo" src="/assets/images/scannly-logo-business-white.png" onclick="location.href='/';"/>
     <img id="hamburger" class="hamburger-icon" src="/assets/images/hamburger.svg"/>
 </nav>
 

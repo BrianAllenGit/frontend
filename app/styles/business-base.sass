@@ -1,5 +1,89 @@
 .business-wrapper
-	width: 100%
-	height: 100%
-	margin: 0 auto
-	padding: 0
+  width: 100%
+  height: 100%
+  margin: 0 auto
+  padding: 0
+
+#price
+  padding-top: 50px
+  padding-bottom: 50px
+  margin: auto
+
+#business-hero
+  height: 490px !important
+  display: flex
+  padding-left: 120px
+  padding-top: 50px
+  margin: auto
+  flex-direction: row
+  @media screen and (max-width: $small-laptop-screen)
+    height: 450px !important
+    padding-left: 70px
+  @media screen and (max-width: $tablet)
+    flex-direction: column
+    height: 385px !important
+    width: 80%
+    padding-top: 60px
+    padding-left: 0px
+    #signup
+      display: none
+  @media screen and (max-width: $mobile)
+    height: 400px !important
+    width: 85%
+    padding-top: 28px
+
+  p
+    margin-bottom: 25px
+
+  h2
+  	font-family: GothamRounded-Medium
+  	font-size: 45px
+  	line-height: 55px
+  	margin-bottom: 0px
+  	margin-top: 0px
+
+  article
+    margin: 0px auto
+
+  a
+    color: #fff
+    border: 2px solid
+    padding: 9px
+
+  .signup-form
+    width: 60% !important
+    height: 450px
+    @media screen and (max-width: $small-laptop-screen)
+      width: 80% !important;
+      height: 430px;
+
+#how-it-works
+  display: flex
+  width: 80%
+  margin: auto
+  height: 200px
+
+  div
+    margin: 0
+    padding: 0
+
+.how-it-works--step
+  display: flex
+  width: 33%
+  margin-right: 3% !important
+
+.how-it-works--step-number
+  font-size: 4em
+  margin-top: 15px !important
+  margin-right: 10px !important
+
+.how-it-works--step-highlight
+  font-family: GothamRounded-Bold
+  font-size: 18px
+
+.section-title
+  text-align: center
+  font-family: GothamRounded-Bold
+  font-size: 30px
+  margin-bottom: 100px
+  margin-top: 90px
