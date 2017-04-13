@@ -69,7 +69,7 @@ define('frontend/tests/components/infinite-table.jshint.lint-test', ['exports'],
   QUnit.module('JSHint | components/infinite-table.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/infinite-table.js should pass jshint.\ncomponents/infinite-table.js: line 10, col 17, \'$\' is not defined.\ncomponents/infinite-table.js: line 10, col 39, \'$\' is not defined.\ncomponents/infinite-table.js: line 10, col 62, \'$\' is not defined.\n\n3 errors');
+    assert.ok(true, 'components/infinite-table.js should pass jshint.');
   });
 });
 define('frontend/tests/components/loading-animation.jshint.lint-test', ['exports'], function (exports) {

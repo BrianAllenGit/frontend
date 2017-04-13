@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	didInsertElement: function(){
+	didInsertElement(){
 		var scrollMe = Ember.$(".receipt-content");
 		var that = this;
 		var userScrolled = false;
 
 		scrollMe.scroll(function() {
-			if ($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight) {
+			if (scrollMe.scrollTop() + scrollMe.innerHeight()>=scrollMe[0].scrollHeight) {
 				userScrolled = true;
 		  	}   
 		});
@@ -18,5 +18,10 @@ export default Ember.Component.extend({
 		    userScrolled = false;
 		  }
 		}, 50);
+	},
+	willDestroyElement() {
+		console.log('called');
+		var scrollMe = Ember.$(".receipt-content");
+		scrollMe.unbind('scroll');
 	}
 });

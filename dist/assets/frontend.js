@@ -35,6 +35,7 @@ define('frontend/components/add-product', ['exports', 'ember'], function (export
 		store: _ember['default'].inject.service(),
 		actions: {
 			submit: function submit() {
+				console.log('click');
 				var store = this.get('store');
 				var name = _ember['default'].$('#name');
 				var sku = _ember['default'].$('#sku');
@@ -42,7 +43,7 @@ define('frontend/components/add-product', ['exports', 'ember'], function (export
 				var quantity = _ember['default'].$('#quantity');
 				var tax = _ember['default'].$('#tax');
 				var barcode = _ember['default'].$('#barcode');
-				var storeId = this.get('model.id');
+				var storeId = this.get('storeId');
 				var new_product = store.createRecord('product', {
 					name: name.val(),
 					price: price.val(),
@@ -283,7 +284,7 @@ define("frontend/components/infinite-table", ["exports", "ember"], function (exp
 			var userScrolled = false;
 
 			scrollMe.scroll(function () {
-				if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+				if (scrollMe.scrollTop() + scrollMe.innerHeight() >= scrollMe[0].scrollHeight) {
 					userScrolled = true;
 				}
 			});
@@ -294,6 +295,11 @@ define("frontend/components/infinite-table", ["exports", "ember"], function (exp
 					userScrolled = false;
 				}
 			}, 50);
+		},
+		willDestroyElement: function willDestroyElement() {
+			console.log('called');
+			var scrollMe = _ember["default"].$(".receipt-content");
+			scrollMe.unbind('scroll');
 		}
 	});
 });
@@ -1409,8 +1415,8 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 				storeId: "",
 				referenceId: 10,
 				model: function model(params, transition) {
-
 						var store_id = transition.params["business.portal.store"].store_id;
+						this.storeId = store_id;
 						return this.get('firebaseUtil').query('product', this.get('referenceId'), "products/", { orderBy: 'storeid', equalTo: store_id, limitToFirst: 25 });
 
 						// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => {
@@ -1439,6 +1445,10 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 						//     	 store: this.store.findRecord('store', store_id)
 						// });
 				},
+				setupController: function setupController(controller) {
+						this._super.apply(this, arguments);
+						_ember["default"].set(controller, 'storeId', this.storeId);
+				},
 				actions: {
 						didTransition: function didTransition() {
 								if (this.controller.get('activeModel') === this.activeModel) {
@@ -1458,8 +1468,18 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 				}
 		});
 });
-define('frontend/routes/business/portal/store/products/add', ['exports', 'ember'], function (exports, _ember) {
-	exports['default'] = _ember['default'].Route.extend({});
+define("frontend/routes/business/portal/store/products/add", ["exports", "ember"], function (exports, _ember) {
+	exports["default"] = _ember["default"].Route.extend({
+		storeId: "",
+		model: function model(params, transition) {
+			var store_id = transition.params["business.portal.store"].store_id;
+			this.storeId = store_id;
+		},
+		setupController: function setupController(controller) {
+			this._super.apply(this, arguments);
+			_ember["default"].set(controller, 'storeId', this.storeId);
+		}
+	});
 });
 define('frontend/routes/business/portal/store/products/show', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Route.extend({});
@@ -1687,10 +1707,10 @@ define("frontend/templates/business/portal/store/pastorders/show", ["exports"], 
   exports["default"] = Ember.HTMLBars.template({ "id": "ZS6odUqV", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/pastorders/show.hbs" } });
 });
 define("frontend/templates/business/portal/store/products", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "n5p6WjPD", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"dont-flex\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"append\",[\"helper\",[\"infinite-table\"],null,[[\"model\",\"loadMore\"],[[\"get\",[\"model\"]],\"loadMore\"]]],false],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "Jq4uRoAd", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"dont-flex\"],[\"flush-element\"],[\"text\",\"\\n\\t\"],[\"append\",[\"helper\",[\"infinite-table\"],null,[[\"model\",\"storeId\",\"loadMore\"],[[\"get\",[\"model\"]],[\"get\",[\"storeId\"]],\"loadMore\"]]],false],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products.hbs" } });
 });
 define("frontend/templates/business/portal/store/products/add", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "fAKxeBlX", "block": "{\"statements\":[[\"append\",[\"helper\",[\"add-product\"],null,[[\"model\"],[[\"get\",[\"model\"]]]]],false]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products/add.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "En6hULtv", "block": "{\"statements\":[[\"append\",[\"helper\",[\"add-product\"],null,[[\"storeId\"],[[\"get\",[\"storeId\"]]]]],false],[\"text\",\"\\n\"],[\"append\",[\"helper\",[\"log\"],[[\"get\",[\"storeId\"]]],null],false]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products/add.hbs" } });
 });
 define("frontend/templates/business/portal/store/products/show", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "dbMlAJyy", "block": "{\"statements\":[[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/business/portal/store/products/show.hbs" } });
@@ -1717,7 +1737,7 @@ define("frontend/templates/components/dashboard-toggle", ["exports"], function (
   exports["default"] = Ember.HTMLBars.template({ "id": "/RVAYXfl", "block": "{\"statements\":[[\"open-element\",\"img\",[]],[\"static-attr\",\"src\",\"/assets/images/dashboard-hamburger.png\"],[\"static-attr\",\"id\",\"dashboard-toggle\"],[\"static-attr\",\"height\",\"16px\"],[\"static-attr\",\"width\",\"16px\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/dashboard-toggle.hbs" } });
 });
 define("frontend/templates/components/infinite-table", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "/gaH9Gjo", "block": "{\"statements\":[[\"open-element\",\"table\",[]],[\"static-attr\",\"style\",\"width:100%; color:black\"],[\"static-attr\",\"id\",\"scrollme\"],[\"flush-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"caption\",[]],[\"flush-element\"],[\"text\",\"Your Products\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Name\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"SKU\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Price\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Quantity\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Barcode\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t  \\t\"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"block\",[\"link-to\"],[\"business.portal.store.products.add\",[\"get\",[\"model\",\"id\"]]],null,3],[\"text\",\" Add product\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"if\"],[[\"get\",[\"model\"]]],null,2],[\"text\",\"\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"unless\"],[[\"get\",[\"model\"]]],null,0]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"\\t\\t\\t\\t\"],[\"append\",[\"unknown\",[\"loading-animation\"]],false],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"name\"]],[\"get\",[\"product\",\"name\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"sku\"]],[\"get\",[\"product\",\"sku\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"price\"]],[\"get\",[\"product\",\"price\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"quantity\"]],[\"get\",[\"product\",\"quantity\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"tax\"]],[\"get\",[\"product\",\"tax\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"barcode\"]],[\"get\",[\"product\",\"barcode\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t  \\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"product\"]},{\"statements\":[[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"model\"]]],null,1]],\"locals\":[]},{\"statements\":[[\"text\",\"+\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/infinite-table.hbs" } });
+  exports["default"] = Ember.HTMLBars.template({ "id": "YhcaU3yZ", "block": "{\"statements\":[[\"open-element\",\"table\",[]],[\"static-attr\",\"style\",\"width:100%; color:black\"],[\"static-attr\",\"id\",\"scrollme\"],[\"flush-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"caption\",[]],[\"flush-element\"],[\"text\",\"Your Products\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Name\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"SKU\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Price\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Quantity\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Tax\"],[\"close-element\"],[\"text\",\"\\n\\t    \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Barcode\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t  \\t\"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"block\",[\"link-to\"],[\"business.portal.store.products.add\",[\"get\",[\"storeId\"]]],null,3],[\"text\",\" Add product\"],[\"close-element\"],[\"text\",\"\\n\\t  \"],[\"close-element\"],[\"text\",\"\\n\\t  \\t  \\t\"],[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n\\n\\n\"],[\"block\",[\"if\"],[[\"get\",[\"model\"]]],null,2],[\"text\",\"\\t\"],[\"close-element\"],[\"text\",\"\\n\"],[\"block\",[\"unless\"],[[\"get\",[\"model\"]]],null,0]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"\\t\\t\\t\\t\"],[\"append\",[\"unknown\",[\"loading-animation\"]],false],[\"text\",\"\\n\"]],\"locals\":[]},{\"statements\":[[\"text\",\"\\t\\t\"],[\"open-element\",\"tr\",[]],[\"flush-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"name\"]],[\"get\",[\"product\",\"name\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"sku\"]],[\"get\",[\"product\",\"sku\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"price\"]],[\"get\",[\"product\",\"price\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"quantity\"]],[\"get\",[\"product\",\"quantity\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"tax\"]],[\"get\",[\"product\",\"tax\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t\\t    \"],[\"open-element\",\"td\",[]],[\"flush-element\"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"\",[\"get\",[\"barcode\"]],[\"get\",[\"product\",\"barcode\"]]]]],false],[\"close-element\"],[\"text\",\"\\n\\t  \\t\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"product\"]},{\"statements\":[[\"text\",\"\\n\"],[\"block\",[\"each\"],[[\"get\",[\"model\"]]],null,1]],\"locals\":[]},{\"statements\":[[\"text\",\"+\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/infinite-table.hbs" } });
 });
 define("frontend/templates/components/loading-animation", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "ziAOTaEG", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"loader\"],[\"flush-element\"],[\"text\",\"\\n  \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"box\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n  \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"id\",\"hill\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/loading-animation.hbs" } });
@@ -1807,7 +1827,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+66488fba"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+dcd33ced"});
 }
 
 /* jshint ignore:end */

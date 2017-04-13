@@ -6,6 +6,7 @@ export default Ember.Component.extend({
 	store: Ember.inject.service(),
 	actions: {
 		submit(){
+			console.log('click');
 	          var store = this.get('store');
 			var name = Ember.$('#name');
 			var sku = Ember.$('#sku');
@@ -13,7 +14,7 @@ export default Ember.Component.extend({
 			var quantity = Ember.$('#quantity');			
 			var tax = Ember.$('#tax');
 			var barcode = Ember.$('#barcode');
-			var storeId = this.get('model.id');
+			var storeId = this.get('storeId');
         	var new_product = store.createRecord('product', {
               name: name.val(),
               price: price.val(),

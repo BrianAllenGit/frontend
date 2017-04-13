@@ -9,8 +9,11 @@
 	    <th>Barcode</th>
 	  </tr>
 		<tr>
-	  	<td>{{#link-to 'business.portal.store.products.add' model.id}}+{{/link-to}} Add product</td>
+	  	<td>{{#link-to 'business.portal.store.products.add' storeId}}+{{/link-to}} Add product</td>
 	  </tr>
+	  	  	{{outlet}}
+
+
 	{{#if model}}
 
 		{{#each model as |product|}}
