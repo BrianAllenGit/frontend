@@ -29,8 +29,10 @@
                 </div>
                 <div id="sidebar-links">
                     <div id="links">
-                        {{#link-to "business.portal.store.pastorders" model.uid}}Past Orders{{/link-to}}
-                        {{#link-to "business.portal" }}Home{{/link-to}}
+                    {{#link-to "business.portal" }}Home{{/link-to}}
+                    {{#if menuDisplay}}
+                        {{#link-to "business.portal.store.pastorders" menuDisplay}}Past Orders{{/link-to}}
+                    {{/if}}
                         <a href="" {{action 'signOut'}}>Sign Out</a>
                     </div>
                 </div>

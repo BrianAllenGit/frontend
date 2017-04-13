@@ -1,3 +1,4 @@
 {{#each model as |store|}}
-	{{#link-to "business.portal.store" store.uid }}{{store.name}}{{/link-to}}
+	{{#link-to "business.portal.store" store.id }}{{store.name}}{{/link-to}}
 {{/each}}
+{{#link-to "business.portal.createstore"}}Create Store{{/link-to}}

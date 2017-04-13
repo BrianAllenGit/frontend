@@ -3,6 +3,103 @@ html, body {
 	width:100%;
 }
 
+#loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -2.7em;
+  margin-left: -2.7em;
+  width: 5.4em;
+  height: 5.4em;
+  background-color: transparent;
+}
+
+#hill {
+  position: absolute;
+  width: 7.1em;
+  height: 7.1em;
+  top: 1.7em;
+  left: 1.7em;
+  background-color: transparent;
+  border-left: .25em solid black;
+  transform: rotate(45deg);
+}
+
+#hill:after {
+  content: '';
+  position: absolute;
+  width: 7.1em;
+  height: 7.1em;
+  left: 0;
+  background-color: transparent;
+}
+
+#box {
+  position: absolute;
+  left: 0;
+  bottom: -.1em;
+  width: 1em;
+  height: 1em;
+  background-color: transparent;
+  border: .25em solid black;
+  border-radius: 15%;
+  transform: translate(0, -1em) rotate(-45deg);
+  animation: push 2.5s cubic-bezier(.79, 0, .47, .97) infinite;
+}
+
+@keyframes push {
+  0% {
+    transform: translate(0, -1em) rotate(-45deg);
+  }
+  5% {
+    transform: translate(0, -1em) rotate(-50deg);
+  }
+  20% {
+    transform: translate(1em, -2em) rotate(47deg);
+  }
+  25% {
+    transform: translate(1em, -2em) rotate(45deg);
+  }
+  30% {
+    transform: translate(1em, -2em) rotate(40deg);
+  }
+  45% {
+    transform: translate(2em, -3em) rotate(137deg);
+  }
+  50% {
+    transform: translate(2em, -3em) rotate(135deg);
+  }
+  55% {
+    transform: translate(2em, -3em) rotate(130deg);
+  }
+  70% {
+    transform: translate(3em, -4em) rotate(217deg);
+  }
+  75% {
+    transform: translate(3em, -4em) rotate(220deg);
+  }
+  100% {
+    transform: translate(0, -1em) rotate(-225deg);
+  }
+}
+/*.loader {
+    border: 16px solid #f3f3f3; 
+    border-top: 16px solid #3498db; 
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}*/
+#dont-flex{
+	height:0;
+	flex:1;
+	width:100%;	
+}
+/*@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}*/
 #dashboard{
 	width: 100vw;
 	height: 100vh;
@@ -12,7 +109,7 @@ html, body {
 	box-shadow: 1px 15px 23px 0 rgba(77,112,161,0.52);
 }
 #dashboard-container{
-	height: 100%;
+	flex: 1;
 
 	.sidebar{
 		position: relative;
@@ -62,6 +159,7 @@ html, body {
 		}
 	}
 	.receipt-content{
+		height:100%;
 		flex:9;
 		overflow: auto;
 		display: flex;
