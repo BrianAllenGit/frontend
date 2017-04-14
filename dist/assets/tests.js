@@ -987,7 +987,7 @@ define('frontend/tests/routes/business/portal/store/products.jshint.lint-test', 
   QUnit.module('JSHint | routes/business/portal/store/products.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal/store/products.js should pass jshint.\nroutes/business/portal/store/products.js: line 45, col 32, \'model\' is defined but never used.\n\n1 error');
+    assert.ok(false, 'routes/business/portal/store/products.js should pass jshint.\nroutes/business/portal/store/products.js: line 41, col 32, \'model\' is defined but never used.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/store/products/add.jshint.lint-test', ['exports'], function (exports) {
