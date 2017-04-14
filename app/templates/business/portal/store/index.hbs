@@ -1,9 +1,34 @@
-{{#link-to "business.portal.store.pastorders" model.id}}Past Orders{{/link-to}}
-{{#link-to "business.portal.store.products" model.id}}Products{{/link-to}}
+<div class="successful-save">Save Successful!</div>
 
-<h1>{{model.uid}}</h1>
-<h1>{{model.address}}</h1>
-<h1>{{model.name}}</h1>
-<h1>{{model.owner}}</h1>
-<h1>{{model.phone}}</h1>
-<h1>{{model.tax}}</h1>
+<div class="info-container">
+	<form {{action "saveInfo" on="submit"}}>
+		<div class="info-row-container">
+			<div class="info-row">
+
+				{{input type='text' maxlength="16" pattern="[A-Za-z '0-9]{1,50}" title="Alphabet characters only" class='input-box' id="name" value=name placeholder=model.name }}
+
+				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder=model.phone }}
+
+				{{input type='submit' class="info-submit blue-gradient" value="Save Info"}}				
+			</div>
+
+			<div class="info-row">
+				{{input type='number' maxlength="16" pattern="0.[0-9]+" title="Please put in tax as a value less than 1" class='input-box' id="name" value=tax placeholder=model.tax }}
+
+				{{place-autocomplete-field
+				value= address
+				placeholder=model.address
+				disable=false
+				handlerController= this
+				inputClass= 'input-box address-box'
+				focusOutCallback='done' 
+				placeChangedCallback='placeChanged' 
+				restrictions=restrictions
+				}}
+
+				<span class="statement">We take your privacy very seriously and<br>will never share your information ever</span>
+			</div>
+		</div>
+	</form>
+</div>
+

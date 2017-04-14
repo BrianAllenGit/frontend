@@ -1058,7 +1058,8 @@ html, body {
   width: 300px;
   min-width: 300px; }
   .business-portal-nav a {
-    color: #fff; }
+    color: #fff;
+    font-family: GothamRounded-Book; }
 
 .business-portal-nav-heading {
   font-family: GothamRounded-Medium; }
@@ -1126,6 +1127,10 @@ html, body {
 
 .business-portal-stores--store-address {
   font-size: 12px !important; }
+
+.add-store {
+  box-shadow: none;
+  background: none; }
 
 body, html {
   width: 100%;

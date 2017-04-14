@@ -1,5 +1,4 @@
 <table style="width:100%; color:black" id="scrollme">
-	  <caption>Your Products</caption>
 	  <tr>
 	    <th>Name</th>
 	    <th>SKU</th>
@@ -9,7 +8,11 @@
 	    <th>Barcode</th>
 	  </tr>
 		<tr>
-	  	<td>{{#link-to 'business.portal.store.products.add' storeId}}+{{/link-to}} Add product</td>
+	  	<td>
+	  		{{#link-to 'business.portal.store.products.add' storeId}}
+	  			+ Add product
+	  		{{/link-to}} 
+	  	</td>
 	  </tr>
 	  	  	{{outlet}}
 
