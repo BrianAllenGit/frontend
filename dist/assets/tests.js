@@ -987,7 +987,7 @@ define('frontend/tests/routes/business/portal/store/products.jshint.lint-test', 
   QUnit.module('JSHint | routes/business/portal/store/products.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/business/portal/store/products.js should pass jshint.');
+    assert.ok(false, 'routes/business/portal/store/products.js should pass jshint.\nroutes/business/portal/store/products.js: line 41, col 32, \'model\' is defined but never used.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/store/products/add.jshint.lint-test', ['exports'], function (exports) {
@@ -1234,6 +1234,26 @@ define('frontend/tests/unit/helpers/check-receiptid-test.jshint.lint-test', ['ex
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/helpers/check-receiptid-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/unit/mixins/table-common-test', ['exports', 'ember', 'frontend/mixins/table-common', 'qunit'], function (exports, _ember, _frontendMixinsTableCommon, _qunit) {
+
+  (0, _qunit.module)('Unit | Mixin | table common');
+
+  // Replace this with your real tests.
+  (0, _qunit.test)('it works', function (assert) {
+    var TableCommonObject = _ember['default'].Object.extend(_frontendMixinsTableCommon['default']);
+    var subject = TableCommonObject.create();
+    assert.ok(subject);
+  });
+});
+define('frontend/tests/unit/mixins/table-common-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/mixins/table-common-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/mixins/table-common-test.js should pass jshint.');
   });
 });
 define('frontend/tests/unit/models/businessuser-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
