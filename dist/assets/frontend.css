@@ -1050,12 +1050,14 @@ html, body {
 #business-portal-background {
   width: 100vw;
   height: 100vh;
-  display: flex; }
+  display: flex;
+  background: #fff; }
 
 /* Navigation bar in business portal */
 .business-portal-nav {
   height: 100vh;
   width: 300px;
+  overflow: auto;
   min-width: 300px; }
   .business-portal-nav a {
     color: #fff;
@@ -1131,6 +1133,58 @@ html, body {
 .add-store {
   box-shadow: none;
   background: none; }
+
+.items-table {
+  width: 100%;
+  background-color: #fff;
+  border-spacing: 0px;
+  font-size: 14px;
+  color: #000; }
+  .items-table tr {
+    border-bottom: 1px solid #bec3c8;
+    display: flex;
+    justify-content: space-between;
+    line-height: 48px;
+    height: 48px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 8px;
+    padding-right: 8px; }
+  .items-table tr:hover {
+    background: #e9f4f9; }
+  .items-table th {
+    color: #32373c;
+    width: 100%; }
+
+.items-table-header {
+  background-color: #f0f1f2;
+  border-top: 1px solid #bec3c8; }
+
+.items-table-header:hover {
+  background: #f0f1f2 !important; }
+
+.portal-button {
+  cursor: pointer;
+  font-family: GothamRounded-Medium;
+  font-size: 14px;
+  background: #2996cc;
+  border: none;
+  color: #fff;
+  display: inline-block;
+  height: 40px;
+  min-width: 80px;
+  padding: 0 16px;
+  border-radius: 3px;
+  line-height: 38px;
+  text-align: center;
+  user-select: none;
+  margin-bottom: 8px;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+
+.portal-button:hover {
+  background-color: rgba(41, 150, 204, 0.7); }
 
 body, html {
   width: 100%;

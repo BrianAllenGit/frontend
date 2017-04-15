@@ -1,37 +1,30 @@
-<table style="width:100%; color:black" id="scrollme">
-	  <tr>
-	    <th>Name</th>
-	    <th>SKU</th>
-	    <th>Price</th>
-	    <th>Quantity</th>
-	    <th>Tax</th>
-	    <th>Barcode</th>
-	  </tr>
-		<tr>
-	  	<td>
-	  		{{#link-to 'business.portal.store.products.add' storeId}}
-	  			+ Add product
-	  		{{/link-to}} 
-	  	</td>
-	  </tr>
-	  	  	{{outlet}}
+<div class="product-actions">
+	{{#link-to 'business.portal.store.products.add' storeId}}
+	<button class="portal-button">
+		Add Product
+	</button>
+	{{/link-to}}
+</div>
+<table class="items-table" id="scrollme">
+	<tr class="items-table-header">
+		<th style="text-align:left;">Name</th>
+		<th style="text-align:right;">Price</th>
+	</tr>
 
-{{log model}}
+	{{outlet}}
+	{{log model}}
 
 	{{#if model}}
 
 		{{#each model as |product|}}
 		<tr>
-		    <td>{{input type='text' class='' value=name placeholder=product.name }}</td>
-		    <td>{{input type='text' class='' value=sku placeholder=product.sku }}</td>
-		    <td>{{input type='text' class='' value=price placeholder=product.price }}</td>
-		    <td>{{input type='text' class='' value=quantity placeholder=product.quantity }}</td>
-		    <td>{{input type='text' class='' value=tax placeholder=product.tax }}</td>
-		    <td>{{input type='text' class='' value=barcode placeholder=product.barcode }}</td>
+		    <td>{{ product.name }}</td>
+		    <td>${{ product.price }}</td>
 	  	</tr>
 		{{/each}}
 	{{/if}}
-	</table>
+</table>
+
 	{{#unless model}}
 				{{loading-animation}}
 	{{/unless}}
