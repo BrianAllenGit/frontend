@@ -778,7 +778,7 @@ html, body {
         margin-left: 10px;
         background: linear-gradient(135deg, #FD7577 0%, #D53434 100%);
         box-shadow: 0 7px 10px 0 rgba(51, 118, 255, 0.44);
-        border: 1px solid rgba(32, 53, 128, 0.16);
+        border: 0;
         border-radius: 3px;
         font-family: GothamRounded-Book;
         font-size: 16px;
@@ -1140,6 +1140,8 @@ html, body {
   border-spacing: 0px;
   font-size: 14px;
   color: #000; }
+  .items-table td {
+    width: 33%; }
   .items-table tr {
     border-bottom: 1px solid #bec3c8;
     display: flex;
@@ -1168,7 +1170,7 @@ html, body {
   cursor: pointer;
   font-family: GothamRounded-Medium;
   font-size: 14px;
-  background: #2996cc;
+  background: #0088e8;
   border: none;
   color: #fff;
   display: inline-block;
@@ -1184,7 +1186,7 @@ html, body {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out; }
 
 .portal-button:hover {
-  background-color: rgba(41, 150, 204, 0.7); }
+  background-color: rgba(0, 136, 232, 0.7); }
 
 body, html {
   width: 100%;

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+export default Ember.Component.extend({
 	model(params){
 		return Ember.RSVP.hash({
  	      receipt: this.store.query('receipt', {orderBy: 'receiptid', equalTo: params.receipt_id} ).then(function(items) {
@@ -9,10 +9,10 @@ export default Ember.Route.extend({
   	      receiptdetails: this.store.query('receiptdetails', {orderBy: 'receiptid', equalTo: params.receipt_id})
   	    });
 	},
-	 setupController(controller, model) {
+	setupController(controller, model) {
 	    this._super(...arguments);
 	    Ember.set(controller, 'receipt', model.receipt);
 	    Ember.set(controller, 'receiptdetails', model.receiptdetails);
-	    this.controllerFor('business.portal.store.pastorders').set('activeModel', model);
-	  }
+	    //this.controllerFor('business.portal.store.pastorders').set('activeModel', model);
+	 }
 });

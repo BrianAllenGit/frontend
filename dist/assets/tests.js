@@ -36,6 +36,15 @@ define('frontend/tests/components/business-login.jshint.lint-test', ['exports'],
     assert.ok(true, 'components/business-login.js should pass jshint.');
   });
 });
+define('frontend/tests/components/business-pastorders.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/business-pastorders.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/business-pastorders.js should pass jshint.\ncomponents/business-pastorders.js: line 40, col 85, \'params\' is not defined.\ncomponents/business-pastorders.js: line 43, col 100, \'params\' is not defined.\n\n2 errors');
+  });
+});
 define('frontend/tests/components/business-signup.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -106,6 +115,15 @@ define('frontend/tests/components/profile-picture.jshint.lint-test', ['exports']
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'components/profile-picture.js should pass jshint.');
+  });
+});
+define('frontend/tests/components/receipt-details.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/receipt-details.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'components/receipt-details.js should pass jshint.');
   });
 });
 define('frontend/tests/controllers/login.jshint.lint-test', ['exports'], function (exports) {
@@ -553,6 +571,44 @@ define('frontend/tests/integration/components/business-login-test.jshint.lint-te
     assert.ok(true, 'integration/components/business-login-test.js should pass jshint.');
   });
 });
+define('frontend/tests/integration/components/business-pastorders-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('business-pastorders', 'Integration | Component | business pastorders', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': 'PneC5/2R',
+      'block': '{"statements":[["append",["unknown",["business-pastorders"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 't1XFLjqP',
+      'block': '{"statements":[["text","\\n"],["block",["business-pastorders"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/business-pastorders-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/business-pastorders-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/business-pastorders-test.js should pass jshint.');
+  });
+});
 define('frontend/tests/integration/components/business-signup-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('business-signup', 'Integration | Component | business signup', {
@@ -817,6 +873,44 @@ define('frontend/tests/integration/components/profile-picture-test.jshint.lint-t
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'integration/components/profile-picture-test.js should pass jshint.');
+  });
+});
+define('frontend/tests/integration/components/receipt-details-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('receipt-details', 'Integration | Component | receipt details', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': 'Enex2XbJ',
+      'block': '{"statements":[["append",["unknown",["receipt-details"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'CJ74pgOA',
+      'block': '{"statements":[["text","\\n"],["block",["receipt-details"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('frontend/tests/integration/components/receipt-details-test.jshint.lint-test', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/receipt-details-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/receipt-details-test.js should pass jshint.');
   });
 });
 define('frontend/tests/models/businessuser.jshint.lint-test', ['exports'], function (exports) {

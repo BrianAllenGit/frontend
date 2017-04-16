@@ -1,0 +1,33 @@
+ <p {{action "pressed"}}>  
+Press Me  
+</p>  
+<table class="items-table" id="scrollme">
+    <tr class="items-table-header">
+        <th style="text-align:left;">Date</th>
+        <th>Name</th>
+        <th style="text-align:right;">Total</th>
+    </tr>
+
+    {{outlet}}
+    {{log model}}
+
+    {{#if model}}
+        {{#each model.receipt as |receipt|}}
+        
+        <tr {{action "pressed"}}>
+            <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
+            <td style="text-align:center;">
+            		Beckah Millionbucks
+            </td>
+            <td style="text-align:right;">${{receipt.total}}</td>
+
+        </tr>
+
+        <tr colspan="3">
+            <div> 
+                {{!-- {{ get-receipt-details model.store.uid receipt.receiptid }} --}}
+            </div>
+        </tr>
+        {{/each}}
+    {{/if}}
+</table>
