@@ -75,16 +75,10 @@
             </tr>
             {{/link-to}}
 
-            <tr colspan="3">
-                <div class="receipt-details {{if (eq activeModel.receipt receipt) "active" ""}} ">
+            <tr colspan="3" class="{{if (eq activeModel.receipt receipt) "active-row" "inactive-row"}} ">
                 {{#if (eq activeModel.receipt receipt)}} 
-                    {{#each activeModel.receiptdetails as |receiptdetails|}}   
-                        {{receiptdetails.productname}}
-                        {{receiptdetails.productquantity}}
-                        ${{receiptdetails.productprice}}
-                    {{/each}} 
+                    {{receipt-details receipt-details=activeModel.receiptdetails}}
                 {{/if}}
-                </div>
             </tr>
         {{/each}}
     {{/if}}

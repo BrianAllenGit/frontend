@@ -1,1 +1,5 @@
-{{yield}}
+{{#each receipt-details as |receiptdetails|}}   
+    {{receiptdetails.productname}}
+    {{receiptdetails.productquantity}}
+    ${{receiptdetails.productprice}}
+{{/each}} 
