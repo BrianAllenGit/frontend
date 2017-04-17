@@ -6,6 +6,7 @@
 			{{update-product activeModel=activeModel storeId=storeId}}
 		{{else}}
 			{{add-product storeId=storeId}}
+			{{log storeId}}
 		{{/if}}
 	{{/unless}}
 </div>
