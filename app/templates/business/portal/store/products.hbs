@@ -1,4 +1,7 @@
 <div id="dont-flex">
-	{{infinite-table model=model storeId=storeId loadMore="loadMore"}}
-
+	{{#unless activeModel}}
+		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel}}
+	{{else}}
+		<h1>Hello</h1>
+	{{/unless}}
 </div>

@@ -45,10 +45,12 @@ export default Ember.Route.extend({
 	  },
 	  actions: {
     didTransition() {
+
     	if (this.controller.get('activeModel') === this.activeModel){
       		this.controller.set('activeModel', "");
     	}
     	this.activeModel = this.controller.get('activeModel');
+
       return true; // Bubble the didTransition event
     },
     loadMore(){

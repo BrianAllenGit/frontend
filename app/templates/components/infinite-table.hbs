@@ -12,8 +12,6 @@
 	</tr>
 
 	{{outlet}}
-	{{log model}}
-
 	{{#if model}}
 
 		{{#each model as |product|}}
@@ -23,7 +21,6 @@
 				    <td>${{ product.price }}</td>
 			  	</tr>
 		  	{{/link-to}}
-		  	{{outlet}}
 		{{/each}}
 	{{/if}}
 </table>
