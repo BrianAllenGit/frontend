@@ -1027,7 +1027,7 @@ define('frontend/tests/routes/business/portal.jshint.lint-test', ['exports'], fu
   QUnit.module('JSHint | routes/business/portal.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal.js should pass jshint.\nroutes/business/portal.js: line 17, col 32, \'snapshot\' is defined but never used.\n\n1 error');
+    assert.ok(false, 'routes/business/portal.js should pass jshint.\nroutes/business/portal.js: line 18, col 24, \'snapshot\' is defined but never used.\n\n1 error');
   });
 });
 define('frontend/tests/routes/business/portal/createstore.jshint.lint-test', ['exports'], function (exports) {
