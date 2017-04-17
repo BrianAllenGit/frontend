@@ -10,9 +10,11 @@ export default Ember.Component.extend({
 			var controller = this;
 			var name = Ember.$('#name');
 			var phone = Ember.$('#phone');
+			var tax = Ember.$('#tax');
 			var address = Ember.$('.address-box');
 			var nameRegex = /[A-Za-z]+$/i;
 			var phoneRegex = /\([2-9][0-9]{2}\) [0-9]{3}-[0-9]{4}/i;
+			var taxRegex = /0\.[0-9]{2}/i;
 			//console.log(phone.val());
 
 			if (address.val().length === 0){
@@ -32,12 +34,17 @@ export default Ember.Component.extend({
             return;
           }
 
+          if (!taxRegex.test(tax.val())){
+          	document.getElementById('tax').setCustomValidity("Please format tax 0.##");
+          	return;
+		}
+
           var new_store = this.get('store').createRecord('store', {
           	address: address.val(),
           	name: name.val(),
           	phone: phone.val(),
           	owner: this.get('session.currentUser.uid'),
-          	tax: 1.7
+          	tax: tax.val()
 
           });
           new_store.save().then(function(){
