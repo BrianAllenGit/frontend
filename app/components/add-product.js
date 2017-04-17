@@ -2,13 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-	tagName: 'tr',
 	store: Ember.inject.service(),
 	router: Ember.inject.service('-routing'), 
 
 	actions: {
 		save(){
-			console.log('click');
+			var controller = this;
 	        var store = this.get('store');
 			var name = Ember.$('#name');
 			var sku = Ember.$('#sku');

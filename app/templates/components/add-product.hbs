@@ -1,53 +1,89 @@
-<form {{action "submit" on="submit"}}>
+<form {{action "save" on="submit"}}>
 
-	{{input type='text' 
-		class='' 
-		id="name" 
-		value=name 
-		placeholder="Name" 
-        required="required"}}
+	<div class="form-table">
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="name">Name</label>
+	         <div class="form-field__content">
+	            {{input type='text' 
+					class='form-field__input' 
+					id="name" 
+					placeholder="Item Name" 
+			        required="required"}}
+	         </div>
+	      </div>
+	   </div> 
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="sku">SKU</label>
+	         <div class="form-field__content">
+	            {{input type='text' 
+					class='form-field__input' 
+					id="sku" 
+					placeholder="SKU" }}
+	         </div>
+	      </div>
+	   </div> 
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="price">Price</label>
+	         <div class="form-field__content">
+	            {{input type='number' 
+					class='form-field__input' 
+					id="price" 
+					min="0"
+					step=0.01
+					placeholder="Price" 
+			        required="required" 
+			        pattern="([0-9]+)(.[0-9]{2}+|)"}}
+	         </div>
+	      </div>
+	   </div>
 
-	{{input type='text' 
-		class='' 
-		id="sku" 
-		value=sku 
-		placeholder="SKU" }}
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="quantity">Quantity</label>
+	         <div class="form-field__content">
+	            {{input type='number' 
+					class='form-field__input' 
+					id="quantity" 
+					placeholder="Quantity" 
+					pattern="[0-9]+" 
+			        required="required" 
+			        title="Please only enter a whole number of 0 or greater"}}
+	         </div>
+	      </div>
+	   </div>
 
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="tax">Tax</label>
+	         <div class="form-field__content">
+	            {{input type='text' 
+					class='form-field__input' 
+					id="tax" 
+					placeholder="Tax" 
+					pattern="0.[0-9]+" 
+					step=0.01
+			        required="required" 
+			        title="Please only enter decimal value less than 1. For instance, '0.07' for 7%."}}
+	         </div>
+	      </div>
+	   </div>    
 
-	{{input type='number' 
-		class='' 
-		id="price" 
-		value=price 
-		step=0.01
-		placeholder="Price"
-		min="0"
-        required="required" 
-        pattern="([0-9]+)(.[0-9]{2}+|)"}}
+	   <div class="form-row">
+	      <div class="ember-view form-field">
+	         <label class="form-field__label" for="barcode">Barcode</label>
+	         <div class="form-field__content">
+	            {{input type='text' 
+					class='form-field__input' 
+					id="barcode"
+					placeholder="Barcode" }}
+	         </div>
+	      </div>
+	   </div>        
+	</div>
 
-	{{input type='number' 
-		class='' id="quantity" 
-		min="0"
-		value=quantity 
-		placeholder="Quantity" 
-		pattern="[0-9]+" 
-        required="required" 
-        title="Please only enter a whole number of 0 or greater"}}
-
-	{{input type='text' 
-		class='' 
-		id="tax" 
-		value=tax 
-		placeholder="Tax" 
-		pattern="0.[0-9]+" 
-		step=0.01
-        required="required" 
-        title="Please only enter decimal value less than 1. For instance, '0.07' for 7%."}}
-
-	{{input type='text' 
-		class='' 
-		id="barcode" 
-		value=barcode 
-		placeholder="Barcode" }}
 	{{input type='submit' name="submit" value="Save" placeholder='Save'}}
 
 	<input type="button" value="Cancel" {{action 'cancel'}}>
