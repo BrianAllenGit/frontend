@@ -8,9 +8,7 @@
 				{{input type='text' maxlength="16" pattern="[A-Za-z '0-9]{1,50}" title="Alphabet characters only" class='input-box' id="name" value=name placeholder=model.name }}
 
 				<label for="phone">Phone</label>
-				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder=model.phone }}
-
-				{{input type='submit' class="info-submit blue-gradient" value="Save Info"}}				
+				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder=model.phone }}		
 			</div>
 
 			<div class="info-row">
@@ -31,7 +29,8 @@
 				restrictions=restrictions
 				}}
 
-				<span class="statement">We take your privacy very seriously and<br>will never share your information ever</span>
+				{{input type='submit' class="info-submit blue-gradient" value="Save Info"}}		
+				
 			</div>
 		</div>
 	</form>

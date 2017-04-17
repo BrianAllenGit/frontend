@@ -7,9 +7,9 @@
 /* Navigation bar in business portal */
 .business-portal-nav
 	height: 100vh
-	width: 300px
+	width: 200px
 	overflow: auto
-	min-width: 300px
+	min-width: 200px
 	a
 		color: #fff
 		font-family: GothamRounded-Book
@@ -59,7 +59,9 @@
 	line-height: 26px
 	color: #525f7f
 	overflow: auto
-
+	@media screen and (max-width: $small-laptop-screen)
+		padding-top: 50px
+        padding-left: 25px
 
 .business-portal-stores
 	display: flex
@@ -164,3 +166,72 @@
 
 .product-table-row
 	justify-content: space-between
+
+.form-table 
+	border: 1px #bec3c8 solid
+	border-width: 1px 1px 0 1px
+	-webkit-transition: border-color 0.2s ease-in-out
+	transition: border-color 0.2s ease-in-out
+	position: relative
+
+.form-table 
+	position: relative
+	.form-row:first-of-type 
+		border-width: 0
+
+.form-row 
+	display: -webkit-box
+	display: -ms-flexbox
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: flex
+
+.form-field 
+    display: -webkit-box
+    display: -ms-flexbox
+    display: -webkit-flex
+    display: -moz-flex
+    display: -ms-flex
+    display: flex
+    width: 100%
+
+
+.form-field__label 
+	display: block
+	min-height: 47px
+	padding: 13px 24px
+	color: #32373c
+	font-size: 14px
+	line-height: 1.5
+	border-bottom: 1px #bec3c8 solid
+	position: relative
+	width: calc(100% - 200px)
+	width: 200px
+	font-weight: 500
+	background-color: #f0f1f2
+	cursor: default
+
+.form-field__content 
+    border-bottom: 1px #bec3c8 solid
+    position: relative
+    width: calc(100% - 200px)
+
+
+.form-field__input 
+    display: block
+    min-height: 47px
+    padding: 13px 24px
+    color: #32373c
+    font-size: 14px
+    line-height: 1.5
+    width: 100%
+    background-color: transparent
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    margin: 0
+    border: 0
+
+.form-row-buttons
+	margin-top: 30px

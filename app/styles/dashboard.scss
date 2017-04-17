@@ -416,8 +416,8 @@ html, body {
 	height:100%;
 	.info-row-container{
 		display: flex;
-		flex-direction: row;
-		padding:100px;
+		flex-direction: column;
+		padding-left:50px;
 		.info-row{
 			padding-right:50px;
 			display: flex;
