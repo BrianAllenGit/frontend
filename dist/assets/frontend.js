@@ -2087,7 +2087,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+1f2d0d53"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+1859dad7"});
 }
 
 /* jshint ignore:end */
