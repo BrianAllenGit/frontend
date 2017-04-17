@@ -1,16 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	storeId: "",
-	model(params, transition){    
-		var store_id = transition.params["business.portal.store"].store_id;
-		this.storeId=store_id;
-	},
-	setupController(controller) {
+	setupController() {
 	    this._super(...arguments);
-	   	//Ember.set(controller, 'storeId', this.storeId);
-	   	console.log(this.get('model.store.tax'));
-	   		    this.controllerFor('business.portal.store.products').set('activeModel', "add");
-
+	   	this.controllerFor('business.portal.store.products').set('activeModel', "add");
 	  },
 });
