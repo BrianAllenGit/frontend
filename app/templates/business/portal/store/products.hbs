@@ -1,11 +1,13 @@
 <div id="dont-flex">
+{{log model.store.id}}
 	{{#unless activeModel}}
-		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel currentlyLoading=currentlyLoading}}
+		{{infinite-table model=model.products storeId=model.store.id loadMore="loadMore" activeModel=activeModel currentlyLoading=currentlyLoading}}
 	{{else}}
 		{{#if activeModel.id}}
-			{{update-product activeModel=activeModel storeId=storeId}}
+
+			{{update-product activeModel=activeModel storeId=model.store.id}}
 		{{else}}
-			{{add-product storeId=storeId}}
+			{{add-product currentStore=model.store}}
 		{{/if}}
 	{{/unless}}
 </div>

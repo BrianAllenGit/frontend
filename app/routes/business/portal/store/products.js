@@ -10,7 +10,10 @@ export default Ember.Route.extend({
 	model(params, transition){   
 			var store_id = transition.params["business.portal.store"].store_id;
 			this.storeId=store_id;
-			 return this.get('firebaseUtil').query('product', this.storeId, "products/", {orderBy: 'storeid', equalTo: store_id, limitToFirst: 25 });
+			 return Ember.RSVP.hash({ 
+			 	products: this.get('firebaseUtil').query('product', this.storeId, "products/", {orderBy: 'storeid', equalTo: store_id, limitToFirst: 25 }),
+			 	store: this.store.findRecord('store', this.storeId) 
+			 });
 
 			 // this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { 
 			 // 	this.controller.set('product', product); 
@@ -39,9 +42,11 @@ export default Ember.Route.extend({
 			// });
 
 	},
-	setupController(controller) {
+	setupController(controller, model) {
 		this._super(...arguments);
-		  Ember.set(controller, 'storeId', this.storeId);
+		  Ember.set(controller, 'store', model.store);
+		  Ember.set(controller, 'products', model.products);
+
 
 	  },
 	  actions: {

@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 			var quantity = Ember.$('#quantity');			
 			var tax = Ember.$('#tax');
 			var barcode = Ember.$('#barcode');
-			var storeId = this.get('storeId');
+			var storeId = this.get('currentStore.id');
         	var new_product = store.createRecord('product', {
               name: name.val(),
               price: price.val(),
