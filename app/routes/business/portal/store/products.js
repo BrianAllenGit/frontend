@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	activeModel: "",
+	currentlyLoading: false,
 	loaded: "0",
 	productList: "",
 	storeId: "",
@@ -61,6 +62,13 @@ export default Ember.Route.extend({
     	// 	this.controller.set('product', productList); 
     	// });
 
+    },
+     loading(transition) {
+     	let controller = this;
+     	controller.currentlyLoading = true;
+      	transition.promise.finally(function() {
+          controller.currentlyLoading = false;
+      });
     }
   }
 });
