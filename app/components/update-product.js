@@ -8,6 +8,7 @@ export default Ember.Component.extend({
 	actions:{
 		save(){
 			console.log(this.get("activeModel.id"));
+			var controller = this;
 			var store = this.get('store');
 			var name = Ember.$('#name');
 			var sku = Ember.$('#sku');
@@ -25,13 +26,22 @@ export default Ember.Component.extend({
 				product.set("barcode", barcode.val());
 				product.set("storeId", storeId);
 				product.save();
+				controller.get('router').transitionTo('business.portal.store.products');  
 			});	
-	 	 	this.get('router').transitionTo('business.portal.store.products');  
 
 		},
 		cancel(){
 			this.get('router').transitionTo('business.portal.store.products');  
 
+		},
+		delete(){
+			if (confirm("Are you sure you'd like to delete this item?") === true) {
+				var controller = this;
+				this.get('store').findRecord('product', this.get("activeModel.id")).then(function(product){
+					product.destroyRecord();
+					controller.get('router').transitionTo('business.portal.store.products');  
+				});	
+			}
 		}
 	}
 });
