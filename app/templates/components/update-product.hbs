@@ -1,13 +1,55 @@
 
 <h1>{{activeModel.name}}</h1>
+<form {{action "save" on="submit"}}>
+	{{input type='text' 
+		class='' 
+		id="name" 
+		value=activeModel.name 
+		placeholder=activeModel.name 
+        required="required"}}
+
+	{{input type='text' 
+		class='' 
+		id="sku" 
+		value=activeModel.sku 
+		placeholder=activeModel.sku }}
 
 
-<td>{{input type='text' class='' id="name" value=activeModel.name placeholder=activeModel.name }}</td>
-<td>{{input type='text' class='' id="sku" value=activeModel.sku placeholder=activeModel.sku }}</td>
-<td>{{input type='text' class='' id="price" value=activeModel.price placeholder=activeModel.price }}</td>
-<td>{{input type='text' class='' id="quantity" value=activeModel.quantity placeholder=activeModel.quantity }}</td>
-<td>{{input type='text' class='' id="tax" value=activeModel.tax placeholder=activeModel.tax }}</td>
-<td>{{input type='text' class='' id="barcode" value=activeModel.barcode placeholder=activeModel.barcode }}</td>
-<input type="button" value="Save"  {{action 'save'}}>
-<input type="button" value="Delete"  {{action 'delete'}}>
-<input type="button" value="Cancel" {{action 'cancel'}}>
+	{{input type='number' 
+		class='' 
+		id="price" 
+		min="0"
+		value=activeModel.price 
+		step=0.01
+		placeholder=activeModel.price 
+        required="required" 
+        pattern="([0-9]+)(.[0-9]{2}+|)"}}
+
+	{{input type='number' 
+		class='' id="quantity" 
+		value=activeModel.quantity 
+		placeholder=activeModel.quantity 
+		pattern="[0-9]+" 
+        required="required" 
+        title="Please only enter a whole number of 0 or greater"}}
+
+	{{input type='text' 
+		class='' 
+		id="tax" 
+		value=activeModel.tax 
+		placeholder=activeModel.tax 
+		pattern="0.[0-9]+" 
+		step=0.01
+        required="required" 
+        title="Please only enter decimal value less than 1. For instance, '0.07' for 7%."}}
+
+	{{input type='text' 
+		class='' 
+		id="barcode" 
+		value=activeModel.barcode 
+		placeholder=activeModel.barcode }}
+
+	{{input type='submit' name="submit" value="Save" placeholder='Save'}}
+	<input type="button" value="Delete"  {{action 'delete'}}>
+	<input type="button" value="Cancel" {{action 'cancel'}}>
+</form>
