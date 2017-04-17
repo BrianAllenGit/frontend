@@ -1096,8 +1096,7 @@ html, body {
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
-  height: 20px; }
+  overflow: hidden; }
 
 .business-portal-name {
   font-family: GothamRounded-Bold; }
