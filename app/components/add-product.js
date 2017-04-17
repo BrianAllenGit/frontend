@@ -4,8 +4,10 @@ export default Ember.Component.extend({
 
 	tagName: 'tr',
 	store: Ember.inject.service(),
+	router: Ember.inject.service('-routing'), 
+
 	actions: {
-		submit(){
+		save(){
 			console.log('click');
 	        var store = this.get('store');
 			var name = Ember.$('#name');
@@ -25,6 +27,12 @@ export default Ember.Component.extend({
               tax: tax.val()	
             });
           	new_product.save();
-		}
+          	controller.get('router').transitionTo('business.portal.store.products');  
+
+		},
+		cancel(){
+			this.get('router').transitionTo('business.portal.store.products');  
+
+		},
 	}
 });

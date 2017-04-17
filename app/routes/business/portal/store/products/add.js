@@ -8,6 +8,8 @@ export default Ember.Route.extend({
 	},
 	setupController(controller) {
 	    this._super(...arguments);
-	   	Ember.set(controller, 'storeId', this.storeId);
+	   	//Ember.set(controller, 'storeId', this.storeId);
+	   		    this.controllerFor('business.portal.store.products').set('activeModel', "add");
+
 	  },
 });
