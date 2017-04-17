@@ -17,10 +17,13 @@
 	{{#if model}}
 
 		{{#each model as |product|}}
-		<tr>
-		    <td>{{ product.name }}</td>
-		    <td>${{ product.price }}</td>
-	  	</tr>
+			{{#link-to "business.portal.store.products.show" storeId product}}
+				<tr>
+				    <td>{{ product.name }}</td>
+				    <td>${{ product.price }}</td>
+			  	</tr>
+		  	{{/link-to}}
+		  	{{outlet}}
 		{{/each}}
 	{{/if}}
 </table>
