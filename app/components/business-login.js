@@ -11,11 +11,7 @@ export default Ember.Component.extend({
         email: this.get('email') || '',
         password: this.get('password') || '',
       }).then(() => {
-        controller.set('email', null);
-        controller.set('password', null);
         controller.get('router').transitionTo('business.portal');
-
-
       }, (error) => {
         alert(error);
       });
