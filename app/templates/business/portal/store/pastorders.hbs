@@ -1,64 +1,7 @@
-{{!-- {{business-pastorders model=model}}
- --}} 
-{{!-- 
 <table class="items-table" id="scrollme">
     <tr class="items-table-header">
         <th style="text-align:left;">Date</th>
-        <th>Name</th>
-        <th style="text-align:right;">Total</th>
-    </tr>
-
-    {{outlet}}
-    {{log model}}
-
-    {{#if model}}
-        {{#each model.receipt as |receipt|}}
-        
-        <tr {{action "pressed"}}>
-            <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
-            <td style="text-align:center;">
-                    Beckah Millionbucks
-            </td>
-            <td style="text-align:right;">${{receipt.total}}</td>
-
-        </tr>
-
-        <tr colspan="3" style="height:500px;">
-            {{log activeModel}} --}}
-            {{!-- <div class="receipt-details {{if (eq activeModel.receipt receipt) "active" ""}} "> --}}
-                {{!-- {{#if (eq activeModel.receipt receipt)}}  --}}
-                    {{!-- {{#each model.receiptdetails as |receiptdetails|}}   
-                        <div class="item-list">
-                            <div class="receipt-details-productname">
-                                <p>{{receiptdetails.productname}}</p>
-                            </div>
-                            <div class="receipt-details-productquantity">
-                                <p>{{receiptdetails.productquantity}}</p>
-                            </div>
-                            <div class="receipt-details-productprice">
-                                <p>${{receiptdetails.productprice}}</p>
-                            </div>
-                        </div>
-                    {{/each}}  --}}
-                {{!-- {{/if}} --}}
-            {{!-- </div> --}}
-
-{{!--  
-            {{#link-to "business.portal.store.pastorders.show" model.store.uid receipt.receiptid}}
-                <div class="receipt-expand">
-                    <img class="image-expand" width="10.5px" height="6px"/>
-                </div>
-            {{/link-to}}
-
-        </tr>
-        {{/each}}
-    {{/if}}
-</table> --}}
-
-<table class="items-table" id="scrollme">
-    <tr class="items-table-header">
-        <th style="text-align:left;">Date</th>
-        <th>Name</th>
+        {{!-- <th>Name</th> --}}
         <th style="text-align:right;">Total</th>
     </tr>
 
@@ -71,7 +14,7 @@
                 {{#link-to "business.portal.store.pastorders"}}
                     <tr>
                         <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
-                        <td style="text-align:center;">Beckah Millionbucks</td>
+                        {{!-- <td style="text-align:center;">Beckah Millionbucks</td> --}}
                         <td style="text-align:right;">${{receipt.total}}</td>
                     </tr>
                 {{/link-to}}
@@ -79,7 +22,7 @@
                 {{#link-to "business.portal.store.pastorders.show" model.store.uid receipt.receiptid}}
                     <tr>
                         <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
-                        <td style="text-align:center;">Beckah Millionbucks</td>
+                        {{!-- <td style="text-align:center;">Beckah Millionbucks</td> --}}
                         <td style="text-align:right;">${{receipt.total}}</td>
                     </tr>
                 {{/link-to}}
@@ -99,73 +42,3 @@
         {{/each}}
     {{/if}}
 </table>
-
-{{!-- <div id="dont-flex">
-{{#each model.receipt as |receipt|}}
-    <div class="receipt-row">
-        <div class="receipt-info-container">
-            <div class="receipt-store-price">
-                <div class="receipt-store">
-                    <p class="store-name">{{receipt.storename}}</p>
-                    <p class="store-address">{{receipt.storeaddress}}helo</p>
-                </div>
-                <div class="receipt-price">
-                    <p class="price-title">Order total</p>
-                    <p class="price-total">$ {{receipt.total}}</p>
-                </div>
-            </div>
-            <div class="receipt-details {{if (eq activeModel.receipt receipt) "active" ""}} ">
-                {{#if (eq activeModel.receipt receipt)}} 
-                        <div class="receipt-details-container"> 
-                            <div class="receipt-detail-items">
-                                {{#each activeModel.receiptdetails as |receiptdetails|}}   
-                                    <div class="item-list">
-                                        <div class="receipt-details-productname">
-                                            <p>{{receiptdetails.productname}}</p>
-                                        </div>
-                                        <div class="receipt-details-productquantity">
-                                            <p>{{receiptdetails.productquantity}}</p>
-                                        </div>
-                                        <div class="receipt-details-productprice">
-                                            <p>${{receiptdetails.productprice}}</p>
-                                        </div>
-                                    </div>
-                                {{/each}} 
-                            </div>
-                            <div class="receipt-detail-subtotal">
-                                <div class="receipt-subtotal">
-                                    <p class="price-title">Subtotal</p>
-                                    <p class="price-total-small">$1.50</p>
-                                </div>
-                                <div class="receipt-tax">
-                                    <p class="price-title">Tax</p>
-                                    <p class="price-total-small">$.49</p>
-                                </div>
-                            </div>
-                        </div>
-                {{/if}}
-            </div>
-            <img src="/assets/images/receipt-line.png" width="100%" height="1px"/>
-            <div class="receipt-date-expand">
-                <div class="receipt-date">
-                    <img src="/assets/images/dashboard-calendar.png" width="18px" height="18px"/>
-                    <p>{{format-epoch receipt.timestamp}}</p>
-                </div>
-                {{#if (eq activeModel.receipt receipt)}}
-                    {{#link-to "business.portal.store.pastorders"}}
-                        <div class="receipt-expand">
-                            <img class="image-expand" width="10.5px" height="6px"/>
-                        </div>
-                    {{/link-to}}
-                {{else}}
-                    {{#link-to "business.portal.store.pastorders.show" model.store.uid receipt.receiptid}}
-                        <div class="receipt-expand">
-                            <img class="image-expand" width="10.5px" height="6px"/>
-                        </div>
-                    {{/link-to}}
-                {{/if}}
-            </div>
-        </div>
-    </div>
-{{/each}} 
-</div> --}}
