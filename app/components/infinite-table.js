@@ -20,7 +20,6 @@ export default Ember.Component.extend({
 		}, 50);
 	},
 	willDestroyElement() {
-		console.log('called');
 		var scrollMe = Ember.$(".receipt-content");
 		scrollMe.unbind('scroll');
 	},

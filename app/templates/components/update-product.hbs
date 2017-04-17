@@ -1,0 +1,13 @@
+
+<h1>{{activeModel.name}}</h1>
+
+
+<td>{{input type='text' class='' id="name" value=activeModel.name placeholder=activeModel.name }}</td>
+<td>{{input type='text' class='' id="sku" value=activeModel.sku placeholder=activeModel.sku }}</td>
+<td>{{input type='text' class='' id="price" value=activeModel.price placeholder=activeModel.price }}</td>
+<td>{{input type='text' class='' id="quantity" value=activeModel.quantity placeholder=activeModel.quantity }}</td>
+<td>{{input type='text' class='' id="tax" value=activeModel.tax placeholder=activeModel.tax }}</td>
+<td>{{input type='text' class='' id="barcode" value=activeModel.barcode placeholder=activeModel.barcode }}</td>
+<input type="button" value="Save"  {{action 'save'}}>
+<input type="button" value="Delete"  {{action 'delete'}}>
+<input type="button" value="Cancel" {{action 'cancel'}}>

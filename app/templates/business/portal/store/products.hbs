@@ -2,6 +2,6 @@
 	{{#unless activeModel}}
 		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel}}
 	{{else}}
-		<h1>Hello</h1>
+		{{update-product activeModel=activeModel storeId=storeId}}
 	{{/unless}}
 </div>
