@@ -10,16 +10,22 @@
 			</a>
 		</div>
 		<div class="footer-customers">
+			{{#link-to 'index'}}
 			<h3>Customers</h3>
+			{{/link-to}}
 			<ul>
+				<li>{{#link-to 'index'}}Customer Home Page{{/link-to}}</li>
 				<li class="mobile-hide">{{#link-to 'login'}}Customer Login{{/link-to}}</li>
 				<li><a href="/coming-soon">Store Locator</a></li>
 				<li class="mobile-hide">{{#link-to 'sign-up'}}Sign Up{{/link-to}}</li>
 			</ul>
 		</div>
 		<div class="footer-stores">
+			{{#link-to 'business.index'}}
 			<h3>Stores</h3>
+			{{/link-to}}
 			<ul>
+				<li>{{#link-to 'business.index'}}Business Home Page{{/link-to}}</li>
 				<li class="mobile-hide">{{#link-to 'business.login'}}Store Login{{/link-to}}</li>
 				<li>{{#link-to 'business.index'}}More Info{{/link-to}}</li>
 				<li>{{#link-to 'business.index'}}Pricing{{/link-to}}</li>
