@@ -1,7 +1,6 @@
 
 <h1>{{activeModel.name}}</h1>
-<form>
-
+<form {{action "save" on="submit"}}>
 	{{input type='text' 
 		class='' 
 		id="name" 
@@ -49,8 +48,7 @@
 		value=activeModel.barcode 
 		placeholder=activeModel.barcode }}
 
-	{{!-- {{input type='submit' name="submit" value="Add" placeholder='Add'}} --}}
-	<input type="submit" value="Save"  {{action 'save'}}>
-	<input type="submit" value="Delete"  {{action 'delete'}}>
-	<input type="submit" value="Cancel" {{action 'cancel'}}>
+	{{input type='submit' name="submit" value="Save" placeholder='Save'}}
+	<input type="button" value="Delete"  {{action 'delete'}}>
+	<input type="button" value="Cancel" {{action 'cancel'}}>
 </form>
