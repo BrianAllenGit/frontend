@@ -17,9 +17,9 @@
 	{{else}}
 		{{#each model as |product|}}
 			{{#link-to "business.portal.store.products.show" storeId product}}
-				<tr>
-				    <td>{{ product.name }}</td>
-				    <td>${{ product.price }}</td>
+				<tr class="product-table-row">
+				    <td class="product-table-data">{{ product.name }}</td>
+				    <td class="product-table-data">${{ product.price }}</td>
 			  	</tr>
 		  	{{/link-to}}
 		{{else}}

@@ -4,18 +4,23 @@
 	<form {{action "saveInfo" model on="submit" }}>
 		<div class="info-row-container">
 			<div class="info-row">
-
+				<label for="name">Store Name</label>
 				{{input type='text' maxlength="16" pattern="[A-Za-z '0-9]{1,50}" title="Alphabet characters only" class='input-box' id="name" value=name placeholder=model.name }}
 
+				<label for="phone">Phone</label>
 				{{input-mask type="text" mask="(999) 999-9999" type="tel" pattern="[\(]\d{3}[\)][\s]\d{3}[\-]\d{4}" class='input-box' id="phone" value=phone placeholder=model.phone }}
 
 				{{input type='submit' class="info-submit blue-gradient" value="Save Info"}}				
 			</div>
 
 			<div class="info-row">
-				{{input type='number' maxlength="16" pattern="0.[0-9]+" title="Please put in tax as a value less than 1" class='input-box' id="tax" value=tax placeholder=model.tax }}
 
+				<label for="tax">Tax</label>
+				{{input type='text' maxlength="16" pattern="0.[0-9]+" title="Please put in tax as a value less than 1" class='input-box' id="tax" value=tax placeholder=model.tax }}
+
+				<label for="address">Address</label>
 				{{place-autocomplete-field
+				id="address"
 				value= address
 				placeholder=model.address
 				disable=false
