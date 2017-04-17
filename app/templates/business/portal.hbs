@@ -2,7 +2,7 @@
     <nav class="business-portal-nav blue-gradient-navigation-background">
         <div class="business-portal-nav-container">
             <div class="business-portal-personal-info">
-                <span class="business-portal-name">Beckah Sheeler</span><br />
+                <span class="business-portal-name">{{session.currentUser.email}}</span><br />
                 <span class="business-portal-signout"{{action "signOut"}}>Sign Out</span><br />
             </div>
 
