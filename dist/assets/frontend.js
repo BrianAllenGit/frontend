@@ -297,7 +297,7 @@ define("frontend/components/infinite-table", ["exports", "ember"], function (exp
 			var userScrolled = false;
 
 			scrollMe.scroll(function () {
-				if (scrollMe.scrollTop() + scrollMe.innerHeight() >= scrollMe[0].scrollHeight) {
+				if (scrollMe.scrollTop() + scrollMe.innerHeight() + 1 >= scrollMe[0].scrollHeight) {
 					userScrolled = true;
 				}
 			});
@@ -1461,7 +1461,7 @@ define('frontend/routes/business/portal', ['exports', 'ember'], function (export
 			var currentRoute = this;
 
 			return this.store.findRecord('businessuser', this.get('session.currentUser.uid')).then(function (snapshot) {
-				return currentRoute.store.query('store', { orderBy: 'owner', equalTo: snapshot.get('uid') });
+				return currentRoute.store.query('store', { orderBy: 'owner', equalTo: snapshot.get('id') });
 			},
 			//On error
 			function (error) {
@@ -1676,7 +1676,8 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 								return true; // Bubble the didTransition event
 						},
 						loadMore: function loadMore() {
-								this.get('firebaseUtil').next(this.get('referenceId'), 25);
+								console.log("hi");
+								this.get('firebaseUtil').next(this.storeId, 25);
 
 								// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => {
 								// 	this.get('productList').pushObjects(product);
@@ -2087,7 +2088,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+1859dad7"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+647c2ac5"});
 }
 
 /* jshint ignore:end */

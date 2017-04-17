@@ -16,7 +16,7 @@ export default Ember.Route.extend({
 
 		return this.store.findRecord('businessuser', this.get('session.currentUser.uid')).then(
 	      	function(snapshot){
-	      		return currentRoute.store.query('store', {orderBy: 'owner', equalTo: snapshot.get('uid')} );
+	      		return currentRoute.store.query('store', {orderBy: 'owner', equalTo: snapshot.get('id')} );
 	     	},
 	     	//On error
 	     	function(error){
