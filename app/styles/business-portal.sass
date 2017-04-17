@@ -99,7 +99,7 @@
 	tr
 		border-bottom: 1px solid #bec3c8
 		display: flex
-		justify-content: space-between
+		/*justify-content: space-between*/
 		line-height: 48px
 		height: 48px
 		vertical-align: middle
@@ -112,6 +112,9 @@
 	th
 		color: #32373c
 		width: 100%
+	a
+		color: #000
+		font-family: GothamRounded-Book
 
 .items-table-header
 	background-color: #f0f1f2
@@ -145,6 +148,17 @@
 
 .inactive-row
 	display: none !important
+
+.active-row
+	height: 500px !important
+	overflow: auto !important
+	flex-direction: column
+
+.receipt-items
+	width: 100%
+
+.receipt-total
+	width: 100%
 
 
 

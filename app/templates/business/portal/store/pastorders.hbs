@@ -67,19 +67,35 @@
 
     {{#if model}}
         {{#each model.receipt as |receipt|}}
-            {{#link-to "business.portal.store.pastorders.show" model.store.uid receipt.receiptid}}
-            <tr>
-                <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
-                <td style="text-align:center;">Beckah Millionbucks</td>
-                <td style="text-align:right;">${{receipt.total}}</td>
-            </tr>
-            {{/link-to}}
+            {{#if (eq activeModel.receipt receipt)}}
+                {{#link-to "business.portal.store.pastorders"}}
+                    <tr>
+                        <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
+                        <td style="text-align:center;">Beckah Millionbucks</td>
+                        <td style="text-align:right;">${{receipt.total}}</td>
+                    </tr>
+                {{/link-to}}
+            {{else}}
+                {{#link-to "business.portal.store.pastorders.show" model.store.uid receipt.receiptid}}
+                    <tr>
+                        <td style="text-align:left;">{{format-epoch receipt.timestamp}}</td>
+                        <td style="text-align:center;">Beckah Millionbucks</td>
+                        <td style="text-align:right;">${{receipt.total}}</td>
+                    </tr>
+                {{/link-to}}
+            {{/if}}
 
             <tr colspan="3" class="{{if (eq activeModel.receipt receipt) "active-row" "inactive-row"}} ">
+                <div class="receipt-items">
                 {{#if (eq activeModel.receipt receipt)}} 
                     {{receipt-details receipt-details=activeModel.receiptdetails}}
                 {{/if}}
+                </div>
+                <div class="receipt-total">
+                    Total: ${{receipt.total}}
+                </div>
             </tr>
+
         {{/each}}
     {{/if}}
 </table>
