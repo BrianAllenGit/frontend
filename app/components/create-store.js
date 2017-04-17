@@ -2,10 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	restrictions : { country: "US" }, 
+	  router: Ember.inject.service('-routing'), 
 	  store: Ember.inject.service(),
 
 		actions : {
 		createStore (){
+			var controller = this;
 			var name = Ember.$('#name');
 			var phone = Ember.$('#phone');
 			var address = Ember.$('.address-box');
@@ -39,7 +41,7 @@ export default Ember.Component.extend({
 
           });
           new_store.save().then(function(){
-          	alert('hi');
+      		controller.get('router').transitionTo('business.portal');  
           });
 		},
 		placeChanged: function(place){
