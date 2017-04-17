@@ -12,8 +12,9 @@
 	</tr>
 
 	{{outlet}}
-	{{#if model}}
-
+	{{#if currentlyLoading}}
+		{{loading-animation}}
+	{{else}}
 		{{#each model as |product|}}
 			{{#link-to "business.portal.store.products.show" storeId product}}
 				<tr>
@@ -21,13 +22,8 @@
 				    <td>${{ product.price }}</td>
 			  	</tr>
 		  	{{/link-to}}
+		{{else}}
+		Please add more products<br />
 		{{/each}}
 	{{/if}}
 </table>
-
-	{{#unless model}}
-				{{!-- {{loading-animation}} --}}
-
-		Please add more products<br />
-		or products are loading.
-	{{/unless}}

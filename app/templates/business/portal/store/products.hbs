@@ -1,6 +1,6 @@
 <div id="dont-flex">
 	{{#unless activeModel}}
-		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel}}
+		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel currentlyLoading=currentlyLoading}}
 	{{else}}
 		{{update-product activeModel=activeModel storeId=storeId}}
 	{{/unless}}
