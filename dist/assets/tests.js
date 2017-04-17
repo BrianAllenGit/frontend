@@ -36,15 +36,6 @@ define('frontend/tests/components/business-login.jshint.lint-test', ['exports'],
     assert.ok(true, 'components/business-login.js should pass jshint.');
   });
 });
-define('frontend/tests/components/business-pastorders.jshint.lint-test', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | components/business-pastorders.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(false, 'components/business-pastorders.js should pass jshint.\ncomponents/business-pastorders.js: line 40, col 85, \'params\' is not defined.\ncomponents/business-pastorders.js: line 43, col 100, \'params\' is not defined.\n\n2 errors');
-  });
-});
 define('frontend/tests/components/business-signup.jshint.lint-test', ['exports'], function (exports) {
   'use strict';
 
@@ -571,44 +562,6 @@ define('frontend/tests/integration/components/business-login-test.jshint.lint-te
     assert.ok(true, 'integration/components/business-login-test.js should pass jshint.');
   });
 });
-define('frontend/tests/integration/components/business-pastorders-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
-
-  (0, _emberQunit.moduleForComponent)('business-pastorders', 'Integration | Component | business pastorders', {
-    integration: true
-  });
-
-  (0, _emberQunit.test)('it renders', function (assert) {
-
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.on('myAction', function(val) { ... });
-
-    this.render(Ember.HTMLBars.template({
-      'id': 'PneC5/2R',
-      'block': '{"statements":[["append",["unknown",["business-pastorders"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
-      'meta': {}
-    }));
-
-    assert.equal(this.$().text().trim(), '');
-
-    // Template block usage:
-    this.render(Ember.HTMLBars.template({
-      'id': 't1XFLjqP',
-      'block': '{"statements":[["text","\\n"],["block",["business-pastorders"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
-      'meta': {}
-    }));
-
-    assert.equal(this.$().text().trim(), 'template block text');
-  });
-});
-define('frontend/tests/integration/components/business-pastorders-test.jshint.lint-test', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | integration/components/business-pastorders-test.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'integration/components/business-pastorders-test.js should pass jshint.');
-  });
-});
 define('frontend/tests/integration/components/business-signup-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('business-signup', 'Integration | Component | business signup', {
@@ -1027,7 +980,7 @@ define('frontend/tests/routes/business/portal.jshint.lint-test', ['exports'], fu
   QUnit.module('JSHint | routes/business/portal.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal.js should pass jshint.\nroutes/business/portal.js: line 18, col 24, \'snapshot\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'routes/business/portal.js should pass jshint.');
   });
 });
 define('frontend/tests/routes/business/portal/createstore.jshint.lint-test', ['exports'], function (exports) {
@@ -1081,7 +1034,7 @@ define('frontend/tests/routes/business/portal/store/products.jshint.lint-test', 
   QUnit.module('JSHint | routes/business/portal/store/products.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/business/portal/store/products.js should pass jshint.\nroutes/business/portal/store/products.js: line 41, col 32, \'model\' is defined but never used.\n\n1 error');
+    assert.ok(true, 'routes/business/portal/store/products.js should pass jshint.');
   });
 });
 define('frontend/tests/routes/business/portal/store/products/add.jshint.lint-test', ['exports'], function (exports) {

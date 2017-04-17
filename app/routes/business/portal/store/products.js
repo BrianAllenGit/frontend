@@ -38,7 +38,7 @@ export default Ember.Route.extend({
 			// });
 
 	},
-	setupController(controller,model) {
+	setupController(controller) {
 		this._super(...arguments);
 		  Ember.set(controller, 'storeId', this.storeId);
 

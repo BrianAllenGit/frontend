@@ -88,59 +88,6 @@ define('frontend/components/business-login', ['exports', 'ember'], function (exp
     }
   });
 });
-define("frontend/components/business-pastorders", ["exports", "ember"], function (exports, _ember) {
-	exports["default"] = _ember["default"].Component.extend({
-		activeModel: "",
-		didInsertElement: function didInsertElement() {
-			_ember["default"].$("tr[colspan=3]").hide();
-			_ember["default"].$("tr[colspan=3]").css("height", "500px");
-			_ember["default"].$("tr[colspan=3]").css("overflow", "auto");
-			_ember["default"].$("table").click(function (event) {
-				event.stopPropagation();
-				var $target = _ember["default"].$(event.target);
-				if ($target.closest("tr").attr("colspan") > 1) {
-					$target.slideUp();
-				} else {
-					$target.closest("tr").next().slideToggle();
-				}
-			});
-		},
-		model: function model(params, transition) {
-			console.log(params);
-			var store_id = transition.params["business.portal.store"].store_id;
-			console.log(store_id);
-			return _ember["default"].RSVP.hash({
-				receipt: this.store.query('receipt', { orderBy: 'storeid', equalTo: store_id }),
-				store: this.store.findRecord('store', store_id),
-				receiptdetails: this.store.query('receiptdetails', { orderBy: 'receiptid', equalTo: params.receipt_id })
-			});
-		},
-		setupController: function setupController(controller, model) {
-			this._super.apply(this, arguments);
-			_ember["default"].set(controller, 'receipt', model.receipt);
-			_ember["default"].set(controller, 'store', model.store);
-		},
-		actions: {
-			pressed: function pressed() {
-				//this.$("#test").fadeOut("slow");
-				alert("hi!");
-				return _ember["default"].RSVP.hash({
-					receipt: this.store.query('receipt', { orderBy: 'receiptid', equalTo: params.receipt_id }).then(function (items) {
-						return items.get('firstObject');
-					}),
-					receiptdetails: this.store.query('receiptdetails', { orderBy: 'receiptid', equalTo: params.receipt_id })
-				});
-			},
-			didTransition: function didTransition() {
-				if (this.controller.get('activeModel') === this.activeModel) {
-					this.controller.set('activeModel', "");
-				}
-				this.activeModel = this.controller.get('activeModel');
-				return true; // Bubble the didTransition event
-			}
-		}
-	});
-});
 define('frontend/components/business-signup', ['exports', 'ember'], function (exports, _ember) {
   exports['default'] = _ember['default'].Component.extend({
     firebaseApp: _ember['default'].inject.service(),
@@ -1437,7 +1384,7 @@ define('frontend/routes/business/portal', ['exports', 'ember'], function (export
 			var currentRoute = this;
 
 			return this.store.findRecord('businessuser', this.get('session.currentUser.uid')).then(function (snapshot) {
-				return currentRoute.store.query('store', { orderBy: 'owner', equalTo: currentRoute.get('session.currentUser.uid') });
+				return currentRoute.store.query('store', { orderBy: 'owner', equalTo: snapshot.uid });
 			},
 			//On error
 			function (error) {
@@ -1565,7 +1512,7 @@ define("frontend/routes/business/portal/store/products", ["exports", "ember"], f
 						//     	 store: this.store.findRecord('store', store_id)
 						// });
 				},
-				setupController: function setupController(controller, model) {
+				setupController: function setupController(controller) {
 						this._super.apply(this, arguments);
 						_ember["default"].set(controller, 'storeId', this.storeId);
 				},
@@ -1876,9 +1823,6 @@ define("frontend/templates/components/add-product", ["exports"], function (expor
 define("frontend/templates/components/business-login", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "22YP7L51", "block": "{\"statements\":[[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box\"],[\"flush-element\"],[\"text\",\"\\n\\n    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-label\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"h1\",[]],[\"flush-element\"],[\"text\",\"Sign In\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"block\",[\"link-to\"],[\"business.sign-up\"],null,1],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\\n    \"],[\"open-element\",\"button\",[]],[\"static-attr\",\"class\",\"button-gradient-square blue-gradient\"],[\"modifier\",[\"action\"],[[\"get\",[null]],\"googleSignIn\"]],[\"flush-element\"],[\"text\",\" \\n        Sign in with \"],[\"open-element\",\"b\",[]],[\"flush-element\"],[\"text\",\"Google\"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n    \"],[\"open-element\",\"form\",[]],[\"flush-element\"],[\"text\",\"\\n        \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"text\",\"input-box\",[\"get\",[\"email\"]],\"Email\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"append\",[\"helper\",[\"input\"],null,[[\"type\",\"class\",\"value\",\"placeholder\"],[\"password\",\"input-box\",[\"get\",[\"password\"]],\"Password\"]]],false],[\"open-element\",\"br\",[]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n    \\n        \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-form-submit\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"remember-me\"],[\"flush-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"checkbox\"],[\"static-attr\",\"name\",\"remember-me\"],[\"static-attr\",\"class\",\"checkbox\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n                \"],[\"open-element\",\"label\",[]],[\"static-attr\",\"for\",\"remember-me\"],[\"flush-element\"],[\"text\",\"\\n                    Remember Me\\n                \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"submit\"],[\"static-attr\",\"class\",\"button-gradient-square blue-gradient\"],[\"static-attr\",\"value\",\"Sign In →\"],[\"modifier\",[\"action\"],[[\"get\",[null]],\"signIn\",\"password\"]],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\\n    \"],[\"block\",[\"link-to\"],[\"passwordreset\"],null,0],[\"text\",\" \\n    \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"login-box-terms\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"a\",[]],[\"static-attr\",\"href\",\"#\"],[\"flush-element\"],[\"text\",\"Terms & Conditions\"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"Forgot your password?\"]],\"locals\":[]},{\"statements\":[[\"text\",\"Sign Up\"]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/business-login.hbs" } });
 });
-define("frontend/templates/components/business-pastorders", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template({ "id": "QV+cF+Kn", "block": "{\"statements\":[[\"text\",\" \"],[\"open-element\",\"p\",[]],[\"modifier\",[\"action\"],[[\"get\",[null]],\"pressed\"]],[\"flush-element\"],[\"text\",\"  \\nPress Me  \\n\"],[\"close-element\"],[\"text\",\"  \\n\"],[\"open-element\",\"table\",[]],[\"static-attr\",\"class\",\"items-table\"],[\"static-attr\",\"id\",\"scrollme\"],[\"flush-element\"],[\"text\",\"\\n    \"],[\"open-element\",\"tr\",[]],[\"static-attr\",\"class\",\"items-table-header\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"th\",[]],[\"static-attr\",\"style\",\"text-align:left;\"],[\"flush-element\"],[\"text\",\"Date\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"th\",[]],[\"flush-element\"],[\"text\",\"Name\"],[\"close-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"th\",[]],[\"static-attr\",\"style\",\"text-align:right;\"],[\"flush-element\"],[\"text\",\"Total\"],[\"close-element\"],[\"text\",\"\\n    \"],[\"close-element\"],[\"text\",\"\\n\\n    \"],[\"append\",[\"unknown\",[\"outlet\"]],false],[\"text\",\"\\n    \"],[\"append\",[\"helper\",[\"log\"],[[\"get\",[\"model\"]]],null],false],[\"text\",\"\\n\\n\"],[\"block\",[\"if\"],[[\"get\",[\"model\"]]],null,1],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[{\"statements\":[[\"text\",\"        \\n        \"],[\"open-element\",\"tr\",[]],[\"modifier\",[\"action\"],[[\"get\",[null]],\"pressed\"]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"td\",[]],[\"static-attr\",\"style\",\"text-align:left;\"],[\"flush-element\"],[\"append\",[\"helper\",[\"format-epoch\"],[[\"get\",[\"receipt\",\"timestamp\"]]],null],false],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"td\",[]],[\"static-attr\",\"style\",\"text-align:center;\"],[\"flush-element\"],[\"text\",\"\\n            \\t\\tBeckah Millionbucks\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"td\",[]],[\"static-attr\",\"style\",\"text-align:right;\"],[\"flush-element\"],[\"text\",\"$\"],[\"append\",[\"unknown\",[\"receipt\",\"total\"]],false],[\"close-element\"],[\"text\",\"\\n\\n        \"],[\"close-element\"],[\"text\",\"\\n\\n        \"],[\"open-element\",\"tr\",[]],[\"static-attr\",\"colspan\",\"3\"],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\" \\n\"],[\"text\",\"            \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n\"]],\"locals\":[\"receipt\"]},{\"statements\":[[\"block\",[\"each\"],[[\"get\",[\"model\",\"receipt\"]]],null,0]],\"locals\":[]}],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/business-pastorders.hbs" } });
-});
 define("frontend/templates/components/business-signup", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template({ "id": "/PVPUXV8", "block": "{\"statements\":[[\"open-element\",\"form\",[]],[\"static-attr\",\"action\",\"//scannly.us15.list-manage.com/subscribe/post?u=62635d5a3bf3273aeeea1ecfd&id=4a7a89bcee\"],[\"static-attr\",\"method\",\"post\"],[\"static-attr\",\"id\",\"mc-embedded-subscribe-form\"],[\"static-attr\",\"name\",\"mc-embedded-subscribe-form\"],[\"static-attr\",\"class\",\"validate\"],[\"static-attr\",\"target\",\"_blank\"],[\"static-attr\",\"novalidate\",\"\"],[\"flush-element\"],[\"text\",\"\\n  \\n  \"],[\"open-element\",\"div\",[]],[\"static-attr\",\"class\",\"signup-form-fields mc_embed_signup_scroll\"],[\"flush-element\"],[\"text\",\"\\n        \"],[\"open-element\",\"div\",[]],[\"flush-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"p\",[]],[\"flush-element\"],[\"text\",\"\\n                Signup for an invite to become a free business beta user. After we \\n                see you have joined, we will send you confidential login information \\n                for your business. Business user accounts will be made publicly \\n                available once we grow.\\n            \"],[\"close-element\"],[\"text\",\"\\n            \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"email\"],[\"static-attr\",\"value\",\"\"],[\"static-attr\",\"name\",\"EMAIL\"],[\"static-attr\",\"class\",\"required email input-box\"],[\"static-attr\",\"id\",\"mce-EMAIL\"],[\"static-attr\",\"placeholder\",\"Email\"],[\"static-attr\",\"required\",\"required\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n            \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"text\"],[\"static-attr\",\"value\",\"\"],[\"static-attr\",\"name\",\"FNAME\"],[\"static-attr\",\"class\",\"required input-box\"],[\"static-attr\",\"id\",\"mce-FNAME\"],[\"static-attr\",\"placeholder\",\"First name\"],[\"static-attr\",\"required\",\"required\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n            \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"text\"],[\"static-attr\",\"value\",\"\"],[\"static-attr\",\"name\",\"LNAME\"],[\"static-attr\",\"class\",\"required input-box\"],[\"static-attr\",\"id\",\"mce-LNAME\"],[\"static-attr\",\"placeholder\",\"Last name\"],[\"static-attr\",\"required\",\"required\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n            \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"text\"],[\"static-attr\",\"value\",\"\"],[\"static-attr\",\"name\",\"MMERGE3\"],[\"static-attr\",\"class\",\"required input-box\"],[\"static-attr\",\"id\",\"mce-MMERGE3\"],[\"static-attr\",\"placeholder\",\"Business name\"],[\"static-attr\",\"required\",\"required\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n\\n\\n            \"],[\"comment\",\" Email \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='email'\\n                id='email'\\n                class='input-box' \\n                value=email \\n                placeholder='Email' \\n                required=\\\"required\\\"}}<br /> \"],[\"text\",\"\\n            \"],[\"comment\",\" First name \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='text' \\n                id='firstName'\\n                class='input-box' \\n                pattern=\\\"[a-zA-z]+\\\" \\n                value=firstName placeholder='First Name' \\n                required=\\\"required\\\" \\n                title=\\\"Please only use alphabetic characters\\\"}}<br /> \"],[\"text\",\"\\n            \"],[\"comment\",\" Last Name \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='text' \\n                id='lastName'\\n                class='input-box' \\n                pattern=\\\"[a-zA-z]+\\\" \\n                value=lastName \\n                placeholder='Last Name' \\n                required=\\\"required\\\" \\n                title=\\\"Please only use alphabetic characters\\\"}}<br /> \"],[\"text\",\"\\n            \"],[\"comment\",\" Business Name \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='text' \\n                id='storename'\\n                class='input-box' \\n                pattern=\\\"[a-zA-z0-9 -'!]+\\\" \\n                value=storename \\n                placeholder='Business Name' \\n                required=\\\"required\\\" \\n                title=\\\"Please only use alphabetic characters\\\"}}<br /> \"],[\"text\",\"\\n        \"],[\"close-element\"],[\"text\",\"\\n        \"],[\"comment\",\" <div> \"],[\"text\",\"\\n        \\t\"],[\"comment\",\" Business Phone \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input-mask type='tel' \\n                id='phone'\\n                class='input-box' \\n                mask=\\\"(999) 999-9999\\\" \\n                type=\\\"tel\\\" \\n                pattern=\\\"[\\\\(]\\\\d{3}[\\\\)][\\\\s]\\\\d{3}[\\\\-]\\\\d{4}\\\" \\n                value=phone \\n                placeholder='Business Phone' }} \"],[\"text\",\"\\n            \"],[\"comment\",\" Business Address \"],[\"text\",\"\\n            \"],[\"comment\",\" {{place-autocomplete-field\\n                value=address\\n                placeholder=\\\"Business Address\\\"\\n                required=\\\"required\\\"\\n                disable=false\\n                handlerController= this\\n                inputClass= 'input-box address-box'\\n                focusOutCallback='done' \\n                placeChangedCallback='placeChanged' \\n                restrictions=restrictions\\n            }} \"],[\"text\",\"\\n            \"],[\"comment\",\" Password \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='password' \\n                id=\\\"password\\\"\\n                class='input-box'\\n                pattern=\\\".{6,}\\\"   \\n                value=password \\n                placeholder='Password' \\n                required=\\\"required\\\" \\n                title=\\\"Please enter a password that's at least 6 characters long\\\"}}<br /> \"],[\"text\",\"\\n            \"],[\"comment\",\" Password Confirm \"],[\"text\",\"\\n            \"],[\"comment\",\" {{input type='password' \\n                id=\\\"passwordConfirm\\\" \\n                class='input-box' \\n                pattern=\\\".{6,}\\\" \\n                value=passwordConfirm \\n                placeholder='Password Confirm' \\n                required=\\\"required\\\" \\n                title=\\\"Please enter a password that's at least 6 characters long\\\"}}<br /> \"],[\"text\",\"\\n        \"],[\"comment\",\" </div> \"],[\"text\",\"\\n        \\n  \"],[\"close-element\"],[\"text\",\"\\n  \"],[\"comment\",\" {{input type='submit' class='button-gradient-square' value=\\\"Sign up\\\" placeholder='Signup'}}\"],[\"text\",\"\\n    \"],[\"open-element\",\"input\",[]],[\"static-attr\",\"type\",\"submit\"],[\"static-attr\",\"value\",\"Sign up\"],[\"static-attr\",\"name\",\"subscribe\"],[\"static-attr\",\"id\",\"mc-embedded-subscribe\"],[\"static-attr\",\"class\",\"button button-gradient-square blue-gradient\"],[\"flush-element\"],[\"close-element\"],[\"text\",\"\\n  \"],[\"close-element\"]],\"locals\":[],\"named\":[],\"yields\":[],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "frontend/templates/components/business-signup.hbs" } });
 });
@@ -1982,7 +1926,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+b479192c"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+d9e90729"});
 }
 
 /* jshint ignore:end */
