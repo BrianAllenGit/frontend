@@ -95,7 +95,6 @@ export default Ember.Controller.extend({
 
 	    },
 	    done: function(){
-	      	console.log("done");
 	    }
 	}
 });
