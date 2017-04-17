@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 		var userScrolled = false;
 
 		scrollMe.scroll(function() {
-			if (scrollMe.scrollTop() + scrollMe.innerHeight()>=scrollMe[0].scrollHeight) {
+			if (scrollMe.scrollTop() + scrollMe.innerHeight() +1 >=scrollMe[0].scrollHeight) {
 				userScrolled = true;
 		  	}   
 		});

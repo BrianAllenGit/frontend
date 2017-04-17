@@ -60,7 +60,8 @@ export default Ember.Route.extend({
       return true; // Bubble the didTransition event
     },
     loadMore(){
-    	this.get('firebaseUtil').next(this.get('referenceId'), 25);
+    	console.log("hi");
+    	this.get('firebaseUtil').next(this.storeId, 25);
 
     	// this.store.query('product', {orderBy: 'storeid', equalTo: store_id, limitToLast: 25 }).then((product) => { 
     	// 	this.get('productList').pushObjects(product);
