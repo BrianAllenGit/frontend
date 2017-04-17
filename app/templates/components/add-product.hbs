@@ -1,7 +1,51 @@
-<td>{{input type='text' class='' id="name" value=name placeholder="Name" }}</td>
-<td>{{input type='text' class='' id="sku" value=sku placeholder="SKU" }}</td>
-<td>{{input type='text' class='' id="price" value=price placeholder="Price" }}</td>
-<td>{{input type='text' class='' id="quantity" value=quantity placeholder="Quantity" }}</td>
-<td>{{input type='text' class='' id="tax" value=tax placeholder="Tax" }}</td>
-<td>{{input type='text' class='' id="barcode" value=barcode placeholder="Barcode" }}</td>
-<input type="submit" name="submit" placeholder="Save" {{action 'submit'}}>
+<form {{action "submit" on="submit"}}>
+
+	{{input type='text' 
+		class='' 
+		id="name" 
+		value=name 
+		placeholder="Name" 
+        required="required"}}
+
+	{{input type='text' 
+		class='' 
+		id="sku" 
+		value=sku 
+		placeholder="SKU" }}
+
+
+	{{input type='number' 
+		class='' 
+		id="price" 
+		value=price 
+		step=0.01
+		placeholder="Price"
+        required="required" 
+        pattern="([0-9]+)(.[0-9]{2}+|)"}}
+
+	{{input type='number' 
+		class='' id="quantity" 
+		value=quantity 
+		placeholder="Quantity" 
+		pattern="[0-9]+" 
+        required="required" 
+        title="Please only enter a whole number of 0 or greater"}}
+
+	{{input type='text' 
+		class='' 
+		id="tax" 
+		value=tax 
+		placeholder="Tax" 
+		pattern="0.[0-9]+" 
+		step=0.01
+        required="required" 
+        title="Please only enter decimal value less than 1. For instance, '0.07' for 7%."}}
+
+	{{input type='text' 
+		class='' 
+		id="barcode" 
+		value=barcode 
+		placeholder="Barcode" }}
+
+	{{input type='submit' name="submit" value="Add" placeholder='Add'}}
+</form>

@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 	actions: {
 		submit(){
 			console.log('click');
-	          var store = this.get('store');
+	        var store = this.get('store');
 			var name = Ember.$('#name');
 			var sku = Ember.$('#sku');
 			var price = Ember.$('#price');
@@ -22,9 +22,8 @@ export default Ember.Component.extend({
               barcode: barcode.val(),
               sku: sku.val(),
               storeid: storeId,
-              tax: tax.val()
-            	}
-          	);
+              tax: tax.val()	
+            });
           	new_product.save();
 		}
 	}
