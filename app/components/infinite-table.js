@@ -23,5 +23,10 @@ export default Ember.Component.extend({
 		console.log('called');
 		var scrollMe = Ember.$(".receipt-content");
 		scrollMe.unbind('scroll');
+	},
+	actions: {
+		updateInfo(){
+			console.log('balls');
+		}
 	}
 });
