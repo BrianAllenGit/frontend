@@ -12,6 +12,33 @@ export default Ember.Route.extend({
 	    }
   	},
   	model(){    
-		return this.store.query('store', {orderBy: 'owner', equalTo: this.get('session.currentUser.uid')} );
-	}
+  		var currentRoute = this;
+		return this.store.findRecord('businessuser', this.get('session.currentUser.uid')).then(
+			      	function(snapshot){
+			      		return currentRoute.store.query('store', {orderBy: 'owner', equalTo: currentRoute.get('session.currentUser.uid')} );
+			      		// .then(
+			      		// 	function(snapshot){
+			      		// 		return snapshot;
+			      		// 	},
+			      		// 	function(error){
+			      		// 		console.log(error);
+			      		// 	});
+			     	},
+			     	//On error
+			     	function(error){
+			     		if (error.message.includes("no record")){
+			     			currentRoute.transitionTo("index");
+			     		}
+		     	});
+		 //this.store.query('store', {orderBy: 'owner', equalTo: this.get('session.currentUser.uid')} );
+	},
+	afterModel(model){
+		console.log(model);
+	},
+	actions: {
+	   signOut() {
+	    	this.get('session').close();
+	 		this.transitionTo('business.index');  
+	 	}	
+	  }
 });
