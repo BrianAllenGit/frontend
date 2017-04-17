@@ -422,6 +422,9 @@ html, body {
 		@media screen and (max-width: $small-laptop-screen){
 			flex-direction: column;
 		}
+		.info-row-button{
+			width:100%;
+		}
 		.info-row{
 			padding-right:50px;
 			display: flex;
