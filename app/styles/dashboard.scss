@@ -416,12 +416,17 @@ html, body {
 	height:100%;
 	.info-row-container{
 		display: flex;
-		flex-direction: column;
-		padding-left:50px;
+		flex-direction: row;
+		padding:100px;
+		flex-wrap: wrap;
+		@media screen and (max-width: $small-laptop-screen){
+			flex-direction: column;
+		}
 		.info-row{
 			padding-right:50px;
 			display: flex;
 			flex-direction: column;
+			
 
 			.info-submit{
 				width: 166px;
