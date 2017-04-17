@@ -2,6 +2,10 @@
 	{{#unless activeModel}}
 		{{infinite-table model=model storeId=storeId loadMore="loadMore" activeModel=activeModel currentlyLoading=currentlyLoading}}
 	{{else}}
-		{{update-product activeModel=activeModel storeId=storeId}}
+		{{#if activeModel.id}}
+			{{update-product activeModel=activeModel storeId=storeId}}
+		{{else}}
+			{{add-product storeId=storeId}}
+		{{/if}}
 	{{/unless}}
 </div>
