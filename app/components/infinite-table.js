@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	didInsertElement(){
-		var scrollMe = Ember.$(".business-portal-contents");
+		var scrollMe = Ember.$(".business-portal-contents-no");
 		var that = this;
 		var userScrolled = false;
 
@@ -20,12 +20,7 @@ export default Ember.Component.extend({
 		}, 50);
 	},
 	willDestroyElement() {
-		var scrollMe = Ember.$(".receipt-content");
+		var scrollMe = Ember.$(".business-portal-content-no");
 		scrollMe.unbind('scroll');
-	},
-	actions: {
-		updateInfo(){
-			console.log('balls');
-		}
 	}
 });

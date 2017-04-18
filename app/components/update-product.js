@@ -7,7 +7,6 @@ export default Ember.Component.extend({
 
 	actions:{
 		save(){
-			console.log(this.get("activeModel.id"));
 			var controller = this;
 			var store = this.get('store');
 			var name = Ember.$('#name');

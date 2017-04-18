@@ -1,5 +1,4 @@
 <div id="dont-flex">
-{{log model.store.id}}
 	{{#unless activeModel}}
 		{{infinite-table model=model.products storeId=model.store.id loadMore="loadMore" activeModel=activeModel currentlyLoading=currentlyLoading}}
 	{{else}}

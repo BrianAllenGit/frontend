@@ -8,7 +8,6 @@ export default Ember.Controller.extend({
 
 	init(){
 			var user = Firebase.auth().currentUser;
-			console.log(user.providerData.get(0).providerId);
 			if (user.providerData.get(0).providerId.includes("google")){
 				this.isGoogleLogin = true;
 			}
