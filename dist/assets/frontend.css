@@ -1092,6 +1092,12 @@ html, body {
   padding-right: 20px;
   height: 80vh; }
 
+.business-portal-personal-info {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
 .business-portal-name {
   font-family: GothamRounded-Bold; }
 
