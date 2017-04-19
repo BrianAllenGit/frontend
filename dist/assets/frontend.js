@@ -2079,7 +2079,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+e681833f"});
+  require("frontend/app")["default"].create({"name":"frontend","version":"0.0.0+63c633e4"});
 }
 
 /* jshint ignore:end */
