@@ -13,6 +13,10 @@ module.exports = function(environment) {
       storageBucket: "Scannly-3e9e2.appspot.com"
     },
     torii: { sessionServiceName: 'session' },
+    intercom: {
+      appId: 'ck9vo9v9', // <-- REPLACE WITH YOUR INTERCOM.IO app_id
+      enabled: true, // <-- Setting to false in your testing environment prevents unneccessary network requests (true by default)
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

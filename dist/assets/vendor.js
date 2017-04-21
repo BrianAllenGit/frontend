@@ -71368,6 +71368,54 @@ requireModule("ember");
   generateModule('rsvp', { 'default': Ember.RSVP });
 })();
 
+;(function() {
+  /* globals define */
+  'use strict';
+
+  function l(config) {
+    var i = function() {
+      i.c(arguments);
+    };
+    i.q = [];
+    i.c = function(args) {
+      i.q.push(args);
+    };
+
+    window.Intercom = i;
+
+    var d = document;
+    var s = d.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = 'https://widget.intercom.io/widget/' + config.intercom.appId;
+    var x = d.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
+  }
+
+  var ic = window.Intercom;
+  if (typeof ic === 'function') {
+    ic('reattach_activator');
+    ic('update', {});
+  }
+
+  function generateModule(name, values) {
+    define(name, [], function() {
+      'use strict'; // jshint ignore:line
+
+      return values;
+    });
+  }
+
+  generateModule('intercom', {
+    default: function() {
+      if (window.Intercom && typeof window.Intercom.apply === 'function') {
+        return window.Intercom.apply(null, arguments);
+      }
+    },
+    _setup: l
+  });
+})();
+
 ;/* globals define */
 
 function createDeprecatedModule(moduleId) {
@@ -94372,6 +94420,139 @@ define('ember-inflector/lib/utils/make-helper', ['exports', 'ember'], function (
     }
     return _ember['default'].Handlebars.makeBoundHelper(helperFunction);
   }
+});
+define('ember-intercom-io/components/intercom-io', ['exports', 'ember'], function (exports, _ember) {
+  'use strict';
+
+  var Component = _ember['default'].Component;
+  var get = _ember['default'].get;
+  var inject = _ember['default'].inject;
+
+  exports['default'] = Component.extend({
+    intercom: inject.service(),
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
+      get(this, 'intercom').start();
+    },
+    willDestroyElement: function willDestroyElement() {
+      this._super.apply(this, arguments);
+      get(this, 'intercom').stop();
+    }
+  });
+});
+define('ember-intercom-io/initializers/ember-intercom', ['exports', 'intercom'], function (exports, _intercom) {
+  'use strict';
+
+  exports.initialize = initialize;
+
+  function initialize(application) {
+    if (typeof FastBoot === 'undefined') {
+      var config = undefined;
+
+      if (application.resolveRegistration) {
+        config = application.resolveRegistration('config:environment');
+      } else {
+        config = application.registry.resolve('config:environment');
+      }
+
+      (0, _intercom._setup)(config);
+    }
+  }
+
+  exports['default'] = {
+    name: 'ember-intercom',
+    initialize: initialize
+  };
+});
+define('ember-intercom-io/services/intercom', ['exports', 'ember', 'intercom'], function (exports, _ember, _intercom) {
+  'use strict';
+
+  var get = _ember['default'].get;
+  var merge = _ember['default'].merge;
+  var Service = _ember['default'].Service;
+  var computed = _ember['default'].computed;
+  var assert = _ember['default'].assert;
+  var scheduleOnce = _ember['default'].run.scheduleOnce;
+
+  exports['default'] = Service.extend({
+    api: _intercom['default'],
+
+    _userNameProp: computed('config.userProperties.nameProp', function () {
+      return get(this, 'user.' + get(this, 'config.userProperties.nameProp'));
+    }),
+
+    _userEmailProp: computed('config.userProperties.emailProp', function () {
+      return get(this, 'user.' + get(this, 'config.userProperties.emailProp'));
+    }),
+
+    _userCreatedAtProp: computed('config.userProperties.createdAtProp', function () {
+      return get(this, 'user.' + get(this, 'config.userProperties.createdAtProp'));
+    }),
+
+    user: {
+      name: null,
+      email: null
+    },
+
+    _hasUserContext: computed('user', '_userNameProp', '_userEmailProp', '_userCreatedAtProp', function () {
+      return !!get(this, 'user') && !!get(this, '_userNameProp') && !!get(this, '_userEmailProp');
+    }),
+
+    _intercomBootConfig: computed('_hasUserContext', function () {
+      var appId = get(this, 'config.appId');
+      assert('You must supply an "ENV.intercom.appId" in your "config/environment.js" file.', appId);
+
+      // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+      var obj = {
+        app_id: appId
+      };
+
+      if (get(this, '_hasUserContext')) {
+        obj.name = get(this, '_userNameProp');
+        obj.email = get(this, '_userEmailProp');
+        if (get(this, '_userCreatedAtProp')) {
+          obj.created_at = get(this, '_userCreatedAtProp');
+        }
+      }
+      // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+
+      return obj;
+    }),
+
+    start: function start() {
+      var _this = this;
+
+      var bootConfig = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      var _bootConfig = merge(get(this, '_intercomBootConfig'), bootConfig);
+      scheduleOnce('afterRender', function () {
+        return _this.get('api')('boot', _bootConfig);
+      });
+    },
+
+    stop: function stop() {
+      var _this2 = this;
+
+      scheduleOnce('afterRender', function () {
+        return _this2.get('api')('shutdown');
+      });
+    },
+
+    update: function update() {
+      var _this3 = this;
+
+      var properties = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      scheduleOnce('afterRender', function () {
+        return _this3.get('api')('update', properties);
+      });
+    }
+  });
+});
+define("ember-intercom-io/templates/components/intercom-io", ["exports"], function (exports) {
+  "use strict";
+
+  exports["default"] = Ember.HTMLBars.template({ "id": "gUW6kqQw", "block": "{\"statements\":[[\"yield\",\"default\"],[\"text\",\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[\"default\"],\"blocks\":[],\"hasPartials\":false}", "meta": { "moduleName": "modules/ember-intercom-io/templates/components/intercom-io.hbs" } });
 });
 define('ember-load-initializers/index', ['exports'], function (exports) {
   'use strict';
